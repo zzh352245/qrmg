@@ -1,6 +1,6 @@
-package com.liaoze.stockmgt.dao;
+package com.qrmg.zd.dao;
 
-import com.liaoze.stockmgt.model.User;
+import com.qrmg.zd.model.User;
 
 public interface UserDao {
 	/**

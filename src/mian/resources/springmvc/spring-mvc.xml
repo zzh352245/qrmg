@@ -3,8 +3,16 @@
 
    <mvc:annotation-driven /> 
    <!-- 扫描controller（controller层注入） -->
-   <context:component-scan base-package="com.liaoze.stockmgt.controller"/>  
+   <context:component-scan base-package="com.qrmg.zd.controller"/>  
 
    <!-- 对模型视图添加前后缀 -->
-   <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/WEB-INF/view/" p:suffix=".jsp"/>
+<!--    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/WEB-INF/view/" p:suffix=".jsp"/> -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+			</list>
+		</property>
+	</bean>
 </beans>

@@ -1,4 +1,4 @@
-package com.liaoze.stockmgt.model;
+package com.qrmg.zd.model;
 
 public class User {
 	

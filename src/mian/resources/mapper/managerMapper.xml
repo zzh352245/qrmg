@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qrmg.zd.dao.ManagerDao">
+<!--设置domain类和数据库中表的字段一一对应，注意数据库字段和domain类中的字段名称不致，此处一定要！-->
+    <resultMap id="managerResultMap" type="com.qrmg.zd.model.Manager">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="mg_name" property="mgName" jdbcType="VARCHAR" />
+        <result column="mg_account" property="mgAccount" jdbcType="VARCHAR" />
+        <result column="mg_password" property="mgPassword" jdbcType="VARCHAR" />
+        <result column="mg_phone" property="mgPhone" jdbcType="VARCHAR" />
+        <result column="mg_email" property="mgEmail" jdbcType="VARCHAR" />
+        <result column="mg_contact" property="mgContact" jdbcType="VARCHAR" />
+        <result column="mg_salt" property="mgSalt" jdbcType="VARCHAR" />
+        <result column="mg_code" property="mgCode" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <select id="loginManager" parameterType="java.util.Map"
+		resultType="managerResultMap">
+		select * from qrmg_manager where mg_name=#{mgName} and mg_password=#{mgPassword}
+	</select>
+</mapper>
