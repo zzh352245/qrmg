@@ -18,7 +18,7 @@
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     </resultMap>
     <select id="getOneChannelByTwoCode" parameterType="java.util.Map"
-		resultType="channelResultMap">
+		resultMap="channelResultMap">
 		SELECT * FROM qrmg_channel  WHERE channel_level='1' 
 		AND channel_code=(SELECT channel_parent_code FROM qrmg_channel WHERE channel_code=#{channelCode} AND channel_level='2')
 	</select>

@@ -16,7 +16,7 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
     <select id="loginManager" parameterType="java.util.Map"
-		resultType="managerResultMap">
+		resultMap="managerResultMap">
 		select * from qrmg_manager where mg_name=#{mgName} and mg_password=#{mgPassword}
 	</select>
 </mapper>
