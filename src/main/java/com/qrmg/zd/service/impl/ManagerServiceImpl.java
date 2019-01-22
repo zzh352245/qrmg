@@ -33,5 +33,17 @@ public class ManagerServiceImpl implements ManagerService {
 		}
 		return returnMap;
 	}
+
+	/**
+	 * @Description: 添加账号
+	 * @author zz
+	 * @date 2019年1月22日 下午8:03:28
+	 * @return 
+	 * @param
+	 */
+	@Override
+	public void addAccount(Map<String, String> map) {
+		managerDao.addAccount(map);
+	}
 	
 }

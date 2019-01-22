@@ -13,4 +13,13 @@ public interface ManagerService {
 	 */
 	Map<String, String> loginManager(Map<String, String> map);
 	
+	/**
+	 * @Description: 添加账号
+	 * @author zz
+	 * @date 2019年1月22日 下午8:03:28
+	 * @return 
+	 * @param
+	 */
+	void addAccount(Map<String, String> map);
+	
 }

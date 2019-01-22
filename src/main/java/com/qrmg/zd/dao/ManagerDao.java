@@ -21,4 +21,13 @@ public interface ManagerDao {
 	 */
 	public Manager loginManager(Map<String, String> map);
 	
+	/**
+	 * @Description: 添加账号
+	 * @author zz
+	 * @date 2019年1月22日 下午8:03:28
+	 * @return 
+	 * @param
+	 */
+	public void addAccount(Map<String, String> map);
+	
 }

@@ -19,4 +19,37 @@
 		resultMap="managerResultMap">
 		select * from qrmg_manager where mg_name=#{mgName} and mg_password=#{mgPassword}
 	</select>
+	<insert id="addAccount" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.qrmg.zd.model.Manager">
+		insert into qrmg_manager
+		<include refid="setAccount" />
+	</insert>
+	<sql id="setAccount">
+		<set>
+			<if test="mgName != null and mgName != 'null' and mgName != ''">
+				mg_name = #{mgName},
+			</if>
+			<if test="mgAccount != null and mgAccount != 'null' and mgAccount != ''">
+				mg_account = #{mgAccount},
+			</if>
+			<if test="mgPassword != null and mgPassword != 'null' and mgPassword != ''">
+				mg_password = #{mgPassword},
+			</if>
+			<if test="mgPhone != null and mgPhone != 'null' and mgPhone != ''">
+				mg_phone = #{mgPhone},
+			</if>
+			<if test="mgEmail != null and mgEmail != 'null' and mgEmail != ''">
+				mg_phone = #{mgEmail},
+			</if>
+			<if test="mgContact != null and mgContact != 'null' and mgContact != ''">
+				mg_contact = #{mgContact},
+			</if>
+			<if test="mgSalt != null and mgSalt != 'null' and mgSalt != ''">
+				mg_salt = #{mgSalt},
+			</if>
+			<if test="mgCode != null and mgCode != 'null' and mgCode != ''">
+				mg_code = #{mgCode}
+			</if>
+		</set>
+	</sql>
 </mapper>
