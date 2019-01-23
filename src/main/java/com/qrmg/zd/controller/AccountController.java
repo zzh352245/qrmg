@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,6 +36,7 @@ public class AccountController {
 		OutputObject outputObj = new OutputObject();
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("userPass");
+		String vcode = request.getParameter("vcode");
 		if(StringUtil.isEmpty(userName)){
 			outputObj.setReturnCode("9999");
 			outputObj.setReturnMessage("用户名不能为空！");
@@ -45,6 +47,17 @@ public class AccountController {
 			outputObj.setReturnMessage("密码不能为空！");
 			return outputObj;
 		}
+		if(StringUtil.isEmpty(vcode) || StringUtil.isEmpty(String.valueOf(request.getSession().getAttribute("LOGIN_CHECK_CODE")))){
+			outputObj.setReturnCode("9999");
+			outputObj.setReturnMessage("验证码已过期，请刷新重试！");
+			return outputObj;
+		}
+		if(!StringUtils.equals(vcode.toLowerCase(), String.valueOf(request.getSession().getAttribute("LOGIN_CHECK_CODE")))){
+			outputObj.setReturnCode("9999");
+			outputObj.setReturnMessage("验证码错误，请重新输入！");
+			return outputObj;
+		}
+		request.getSession().removeAttribute("LOGIN_CHECK_CODE");
 		Map<String, String> map = new HashMap<>();
 		map.put("mgName", userName);
 		map.put("mgPassword", password);

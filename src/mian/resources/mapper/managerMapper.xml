@@ -17,7 +17,7 @@
     </resultMap>
     <select id="loginManager" parameterType="java.util.Map"
 		resultMap="managerResultMap">
-		select * from qrmg_manager where mg_name=#{mgName} and mg_password=#{mgPassword}
+		select * from qrmg_manager where mg_account=#{mgName} and mg_password=#{mgPassword}
 	</select>
 	<insert id="addAccount" useGeneratedKeys="true" keyProperty="id"
 		parameterType="com.qrmg.zd.model.Manager">
