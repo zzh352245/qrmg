@@ -2,6 +2,9 @@ package com.qrmg.zd.service;
 
 import java.util.Map;
 
+import com.ai.frame.bean.OutputObject;
+import com.qrmg.zd.model.Manager;
+
 public interface ManagerService {
 
 	/**
@@ -20,6 +23,26 @@ public interface ManagerService {
 	 * @return 
 	 * @param
 	 */
-	void addAccount(Map<String, String> map);
+	void addAccount(Manager manager);
+	
+	/**
+	 * @Description: 修改账号信息
+	 * @author zz
+	 * @date 2019年1月24日 下午3:51:21
+	 * @return 
+	 * @param
+	 */
+	void updateAccount(Manager manager);
+	
+	/**
+	 * @Description: 获取账号列表
+	 * @author zz
+	 * @date 2019年1月24日 下午5:44:09
+	 * @return 
+	 * @param
+	 */
+	OutputObject queryManagerList(Map<String, String> map);
+	
+	boolean loginManagerName(String userName);
 	
 }

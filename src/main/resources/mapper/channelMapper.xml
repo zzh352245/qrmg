@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qrmg.zd.dao.ChannelDao">
+<!--设置domain类和数据库中表的字段一一对应，注意数据库字段和domain类中的字段名称不致，此处一定要！-->
+    <resultMap id="channelResultMap" type="com.qrmg.zd.model.Channel">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="channel_level" property="channelLevel" jdbcType="VARCHAR" />
+        <result column="channel_parent_code" property="channelParentCode" jdbcType="VARCHAR" />
+        <result column="channel_code" property="channelCode" jdbcType="VARCHAR" />
+        <result column="channel_name" property="channelName" jdbcType="VARCHAR" />
+        <result column="channel_qrcode" property="channelQrcode" jdbcType="VARCHAR" />
+        <result column="channel_qrcode_type" property="channelQrcodeType" jdbcType="VARCHAR" />
+        <result column="channel_link_url" property="channelLinkUrl" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="create_mg" property="createMg" jdbcType="VARCHAR" />
+        <result column="update_mg" property="updateMg" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <select id="getOneChannelByTwoCode" parameterType="java.util.Map"
+		resultMap="channelResultMap">
+		SELECT * FROM qrmg_channel  WHERE channel_level='1' 
+		AND channel_code=(SELECT channel_parent_code FROM qrmg_channel WHERE channel_code=#{channelCode} AND channel_level='2')
+	</select>
+	<select id="queryChannelList" parameterType="java.util.Map"
+		resultMap="channelResultMap">
+		SELECT * FROM qrmg_channel
+		<include refid="channelWhere" />
+		limit ${start},${length}
+	</select>
+	<select id="getCountChannel" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+		SELECT count(1) FROM qrmg_channel
+		<include refid="channelWhere" />
+	</select>
+	<sql id="channelWhere">
+		<where>
+			<if test="channelLevel != null and channelLevel != 'null' and channelLevel != ''">
+				channel_level = #{channelLevel}
+			</if>
+			<if test="channelName != null and channelName != 'null' and channelName != ''">
+				and channel_name like #{channelName}
+			</if>
+			<if test="channelQrcodeType != null and channelQrcodeType != 'null' and channelQrcodeType != ''">
+				and channel_qrcode_type = #{channelQrcodeType}
+			</if>
+			<if test="createMg != null and createMg != 'null' and createMg != ''">
+				and create_mg like #{createMg}
+			</if>
+		</where>
+	</sql>
+	<insert id="addChannel" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.qrmg.zd.model.Channel">
+		insert into qrmg_channel
+		set channel_level=#{channelLevel},channel_parent_code=#{channelParentCode},channel_code=#{channelCode},
+		channel_name=#{channelName},channel_qrcode=#{channelQrcode},channel_qrcode_type=#{channelQrcodeType},
+		channel_link_url=#{channelLinkUrl},create_mg=#{createMg}
+	</insert>
+	<update id="updateChannel" parameterType="com.qrmg.zd.model.Channel">
+		update qrmg_channel set channel_level=#{channelLevel},channel_parent_code=#{channelParentCode},channel_code=#{channelCode},
+		channel_name=#{channelName},channel_qrcode=#{channelQrcode},
+		channel_link_url=#{channelLinkUrl},update_mg=#{updateMg},update_time=NOW()
+		where id=#{id}
+	</update>
+	<select id="queryChannel" parameterType="java.util.Map"
+		resultMap="channelResultMap">
+		SELECT * FROM qrmg_channel
+		<include refid="channelWhere" />
+	</select>
+</mapper>

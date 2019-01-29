@@ -1,0 +1,81 @@
+{
+    "busiCode": null,
+    "opId": null,
+    "phone": null,
+    "returnCode": "0",
+    "returnMessage": null,
+    "bean": {
+        "total": "310468"
+    },
+    "beans": [{
+        "businessname": "华为荣耀",
+        "description": "华为荣耀",
+        "priority": "2",
+        "tokenService": "asda",
+        "userid": "aa",
+        "createTime": "2015-05-17 02:47:21",
+        "mailRetentionTime": "2015-05-17 02:47:21",
+        "dataRetentionTime": "2015-05-17 02:47:21",
+        "attachRetentionTime": "2015-05-17 02:47:21",
+        "startStatus": "2",
+      "serviceIp":"192.168.0.1",
+      "maxFailures":"2"
+    },
+      {
+        "businessname": "华为荣耀",
+        "description": "华为荣耀",
+        "priority": "2",
+        "tokenService": "asda",
+        "userid": "aa",
+        "createTime": "2015-05-17 02:47:21",
+        "mailRetentionTime": "2015-05-17 02:47:21",
+        "dataRetentionTime": "2015-05-17 02:47:21",
+        "attachRetentionTime": "2015-05-17 02:47:21",
+        "startStatus": "2",
+        "serviceIp":"192.168.0.1",
+        "maxFailures":"2"
+      },
+      {
+        "businessname": "华为荣耀",
+        "description": "华为荣耀",
+        "priority": "2",
+        "tokenService": "asda",
+        "userid": "aa",
+        "createTime": "2015-05-17 02:47:21",
+        "mailRetentionTime": "2015-05-17 02:47:21",
+        "dataRetentionTime": "2015-05-17 02:47:21",
+        "attachRetentionTime": "2015-05-17 02:47:21",
+        "startStatus": "2",
+        "serviceIp":"192.168.0.1",
+        "maxFailures":"2"
+      },
+      {
+        "businessname": "华为荣耀",
+        "description": "华为荣耀",
+        "priority": "2",
+        "tokenService": "asda",
+        "userid": "aa",
+        "createTime": "2015-05-17 02:47:21",
+        "mailRetentionTime": "2015-05-17 02:47:21",
+        "dataRetentionTime": "2015-05-17 02:47:21",
+        "attachRetentionTime": "2015-05-17 02:47:21",
+        "startStatus": "2",
+        "serviceIp":"192.168.0.1",
+        "maxFailures":"2"
+      },
+      {
+        "businessname": "华为荣耀",
+        "description": "华为荣耀",
+        "priority": "2",
+        "tokenService": "asda",
+        "userid": "aa",
+        "createTime": "2015-05-17 02:47:21",
+        "mailRetentionTime": "2015-05-17 02:47:21",
+        "dataRetentionTime": "2015-05-17 02:47:21",
+        "attachRetentionTime": "2015-05-17 02:47:21",
+        "startStatus": "2", "serviceIp":"192.168.0.1",
+        "maxFailures":"2"
+      }
+ ],
+    "object": null
+}

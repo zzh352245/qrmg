@@ -1,5 +1,10 @@
 package com.qrmg.zd.model;
 
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+
 /**
  * @Description: 用户登记
  * @ClassName: Person  
@@ -12,7 +17,8 @@ public class Person {
 	private String userName;
 	private String userPhone;
 	private String channelCode;
-	private String createTime;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:dd", timezone = "GMT+8")
+	private Date createTime;
 	public int getId() {
 		return id;
 	}
@@ -37,10 +43,10 @@ public class Person {
 	public void setChannelCode(String channelCode) {
 		this.channelCode = channelCode;
 	}
-	public String getCreateTime() {
+	public Date getCreateTime() {
 		return createTime;
 	}
-	public void setCreateTime(String createTime) {
+	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
 	

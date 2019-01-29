@@ -1,0 +1,18 @@
+{
+	"returnCode": "0000",
+	"returnMessage": "success",
+	"beans":[
+		{
+			"text":"测试1表单",
+			"value":"1001"
+		},
+		{
+			"text":"测试2表单",
+			"value":"1002"
+		},
+		{
+			"text":"测试3表单",
+			"value":"1002"
+		}
+	]
+}

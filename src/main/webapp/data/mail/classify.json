@@ -1,0 +1,35 @@
+{
+  "busiCode": null,
+  "opId": null,
+  "phone": null,
+  "returnCode": "0",
+  "returnMessage": null,
+  "bean": {
+    "total": "310468"
+  },
+  "beans": [
+    {
+    "name": "华为荣耀",
+    "shortName": "华为荣耀",
+    "description": "2",
+    "createUser": "asda",
+    "createTime": "2015-05-17 02:47:21"
+  },
+    {
+    "name": "华为荣耀",
+    "shortName": "华为荣耀",
+    "description": "2",
+    "createUser": "asda",
+    "createTime": "2015-05-17 02:47:21"
+  },
+    {
+    "name": "华为荣耀",
+    "shortName": "华为荣耀",
+    "description": "2",
+    "createUser": "asda",
+    "createTime": "2015-05-17 02:47:21"
+  }
+
+  ],
+  "object": null
+}

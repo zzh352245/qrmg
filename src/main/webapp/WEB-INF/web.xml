@@ -88,9 +88,9 @@
         <error-code>405</error-code>
         <location>/WEB-INF/errorpage/405.html</location>
     </error-page>
-    <error-page>
-        <!-- 内部错误 -->
-        <error-code>500</error-code>
-        <location>/WEB-INF/errorpage/500.html</location>
-    </error-page>
+<!--     <error-page> -->
+<!--         内部错误 -->
+<!--         <error-code>500</error-code> -->
+<!--         <location>/WEB-INF/errorpage/500.html</location> -->
+<!--     </error-page> -->
 </web-app>

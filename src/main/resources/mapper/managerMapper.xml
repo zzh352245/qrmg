@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qrmg.zd.dao.ManagerDao">
+<!--设置domain类和数据库中表的字段一一对应，注意数据库字段和domain类中的字段名称不致，此处一定要！-->
+    <resultMap id="managerResultMap" type="com.qrmg.zd.model.Manager">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="mg_name" property="mgName" jdbcType="VARCHAR" />
+        <result column="mg_account" property="mgAccount" jdbcType="VARCHAR" />
+        <result column="mg_password" property="mgPassword" jdbcType="VARCHAR" />
+        <result column="mg_phone" property="mgPhone" jdbcType="VARCHAR" />
+        <result column="mg_email" property="mgEmail" jdbcType="VARCHAR" />
+        <result column="mg_contact" property="mgContact" jdbcType="VARCHAR" />
+        <result column="mg_salt" property="mgSalt" jdbcType="VARCHAR" />
+        <result column="mg_code" property="mgCode" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <select id="loginManager" parameterType="java.util.Map"
+		resultMap="managerResultMap">
+		select * from qrmg_manager where mg_account=#{mgAccount} and mg_password=#{mgPassword}
+	</select>
+	<select id="loginManagerName" parameterType="java.util.Map"
+		resultMap="managerResultMap">
+		select * from qrmg_manager where mg_account=#{mgAccount}
+	</select>
+	<insert id="addAccount" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.qrmg.zd.model.Manager">
+		insert into qrmg_manager
+		<include refid="setAccount" />
+	</insert>
+	<update id="updateAccount" parameterType="com.qrmg.zd.model.Manager">
+		update qrmg_manager 
+		<include refid="setAccount" />
+		where mg_account = #{mgAccount}
+	</update>
+	<sql id="setAccount">
+		<set>
+			<if test="mgName != null and mgName != 'null' and mgName != ''">
+				mg_name = #{mgName},
+			</if>
+			<if test="mgAccount != null and mgAccount != 'null' and mgAccount != ''">
+				mg_account = #{mgAccount},
+			</if>
+			<if test="mgPassword != null and mgPassword != 'null' and mgPassword != ''">
+				mg_password = #{mgPassword},
+			</if>
+			<if test="mgPhone != null and mgPhone != 'null' and mgPhone != ''">
+				mg_phone = #{mgPhone},
+			</if>
+			<if test="mgEmail != null and mgEmail != 'null' and mgEmail != ''">
+				mg_email = #{mgEmail},
+			</if>
+			<if test="mgContact != null and mgContact != 'null' and mgContact != ''">
+				mg_contact = #{mgContact},
+			</if>
+			<if test="mgSalt != null and mgSalt != 'null' and mgSalt != ''">
+				mg_salt = #{mgSalt},
+			</if>
+			<if test="mgCode != null and mgCode != 'null' and mgCode != ''">
+				mg_code = #{mgCode}
+			</if>
+		</set>
+	</sql>
+	<select id="queryManagerList" parameterType="java.util.Map"
+		resultMap="managerResultMap">
+		SELECT mg_name,mg_account,mg_phone,mg_email,mg_contact,
+		CASE mg_code WHEN '1' THEN '超级管理员' ELSE '普通操作员' END mg_code,
+		create_time FROM qrmg_manager
+		<include refid="managerWhere" />
+		limit ${start},${length}
+	</select>
+	<select id="getCountManager" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+		SELECT count(1) FROM qrmg_manager
+		<include refid="managerWhere" />
+	</select>
+	<sql id="managerWhere">
+		<where>
+			<if test="mgCode != null and mgCode != 'null' and mgCode != ''">
+				mg_code = #{mgCode}
+			</if>
+			<if test="mgName != null and mgName != 'null' and mgName != ''">
+				and mg_name like #{mgName}
+			</if>
+		</where>
+	</sql>
+</mapper>

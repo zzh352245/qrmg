@@ -1,0 +1,122 @@
+{
+  "busiCode": null,
+  "opId": null,
+  "phone": null,
+  "returnCode": "0",
+  "returnMessage": null,
+  "bean": {"total": "31"},
+  "beans": [
+    {
+      "GRAP_ID": "2015051719595288334",
+      "CRT_USER_ID": "U100000000000X",
+      "GRAP_NAME": "普通活动",
+      "GRAP_URL":"http://wwww.baidu.com",
+      "GRAP_SEVERID": "12345",
+      "GRAP_DATE": "2015-05-21 00:00:00",
+      "GRAP_DESC": "HELLO你好",
+      "CMPGN_STS_CD": "已结束"
+    },
+    {
+      "GRAP_ID": "2015051719595288334",
+      "CRT_USER_ID": "U100000000000X",
+      "GRAP_NAME": "普通活动",
+      "GRAP_URL":"http://wwww.baidu.com",
+      "GRAP_SEVERID": "12345",
+      "GRAP_DATE": "2015-05-21 00:00:00",
+      "GRAP_DESC": "HELLO你好",
+      "CMPGN_STS_CD": "已结束"
+    },
+    {
+      "GRAP_ID": "2015051719595288334",
+      "CRT_USER_ID": "U100000000000X",
+      "GRAP_NAME": "普通活动",
+      "GRAP_URL":"http://wwww.baidu.com",
+      "GRAP_SEVERID": "12345",
+      "GRAP_DATE": "2015-05-21 00:00:00",
+      "GRAP_DESC": "HELLO你好",
+      "CMPGN_STS_CD": "已结束"
+    },
+    {
+      "GRAP_ID": "2015051719595288334",
+      "CRT_USER_ID": "U100000000000X",
+      "GRAP_NAME": "普通活动",
+      "GRAP_URL":"http://wwww.baidu.com",
+      "GRAP_SEVERID": "12345",
+      "GRAP_DATE": "2015-05-21 00:00:00",
+      "GRAP_DESC": "HELLO你好",
+      "CMPGN_STS_CD": "已结束"
+    },
+    {
+      "GRAP_ID": "2015051719595288334",
+      "CRT_USER_ID": "U100000000000X",
+      "GRAP_NAME": "普通活动",
+      "GRAP_URL":"http://wwww.baidu.com",
+      "GRAP_SEVERID": "12345",
+      "GRAP_DATE": "2015-05-21 00:00:00",
+      "GRAP_DESC": "HELLO你好",
+      "CMPGN_STS_CD": "已结束"
+    },
+    {
+      "GRAP_ID": "2015051719595288334",
+      "CRT_USER_ID": "U100000000000X",
+      "GRAP_NAME": "普通活动",
+      "GRAP_URL":"http://wwww.baidu.com",
+      "GRAP_SEVERID": "12345",
+      "GRAP_DATE": "2015-05-21 00:00:00",
+      "GRAP_DESC": "HELLO你好",
+      "CMPGN_STS_CD": "已结束"
+    },
+    {
+      "GRAP_ID": "2015051719595288334",
+      "CRT_USER_ID": "U100000000000X",
+      "GRAP_NAME": "普通活动",
+      "GRAP_URL":"http://wwww.baidu.com",
+      "GRAP_SEVERID": "12345",
+      "GRAP_DATE": "2015-05-21 00:00:00",
+      "GRAP_DESC": "HELLO你好",
+      "CMPGN_STS_CD": "已结束"
+    },
+    {
+      "GRAP_ID": "2015051719595288334",
+      "CRT_USER_ID": "U100000000000X",
+      "GRAP_NAME": "普通活动1",
+      "GRAP_URL":"http://wwww.baidu.com",
+      "GRAP_SEVERID": "12345",
+      "GRAP_DATE": "2015-05-21 00:00:00",
+      "GRAP_DESC": "HELLO你好",
+      "CMPGN_STS_CD": "已结束"
+    },
+    {
+      "GRAP_ID": "2015051719595288334",
+      "CRT_USER_ID": "U100000000000X",
+      "GRAP_NAME": "普通活动",
+      "GRAP_URL":"http://wwww.baidu.com",
+      "GRAP_SEVERID": "12345",
+      "GRAP_DATE": "2015-05-21 00:00:00",
+      "GRAP_DESC": "HELLO你好",
+      "CMPGN_STS_CD": "已结束"
+    },
+    {
+      "GRAP_ID": "2015051719595288334",
+      "CRT_USER_ID": "U100000000000X",
+      "GRAP_NAME": "普通活动",
+      "GRAP_URL":"http://wwww.baidu.com",
+      "GRAP_SEVERID": "12345",
+      "GRAP_DATE": "2015-05-21 00:00:00",
+      "GRAP_DESC": "HELLO你好",
+      "CMPGN_STS_CD": "已结束"
+    },
+    {
+      "GRAP_ID": "2015051719595288334",
+      "CRT_USER_ID": "U100000000000X",
+      "GRAP_NAME": "普通活动",
+      "GRAP_URL":"http://wwww.baidu.com",
+      "GRAP_SEVERID": "12345",
+      "GRAP_DATE": "2015-05-21 00:00:00",
+      "GRAP_DESC": "HELLO你好",
+      "CMPGN_STS_CD": "已结束"
+    }
+
+  ],
+  "object": null
+}

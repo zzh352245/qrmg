@@ -1,0 +1,40 @@
+{
+  "busiCode": null,
+  "opId": null,
+  "phone": null,
+  "returnCode": "0",
+  "returnMessage": null,
+  "bean": {
+    "total": "310468"
+  },
+  "beans": [
+    {
+      "taskid":"1",
+    "taskname": "任务名称",
+    "taskorder":"任务顺序",
+    "taskstate": "1",
+    "unziptype":"2",
+    "urlPath":"../../ur.url",
+    "province":"河南省"
+  },
+   {
+      "taskid":"1",
+    "taskname": "任务名称",
+    "taskorder":"任务顺序",
+    "taskstate": "1",
+    "unziptype":"2",
+    "urlPath":"../../ur.url",
+    "province":"河南省"
+  },
+   {
+      "taskid":"1",
+    "taskname": "任务名称",
+    "taskorder":"任务顺序",
+    "taskstate": "1",
+    "unziptype":"2",
+    "urlPath":"../../ur.url",
+    "province":"河南省"
+  }
+  ],
+  "object": null
+}

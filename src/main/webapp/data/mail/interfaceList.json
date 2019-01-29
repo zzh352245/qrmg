@@ -1,0 +1,41 @@
+{
+  "busiCode": null,
+  "opId": null,
+  "phone": null,
+  "returnCode": "0",
+  "returnMessage": null,
+  "bean": {
+    "total": "310468"
+  },
+  "beans": [{
+    "interfaceName": "asdasda",
+    ".interfaceType":"策略名称",
+    "description": "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "state":"1",
+    "urlPath":"../../asd.url"
+  },
+    {
+      "interfaceName": "asdasda",
+      ".interfaceType":"策略名称",
+      "description": "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "state":"1",
+      "urlPath":"../../asd.url"
+    },
+    {
+      "interfaceName": "asdasda",
+      ".interfaceType":"策略名称",
+      "description": "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "state":"1",
+      "urlPath":"../../asd.url"
+    },
+    {
+      "interfaceName": "asdasda",
+      ".interfaceType":"策略名称",
+      "description": "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "state":"1",
+      "urlPath":"../../asd.url"
+    }
+
+  ],
+  "object": null
+}

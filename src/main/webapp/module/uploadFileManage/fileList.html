@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>上传文件管理</title>
+    <#include "../../tpl/res_css.tpl" />
+    <link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon" />
+</head>
+
+<body>
+	<div class="container">
+	    <div class="breadcrumb"></div>
+	    <div class="formItem">
+	        <div class="titleArea">
+	            <h2 style="float: left">邮件配置管理<em>></em>上传文件管理</h2>
+	            <div class="normalBtnArea ft-right">
+	                <a href="javascript:;" onclick="add();" a_code="uploadManger_add" class="normalBtn BGblue">上传文件</a>
+	            </div>
+	        </div>
+	    </div>
+	    <div class="cmxform">
+	        <form method="get" action="" class="record-search-form record-search-min record-search-form-border" id="J_formSearch" name="J_formSearch">
+	            <div class="record-search-cate">
+	            	<input type="hidden" id="total">
+	                <table class="search_table" cellpadding="0" cellspacing="0" border="0" width="100%">
+	                    <tr>
+	                        <td width="50">
+	                            <label class="description">文件类型</label>
+	                        </td>
+	                        <td width="150">
+	                            <select class="selectwidth inputText" name="type">
+	                                <option value="">请选择</option>
+	                                <option value="1">图片</option>
+	                                <option value="2">文本</option>
+	                                <option value="3">视频</option>
+	                            </select>
+	                        </td>
+	                        <td width="60">
+	                            <label class="description">业务类型</label>
+	                        </td>
+	                        <td width="150">
+	                            <select class="selectwidth inputText" name="busi_type">
+	                                <option value="">请选择</option>
+	                                <option value="2">模板资源</option>
+	                                <option value="1">系统资源</option>
+	                                <option value="3">其他资源</option>
+	                            </select>
+	                        </td>
+	                        <td width="">
+	                            <div class="normalBtnArea w82">
+	                                <a class="searchBtn" href="javascript:;" onclick="query();" a_code="uploadManger_query"><i></i>查询</a>
+	                            </div>
+	                        </td>
+	                    </tr>
+	                </table>
+	            </div>
+	            <div class="seeMoreFilter"><a href="#" class="down"></a></div>
+	        </form>
+	    </div>
+	    <div class="tablewidth mg_t_10">
+	        <table class="ui-record-table ui-record-tableNormals table_radius table-bordered table-striped">
+	            <thead>
+	                <tr>
+	                    <th width="30">选择</th>
+	                    <th width="50">id</th>
+	                    <th width="">缩略图</th>
+	                    <th width="200">src</th>
+	                    <th width="">code</th>
+	                    <th width="">文件名</th>
+	                    <th width="">文件类型</th>
+	                    <th width="">业务类型</th>
+	                    <th width="">上传时间</th>
+	                    <th width="">操作</th>
+	                </tr>
+	            </thead>
+	            <tbody id="J_tabletpl"></tbody>
+	        </table>
+	    </div>
+	    <!--翻页及功能按钮区域开始-->
+	    <DIV class="amount-bottom">
+	        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="gridBottom">
+	            <tr>
+	                <td width="60">
+	                    <input type="checkbox" class="selectAll" id="selectAll" />
+	                    <label for="selectAll">全选</label>
+	                </td>
+	                <td>
+	                    <div class="normalBtnArea">
+	                        <a class="normalBtn BGgray" href="javascript:;" onclick="doMany()" a_code="uploadManger_doMany">批量删除<span id="J_selectNum"></span></a>
+	                    </div>
+	                </td>
+	                <td>
+	                    <DIV class="fn-clear action-other  action-other-show " style="width:800px">
+	                        <DIV id="Pagination" class="page pagination fn-right"> </DIV>
+	                        <DIV class="fn-right fn-pt6 fn-pr10"></DIV>
+	                    </DIV>
+	                </td>
+	            </tr>
+	        </table>
+	    </DIV>
+	    <div class="footers mg_t_10">
+	        <p> 为了获得最佳操作体验，建议您使用：1280×768及以上分辨率，Chrome浏览器</p>
+	        <p>版权所有© 中移在线服务有限公司</p>
+	    </div>
+	</div>
+    <#include "../../tpl/res_js.tpl" />
+    <script id="T_tabletpl" type="text/x-handlebars-template">
+        {{#if beans}} {{#each beans}}
+        <tr>
+            <td align="center">
+                <input type="checkbox" name="checkbox" value="{{id}}" />
+            </td>
+            <td align="center">{{id}}</td>
+            <td align="center">
+                {{#compare type 1}}
+                	<img src="{{url}}" onclick="fileUrl('{{url}}')" style="width:100px;cursor:pointer">
+				{{/compare}}
+            </td>
+            <td align="center">{{url}}</td>
+            <td align="center">{{code}}</td>
+            <td align="center"><a href="{{url}}" class="">{{name}}</a></td>
+            <td align="center">{{typeText}}</td>
+            <td align="center">{{busi_typeText}}</td>
+            <td align="center">{{time_create}}</td>
+            <td align="center">
+                <a class="item-text" href="javascript:;" onclick="del('{{id}}','{{start}}','{{limit}}')" a_code="uploadManger_del">删除</a>
+            </td>
+        </tr>
+        {{/each}} {{else}}
+        <tr>
+            <td colspan="10">
+                <div class="ui-tips-box tipsBox">
+                    <div class="ui-icon-noData"></div>
+                    <div class="ui-tips-text">暂无数据记录！</div>
+                </div>
+            </td>
+        </tr>
+        {{/if}}
+    </script>
+    <script type="text/javascript">
+    var G_params = {
+        url: "/mail/front/sh/uploadManger!select?uid=select",
+        searchformId: "J_formSearch",
+        items_per_page: 15, // 每页数     @param : items_per_page
+        //items_per_page:10,
+        page_index: 0, //当前页  @param : page_index
+        //page_index:0,
+        pagination: "Pagination", //分页id
+        tabletpl: "T_tabletpl", //表格模板
+        tablewrap: "J_tabletpl" //表格容器
+    };
+    $(document).ready(function() {
+    	var start = Util.browser.getParameter('start');
+    	   //查询回显
+        if (start != null && start != ""){
+            query(start);
+        } else {
+        	query();
+        }
+        //全选 
+   /*      var flag = true;
+        $("#selectAll").change(function() {
+            if (flag) {
+                $("input[name='checkbox']").prop("checked", true);
+                flag = false;
+            } else {
+                $("input[name='checkbox']").removeAttr("checked");
+                flag = true;
+            }
+        }); */
+        $("#selectAll").click(function(){  
+            if(this.checked){   
+            	$("input:checkbox").prop("checked", true);
+            }else{   
+            	$("input:checkbox").removeAttr("checked");
+            }   
+        });
+
+        var myTemplate = Handlebars.compile($("#T_tabletpl").html());
+        //注册一个比较大小的Helper,判断v1是否大于v2
+        Handlebars.registerHelper("compare", function(v1, v2, options) {
+            if (v1 == v2) {
+                //满足添加继续执行
+                return options.fn(this);
+            } else {
+                //不满足条件执行{{else}}部分
+                return options.inverse(this);
+            }
+        });
+    });
+
+    function query(start) {
+        var str = $("#J_formSearch").serialize();
+        if (start != null && start != "") {
+            Util.pagination(parseInt(start), true, $.extend({
+                pageCallback: buttonCtrl
+            }, G_params), str);
+        } else {
+            Util.pagination(0, true, $.extend({
+                pageCallback: buttonCtrl
+            }, G_params), str);
+        } 
+        Util.ajax.postJson("/mail/front/sh/uploadManger!select", "uid=select&" + str, function(json) {
+            if (json.returnCode == 0) {
+               //alert(json.bean.total)
+               $("#total").val(json.bean.total);
+            }
+        })
+    }
+
+    function del(id,start,limit) {
+        if (id != "") {
+            var r = confirm("是否确认删除？");
+            if (r == false) {
+                return;
+            }
+            var start1 = parseInt(start/limit);
+            var total = $("#total").val();
+            $.ajax({
+                type: "POST",
+                url: "/mail/front/sh/uploadManger!del?uid=del",
+                data: { id: id ,start: start1},
+                dataType: "json",
+                success: function(data) {
+                    if (data.returnCode == 0) {
+                        Util.dialog.msg("操作成功");
+                        if((total - start) != 1){
+                        	query(start1);
+                        } else {
+                        	query();
+                        } 
+                    } else if (data.returnCode == 1) {
+                        alert(data.returnMessage);
+                    } else {
+                        Util.dialog.msg("操作失败");
+                    }
+           /*          var str = $("#J_formSearch").serialize();
+                    Util.pagination(G_params.page_index, true, G_params, str);
+                    Util.ajax.postJson("/mail/front/sh/uploadManger!select", "uid=select&" + str, function(json) {
+                        if (json.returnCode == 0) {
+                            $("#count").text(json.bean.count);
+                            $("#time").text(json.bean.time);
+                        }
+                    }); */
+                }
+            });
+        }
+    }
+
+    function doMany() {
+        
+        var sel = $("input[name='checkbox']");
+        var id = "";
+        for (i = 0; i < sel.length; i++) {
+            if (sel[i].checked) {
+                id = id + sel[i].value + "&";
+            }
+        }
+        if (id != "") {
+            id = id.substring(0, id.length - 1);
+            var r = confirm("是否确认删除？");
+            if (r == false) {
+                return;
+            }
+            $.ajax({
+                type: "POST",
+                url: "/mail/front/sh/uploadManger!domany?uid=domany",
+                data: { ids: id },
+                dataType: "json",
+                success: function(data) {
+                    if (data.returnCode == 0) {
+                        Util.dialog.msg("操作成功！");
+                        query();
+                    } else if (data.returnCode == 1) {
+                        alert(data.returnMessage);
+                    } else {
+                        Util.dialog.msg("操作失败");
+                    }
+                    $("#selectAll").attr("checked", false);
+
+                    var str = $("#J_formSearch").serialize();
+                    Util.pagination(G_params.page_index, true, G_params, str);
+                    Util.ajax.postJson("/mail/front/sh/uploadManger!select", "uid=select&" + str, function(json) {
+                        if (json.returnCode == 0) {
+                            $("#count").text(json.bean.count);
+                            $("#time").text(json.bean.time);
+                        }
+                    });
+                }
+            });
+        } else {
+            Util.dialog.msg("请选择要删除的行");
+        }
+    }
+
+    function resizeModel() {
+        var $bw = $(window).width(); //浏览器的宽
+        var $bh = $(window).height();
+        var $w = $("#showPreview").width(); //弹出的内容宽
+        var $h = $("#showPreview").height();
+        var $ph = $("body").height();
+        $("#pre").css({ "width": 800, "height": 500 });
+        $("#showPreview").css({ "postion": "fixed", "left": (($bw - $w) / 2), "top": ($bh - $h) / 2 });
+        $(".mask").css({ "postion": "absolute", "left": 0, "top": 0, "width": $bw, "height": $ph });
+    }
+    $(window).resize(function() {
+        resizeModel();
+    });
+
+    function add() {
+        window.location.href = "../uploadFileManage/uploadFile.html";
+    }
+    
+    /* 图片预览 */
+    function fileUrl(url){
+    	var elem = '<img src="'+url+'" style="text-align:center;min-width:500px"/>';
+        var paramsdiv = {
+            id: "d2",
+            title: '缩略图显示',
+            content: elem,
+            top: top,
+            cancelCallback: function() {
+            }
+        }
+        Util.dialog.openDiv(paramsdiv);
+        $(".ui-dialog-content",parent.document).css({"min-width":"300px","text-align":"center","max-height":"500px"});
+    }
+    </script>
+</body>
+
+</html>

@@ -1,5 +1,9 @@
 package com.qrmg.zd.model;
 
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * @Description: 账号管理
  * @ClassName: Manager  
@@ -17,7 +21,8 @@ public class Manager {
 	private String mgContact;
 	private String mgSalt;
 	private String mgCode;
-	private String createTime;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:dd", timezone = "GMT+8")
+	private Date createTime;
 	public String getMgAccount() {
 		return mgAccount;
 	}
@@ -72,10 +77,10 @@ public class Manager {
 	public void setMgCode(String mgCode) {
 		this.mgCode = mgCode;
 	}
-	public String getCreateTime() {
+	public Date getCreateTime() {
 		return createTime;
 	}
-	public void setCreateTime(String createTime) {
+	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
 	

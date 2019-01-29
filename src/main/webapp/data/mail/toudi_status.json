@@ -1,0 +1,19 @@
+{
+	"returnCode": "0000",
+	"returnMessage": "success",
+	"beans":[
+		{
+			"text":"触发",
+			"value":"1001"
+		},
+		{
+			"text":"批量",
+			"value":"1002"
+		},
+		{
+		
+			"text":"邮件",
+			"value":"1003"
+		}
+	]
+}

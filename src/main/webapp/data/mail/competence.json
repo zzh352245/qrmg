@@ -1,0 +1,38 @@
+{
+  "busiCode": null,
+  "opId": null,
+  "phone": null,
+  "returnCode": "0",
+  "returnMessage": null,
+  "bean": {
+    "total": "310468"
+  },
+  "beans": [
+    {
+    "id":"1",
+    "permissionname": "权限名称",
+    "permissiondescription": "权限描述"
+  },
+    {
+      "id":"2",
+      "permissionname": "华为荣耀",
+      "permissiondescription": "华为荣耀"
+    },
+    {
+      "id":"3",
+      "permissionname": "华为荣耀",
+      "permissiondescription": "华为荣耀"
+    },
+    {
+      "id":"4",
+      "permissionname": "华为荣耀",
+      "permissiondescription": "华为荣耀"
+    },
+    {
+      "id":"5",
+      "permissionname": "华为荣耀",
+      "permissiondescription": "华为荣耀"
+    }
+  ],
+  "object": null
+}

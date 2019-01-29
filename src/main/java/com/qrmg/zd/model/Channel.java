@@ -1,5 +1,9 @@
 package com.qrmg.zd.model;
 
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * @Description: 渠道
  * @ClassName: Channel  
@@ -16,10 +20,12 @@ public class Channel {
 	private String channelQrcode;
 	private String channelQrcodeType;
 	private String channelLinkUrl;
-	private String createTime;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:dd", timezone = "GMT+8")
+	private Date createTime;
 	private String createMg;
 	private String updateMg;
-	private String updateTime;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:dd", timezone = "GMT+8")
+	private Date updateTime;
 	public String getChannelQrcodeType() {
 		return channelQrcodeType;
 	}
@@ -68,10 +74,10 @@ public class Channel {
 	public void setChannelLinkUrl(String channelLinkUrl) {
 		this.channelLinkUrl = channelLinkUrl;
 	}
-	public String getCreateTime() {
-		return createTime.replace(".0", "");
+	public Date getCreateTime() {
+		return createTime;
 	}
-	public void setCreateTime(String createTime) {
+	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
 	public String getCreateMg() {
@@ -86,10 +92,10 @@ public class Channel {
 	public void setUpdateMg(String updateMg) {
 		this.updateMg = updateMg;
 	}
-	public String getUpdateTime() {
-		return updateTime.replace(".0", "");
+	public Date getUpdateTime() {
+		return updateTime;
 	}
-	public void setUpdateTime(String updateTime) {
+	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
 	

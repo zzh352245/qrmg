@@ -1,0 +1,125 @@
+{
+  "busiCode": null,
+  "opId": null,
+  "phone": null,
+  "returnCode": "0",
+  "returnMessage": null,
+  "bean": {},
+  "beans": [],
+  "object": [
+     {
+      "tMenu": [
+      {
+          "menuId": "111",
+          "url": "../index/index.html",
+          "menuName": "首页"
+        },
+        {
+          "menuId": "111",
+          "url": "../template/templateList.html",
+          "menuName": "邮件模板列表"
+        },
+        {
+          "menuId": "111",
+          "url": "../graph/graphList.html",
+          "menuName": "图形模板列表"
+        },{
+          "menuId": "111",
+          "url": "../recipients/recipientsList.html",
+          "menuName": "收件人列表"
+        }
+      ],
+      "menuId": "101",
+      "url": "../index/index.html",
+      "menuName": "模板管理"
+    },
+    {
+      "tMenu": [
+      {
+          "menuId": "111",
+          "url": "../resolotionCon/resolotionConList.html",
+          "menuName": "解析配置"
+        },
+        {
+          "menuId": "111",
+          "url": "../parsingtask/parsingtaskList.html",
+          "menuName": "解析任务"
+        }
+        
+      ],
+      "menuId": "101",
+      "url": "",
+      "menuName": "解析管理"
+    }, 
+    {
+      "tMenu": [
+        {
+          "menuId": "111",
+          "url": "../classify/classifyList.html",
+          "menuName": "分类列表"
+        },
+        {
+          "menuId": "111",
+          "url": "../business/businessList.html",
+          "menuName": "业务列表"
+        },{
+          "menuId": "111",
+          "url": "../task/taskList.html",
+          "menuName": "投递任务列表"
+        }
+      ],
+      "menuId": "101",
+      "url": "",
+      "menuName": "业务管理"
+    },
+    {
+      "tMenu": [
+        {
+          "menuId": "111",
+          "url": "../dataCount/countList.html",
+          "menuName": "投递数据统计"
+        }
+      ],
+      "menuId": "101",
+      "url": "",
+      "menuName": "数据管理"
+    },
+    {
+      "tMenu": [
+        {
+          "menuId": "111",
+          "url": "../user/userList.html",
+          "menuName": "用户列表"
+        },
+        {
+          "menuId": "111",
+          "url": "../role/roleList.html",
+          "menuName": "角色列表"
+        },
+        {
+          "menuId": "111",
+          "url": "../competence/competenceList.html",
+          "menuName": "权限列表"
+        },
+        {
+          "menuId": "111",
+          "url": "../service/serviceList.html",
+          "menuName": "服务列表"
+        },
+        {
+          "menuId": "111",
+          "url": "../proservice/proserviceList.html",
+          "menuName": "服务商列表"
+        },
+        {
+          "menuId": "111",
+          "url": "../interface/interfaceList.html",
+          "menuName": "接口列表"
+        }
+      ],
+      "menuId": "101",
+      "url": "",
+      "menuName": "系统管理"
+    }
+  ]
+}

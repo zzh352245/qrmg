@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ai.frame.bean.OutputObject;
@@ -67,6 +68,45 @@ public class PersonController {
 		map.put("channelCode", channel);
 		output.setBean(channelService.getChannel(map));
 		output.setReturnCode("0");
+		return output;
+	}
+	
+	/**
+	 * @Description: 获取用户列表
+	 * @author zz
+	 * @date 2019年1月24日 上午9:42:27
+	 * @return 
+	 * @param
+	 */
+	@ResponseBody
+	@RequestMapping(value="/queryPersonList", method=RequestMethod.GET)
+	public OutputObject queryPersonList(HttpServletRequest request){
+		OutputObject output = new OutputObject();
+		String name = request.getParameter("userName");
+		String channel = request.getParameter("channelCode");
+		String start = request.getParameter("start");
+		String length = request.getParameter("length");
+		if(StringUtil.isEmpty(start) || StringUtil.isEmpty(length)){
+			output.setReturnCode("9999");
+			output.setReturnMessage("参数格式不正确！");
+			return output;
+		}
+		try {
+			Integer.parseInt(start);
+			Integer.parseInt(length);
+		} catch (NumberFormatException e) {
+			output.setReturnCode("9999");
+			output.setReturnMessage("分页格式不正确！");
+			return output;
+		}
+		Map<String, String> map = new HashMap<>();
+		map.put("channelCode", channel);
+		map.put("start", start);
+		map.put("length", length);
+		if(StringUtil.isNotEmpty(name)){
+			map.put("userName", "%" + name + "%");
+		}
+		output = personService.queryPerson(map);
 		return output;
 	}
 	

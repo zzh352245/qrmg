@@ -1,0 +1,48 @@
+{
+  "busiCode": null,
+  "opId": null,
+  "phone": null,
+  "returnCode": "0",
+  "returnMessage": null,
+  "bean": {
+    "total": "310468"
+  },
+  "beans": [
+    {
+    "id": "asdasda",
+    "businessid":"策略名称",
+    "Decompressiontype": "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "pressionPassword":"1",
+    "Md5":"asdasl",
+    "Path":"../../asd.url",
+    "username":"asdasd"
+  },
+    {
+      "id": "asdasda",
+      "businessid":"策略名称",
+      "Decompressiontype": "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "pressionPassword":"1",
+      "Md5":"asdasl",
+      "Path":"../../asd.url",
+      "username":"asdasd"
+    },{
+      "id": "asdasda",
+      "businessid":"策略名称",
+      "Decompressiontype": "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "pressionPassword":"1",
+      "Md5":"asdasl",
+      "Path":"../../asd.url",
+      "username":"asdasd"
+    },{
+      "id": "asdasda",
+      "businessid":"策略名称",
+      "Decompressiontype": "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "pressionPassword":"1",
+      "Md5":"asdasl",
+      "Path":"../../asd.url",
+      "username":"asdasd"
+    }
+
+  ],
+  "object": null
+}

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>上传文件</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=8,chrome=1" />
+    <link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon" />
+    <#include "../../tpl/res_css.tpl" />
+    <style>
+    .advUpload {
+        width: 86px;
+        height: 34px;
+        position: absolute;
+        cursor: pointer;
+        opacity: 0;
+        left:77px;
+        font-size: 150px;
+        overflow: hidden;
+        filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    }
+    .search_table{margin-left:15px}
+    /* .t-loading-cmcc-lg { padding:14px 20px 14px 50px; background:#fff url(../../css/images/cmcc_loading_lg.gif) no-repeat 12px 8px; font-size: 14px;margin:25% 44%} */
+    </style>
+</head>
+
+<body>
+	<div class="container">
+	    <div class="breadcrumb"></div>
+	    <div class="formItem">
+		    <div class="titleArea">
+		        <h2 style="float: left">邮件配置管理<em>></em>上传文件素材管理<em>></em>上传文件</h2>
+		    	<a class="smallBtn BGblue ft-14 mg_l_10" href="javascript:;" onclick="abolish();">返回</a>
+		    </div>
+		</div>
+	    <form class="record-search-form record-search-min record-search-form-border" id="form1" name="form1" method="post" enctype="multipart/form-data">
+	                <table class="search_table" cellpadding="0" cellspacing="0" border="0">
+	                    <tr>
+	                        <td width="">
+	                            <label class="description">文件类型</label>
+	                        </td>
+	                        <td width="">
+	                            <select class="FormInputText inputWidth"  name="type" id="type">
+	                                <option value="1">图片</option>
+	                                <option value="2">文本</option>
+	                                <option value="3">视频</option>
+	                            </select>
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                        <td width="">
+	                            <label class="description">业务类型</label>
+	                        </td>
+	                        <td width="">
+	                            <select class="FormInputText inputWidth" name="busi_type" id="busi_type">
+	                                <option value="2">模板资源</option>
+	                                <option value="1">系统资源</option>
+	                                <option value="3">其他资源</option>
+	                            </select>
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                        <td width="">
+	                            <label class="description">上传文件</label>
+	                        </td>
+	                        <td enctype="multipart/form-data" method="post" id="uploadForms" class="uploadForm">
+	                        	<!-- <img id="tempimg" dynsrc="" src="" style="display:none" />   -->
+	                            <input type="file" name="upload" class="file advUpload advUploadWidth" id="uploadForm" value="选择文件"  onchange="fileChange(this)"/>
+	                            <div class="uploadStyle advUploadWidth" >上传文件</div>
+	                        </td>
+	                        <td>
+	                        	<!-- <input type="text" disabled="disable" id="fileName" name="fileName"> -->
+	                        	<div  id="fileName" name="fileName"></div>
+	                        </td>
+	                    </tr>
+	                </table>
+	        <div class="amount-bottom">
+	            <table width="100%">
+	                <tr>
+	                    <td>
+	                        <div class="masterBtn normalBtnArea" style="position:relative;">
+	                            <a class="normalBtn BGblue largeBtn" id="tijiao" onclick="tijiao();">提交</a>
+	                            <div class="mb" style="display:none;cursor:pointer;width:120px;height:44px;background:red;position:absolute;left:0;top:0;opacity:0;"></div>
+	                            <a class="normalBtn BGgray largeBtn" href="javascript:;" onclick="abolish();">取消</a>
+	                        </div>
+	                    </td>
+	                </tr>
+	            </table>
+	        </div>
+	    </form>
+	    <div class="footers mg_t_10">
+	        <p> 为了获得最佳操作体验，建议您使用：1280×768及以上分辨率，Chrome浏览器</p>
+	        <p>版权所有© 中移在线服务有限公司</p>
+	    </div>
+	    <!--  加载 -->
+	    <div class="loadMask" style="display:none">
+	        <div class="t-loading-cmcc-lg">
+	            <img src="../../css/images/loadding.gif" alt="">
+	        </div>
+	    </div>
+	</div>
+    <#include "../../tpl/res_js.tpl" />
+    <script type="text/javascript">
+    $(function() {});
+    function tijiao() {
+        var type = $("#type").val();
+        var busi_type = $("#busi_type").val();
+        if (type == "") {
+            Util.dialog.msg("请选择文件类型");
+            return false;
+        }
+        var s = document.getElementById('uploadForm');
+        if (s.value != '') {
+            $(".loadMask").show();
+        }
+        if (busi_type == "") {
+            Util.dialog.msg("请选择业务类型");
+            return false;
+        }
+        $(".mb").css("display", "bloak");
+        $("input[name='upload'][id='uploadForm']").upload({
+            url: "/mail/front/sh/uploadManger!tijiao?uid=tijiao&type=" + type + "&busi_type=" + busi_type,
+            type: "POST",
+            async: true,
+            cache: false,
+            contentType: false,
+            processData: false,
+            params: {},
+            // 上传完成后, 返回json, text
+            onSend: function(obj, str) {
+                return true;
+            },
+            // 上传之后回调      
+            onComplate: function(data) {
+                var jsonData = eval("(" + data + ")");
+                var code = jsonData.returnCode;
+                $('input[type=file][name="upload"][id="uploadForm"]').wrap('<form>').closest('form').get(0).reset();
+                if (code == 0) {
+                    Util.dialog.msg("上传成功！");
+                    window.location.href = "fileList.html";
+                    $(".loadMask").hide();
+                } else if (code == 1) {
+                    alert(jsonData.returnMessage);
+                    $(".mb").css("display", "none");
+                    $("#fileName").html('');
+                    $(".loadMask").hide();
+                } else {
+                    Util.dialog.msg("操作失败");
+                    $(".mb").css("display", "none");
+                    $(".loadMask").hide();
+                    $("#fileName").html('');
+                }
+            }
+        });
+        $("input[name='upload'][id='uploadForm']").upload("ajaxSubmit");
+    }
+    
+   
+   function fileChange(target) {
+    	var fileName = target.value;
+        //var fileSize = target.files[0].size;
+        var ua = window.navigator.userAgent; 
+        if (ua.indexOf("MSIE")>=1){ 
+        	/* var obj_img = document.getElementById('tempimg');  
+            obj_img.dynsrc = fileName;  
+            var filesize = obj_img.fileSize;  */
+        } else {
+        	var fileSize = target.files[0].size;
+        }
+        var MB = 1024 * 1024;
+        //var size = fileSize / 1024;  
+        //var name = target.files[0].name;
+       // alert(name);
+        $("#fileName").html(fileName);
+        var type = $.trim($("#type").val());
+        if (type == "3") {
+            if (fileSize > (80 * MB)) {
+                Util.dialog.msg("视频文件不能超过80M");
+                target.value = "";
+                return;
+            }
+
+        } else {
+            if (fileSize > (5 * MB)) {
+                Util.dialog.msg("文件不能超过5M");
+                target.value = "";
+                return;
+            }
+
+        }
+    } 
+    function abolish(){
+    	if (confirm("你确定要取消吗？") == true) {
+            window.location.href = 'fileList.html';
+        }
+    }
+    </script>
+</body>
+
+</html>

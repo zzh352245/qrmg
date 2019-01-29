@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>用户列表</title>
+		<#include "../../tpl/res_css.tpl" />
+	</head>
+	<body>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				用户列表
+				<span class="pull-right">
+					<!-- <span class="fa fa-code"></span> -->
+				</span>
+			</div>
+		</div>
+		<div class="panel-body">
+			<form action="" method="" id="J_formSearch" name="J_formSearch">
+				<table class="search_table" cellpadding="0" cellspacing="0" border="0" width="60%">
+					<tr>
+						<td width="50">
+							<label class="description">用户姓名</label>
+						</td>
+						<td width="150">
+							<input class="form-control inputText" name="userName" id="userName" type="text" maxlength="255" value="" />
+						</td>
+						<td width="50">
+							<label class="description">渠道等级</label>
+						</td>
+						<td width="150">
+							<select class="inputText form-control">
+								<option>一级渠道</option>
+								<option>二级渠道</option>
+							</select>
+							<!-- <input class="form-control inputText" name="phoneNum" id="phoneNum" type="text" maxlength="255" value="" /> -->
+						</td>
+						<td width="60">
+							<label class="description">创建时间</label>
+						</td>
+						<td width="315">
+							<input id="d11" type="text" name="starttime" class="text Wdate starttime" onClick="WdatePicker()" /> -
+							<input id="d11" type="text" name="endtime" class="text Wdate endtime" onClick="WdatePicker()" />
+						</td>
+						<td width="90">
+							<a class="btn btn-warning" href="javascript:;" onclick="query()" a_code="user_query"><i></i>查询</a>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<div class="mg_M_20">
+			<table class="table table-bordered table-condensed">
+				<thead>
+					<tr class="info">
+						<th width="">用户姓名</th>
+						<th width="">用户手机号</th>
+						<th width="">登记渠道名称</th>
+						<th width="">子业务类型</th>
+						<th width="">登记时间</th>
+					</tr>
+				</thead>
+				<tbody id="J_tabletpl"></tbody>
+			</table>
+		</div>
+		<!--翻页及功能按钮区域开始-->
+		<DIV class="amount-bottom">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="gridBottom">
+				<tr>
+					<td>
+						<DIV class="fn-clear action-other  action-other-show " style="width:800px">
+							<DIV id="Pagination" class="page pagination fn-right"> </DIV>
+							<DIV class="fn-right fn-pt6 fn-pr10"></DIV>
+						</DIV>
+					</td>
+				</tr>
+			</table>
+		</DIV>
+		<#include "../../tpl/res_js.tpl" />
+		<script id="T_tabletpl" type="text/x-handlebars-template">
+			{{#if beans}} {{#each beans}}
+				<tr>
+					<td align="center">{{provinceName}}</td>
+					<td align="center">{{provinceName}}</td>
+					<td align="center">{{createTime}}</td>
+					<td width="90" align="center">
+						<div class="gridRowBtn">
+							<a class="item-text" href="javascript:;" onclick="edit('{{id}}','{{start}}','{{limit}}')" a_code="user_edit">编辑</a>
+							<a class="item-text" href="javascript:;" onclick="del('{{id}}','{{state}}','{{start}}','{{limit}}')" a_code="user_del">删除</a>
+							<a class="item-text" href="javascript:;" onclick="resetPSW('{{id}}','{{start}}','{{limit}}')" a_code="user_resetPSW">重置密码</a>
+						</div>
+					</td>
+				</tr>
+			{{/each}} {{else}}
+				<tr>
+					<td colspan="10">
+						<div class="ui-tips-box tipsBox">
+							<div class="ui-icon-noData"></div>
+							<div class="ui-tips-text">暂无数据记录！</div>
+						</div>
+					</td>
+				</tr>
+				{{/if}}
+		</script>
+		<script>
+			var G_params = {
+				url: "http://172.18.64.67:28080/qrmg/person/queryPersonList?start=0&length=10",
+				searchformId: "J_formSearch",
+				items_per_page: 15, // 每页数     @param : limit
+				//limit:1,
+				page_index: 0, //当前页  @param : start
+				//  start:0,
+				pagination: "Pagination", //分页id
+				tabletpl: "T_tabletpl", //表格模板
+				tablewrap: "J_tabletpl" //表格容器
+			};
+			$(function() {
+				query();
+				//全选 
+				var flag = true;
+				$("#selectAll").change(function() {
+					if (flag) {
+						$("input[name='checkbox']").attr("checked", "check");
+						flag = false;
+					} else {
+						$("input[name='checkbox']").attr("checked", false);
+						flag = true;
+					}
+				});
+				var myTemplate = Handlebars.compile($("#T_tabletpl").html());
+				//注册一个比较大小的Helper,判断v1是否大于v2
+				Handlebars.registerHelper({
+					compare: function(v1, v2, options) {
+						if (v1 == v2) {
+							//满足添加继续执行
+							return options.fn(this);
+						} else {
+							//不满足条件执行{{else}}部分
+							return options.inverse(this);
+						}
+					},
+					formateDate: function(timeStr) {
+						if (Object.prototype.toString.call(timeStr) === "[object String]" && timeStr.indexOf(".") > -1) {
+							return timeStr.split('.')[0]
+						} else {
+							return "";
+						}
+
+					}
+				});
+			})
+
+			function query() {
+				var str = $("#J_formSearch").serialize();
+				Util.pagination(0, true, $.extend({
+					pageCallback: buttonCtrl
+				}, G_params), str);
+			}
+		</script>
+
+		</div>
+	</body>
+</html>

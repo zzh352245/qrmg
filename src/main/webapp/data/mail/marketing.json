@@ -1,0 +1,51 @@
+{
+  "busiCode": null,
+  "opId": null,
+  "phone": null,
+  "returnCode": "0",
+  "returnMessage": null,
+  "bean": {"total": "5"},
+  "beans": [
+    {
+      "id": "1",
+      "marketurl": "2",
+      "path": "s",
+      "createtime": "2015-08-19 19:33:42.0",
+      "description": "邮箱模板模板",
+      "name": "邮箱模板",
+    },
+    {
+      "id": "1",
+      "marketurl": "2",
+      "path": "s",
+      "createtime": "2015-08-19 19:33:42.0",
+      "description": "邮箱模板模板",
+      "name": "邮箱模板",
+    },
+    {
+      "id": "1",
+      "marketurl": "2",
+      "path": "s",
+      "createtime": "2015-08-19 19:33:42.0",
+      "description": "邮箱模板模板",
+      "name": "邮箱模板",
+    },
+    {
+      "id": "1",
+      "marketurl": "2",
+      "path": "s",
+      "createtime": "2015-08-19 19:33:42.0",
+      "description": "邮箱模板模板",
+      "name": "邮箱模板",
+    },
+    {
+      "id": "1",
+      "marketurl": "2",
+      "path": "s",
+      "createtime": "2015-08-19 19:33:42.0",
+      "description": "邮箱模板模板",
+      "name": "邮箱模板",
+    }
+  ],
+  "object": null
+}
