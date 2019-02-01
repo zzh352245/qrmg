@@ -20,7 +20,7 @@ $(function(){
 	})
 	$.ajax({
 		type: "GET",
-		url: "http://172.18.64.67:28080/qrmg/person/queryPersonList?start=1&length=10",
+		url: "person/queryPersonList?start=1&length=10",
 		dataType: "json",
 		success: function(data) {
 	

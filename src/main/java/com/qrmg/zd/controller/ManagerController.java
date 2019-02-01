@@ -191,8 +191,7 @@ public class ManagerController {
 		String channelLinkUrl = request.getParameter("channelLinkUrl");
 		String createMg = request.getParameter("mgName");
 		String type = request.getParameter("type");
-		if(StringUtil.isEmpty(channelLevel) || StringUtil.isEmpty(channelParentCode)
-				|| StringUtil.isEmpty(channelName)
+		if(StringUtil.isEmpty(channelLevel) || StringUtil.isEmpty(channelName)
 				|| StringUtil.isEmpty(createMg) || StringUtil.isEmpty(type)){
 			outputObj.setReturnCode("9999");
 			outputObj.setReturnMessage("参数格式不正确！");
@@ -219,7 +218,6 @@ public class ManagerController {
 		channel.setChannelLevel(channelLevel);
 		channel.setChannelParentCode(channelParentCode);
 		channel.setChannelName(channelName);
-		channel.setChannelQrcode(channelQrcode);
 		channel.setChannelLinkUrl(channelLinkUrl);
 		channelService.addChannel(channel);
 		outputObj.setReturnCode("0");
@@ -245,11 +243,12 @@ public class ManagerController {
 		String channelLevel = request.getParameter("channelLevel");
 		String channelLinkUrl = request.getParameter("channelLinkUrl");
 		String channelCode = request.getParameter("channelCode");
+		String updateMg = request.getParameter("updateMg");
 		String type = request.getParameter("type");//1-修改了链接地址 0-未修改链接地址
-		if(StringUtil.isEmpty(id) || StringUtil.isEmpty(channelParentCode)
+		if(StringUtil.isEmpty(id) || StringUtil.isEmpty(updateMg)
 				|| StringUtil.isEmpty(channelQrcode) || StringUtil.isEmpty(channelName)
 				|| StringUtil.isEmpty(channelLevel) || StringUtil.isEmpty(channelCode)
-				|| StringUtil.isEmpty(type)){
+				|| StringUtil.isEmpty(type) || StringUtil.isEmpty(channelLinkUrl)){
 			outputObj.setReturnCode("9999");
 			outputObj.setReturnMessage("参数格式不正确！");
 			return outputObj;
@@ -277,36 +276,46 @@ public class ManagerController {
 		channel.setChannelLevel(channelLevel);
 		channel.setChannelParentCode(channelParentCode);
 		channel.setChannelName(channelName);
+		channel.setChannelLinkUrl(channelLinkUrl);
+		channel.setUpdateMg(updateMg);
+		channel.setChannelCode(channelCode);
 		channelService.updateChannel(channel);
 		outputObj.setReturnCode("0");
-		outputObj.setReturnMessage("添加成功！");
+		outputObj.setReturnMessage("修改成功！");
 		return outputObj;
 	}
 	
 	@RequestMapping("/upload")
-	public String upload(MultipartFile file,HttpServletRequest request,Model model) throws Exception{
-	  //保存数据库的路径
-	  String sqlPath = null; 
-	  //定义文件保存的本地路径
-      String localPath="F:\\codeImg\\";
-      //定义 文件名
-      String filename=null;  
-      if(!file.isEmpty()){  
-          //生成uuid作为文件名称  
-          String uuid = UUID.randomUUID().toString().replaceAll("-","");  
-          //获得文件类型（可以判断如果不是图片，禁止上传）  
-          String contentType=file.getContentType();  
-          //获得文件后缀名 
-          String suffixName=contentType.substring(contentType.indexOf("/")+1);
-          //得到 文件名
-          filename=uuid+"."+suffixName; 
-          //文件保存路径
-          file.transferTo(new File(localPath+filename));  
-      }
-      //把图片的相对路径保存至数据库
-      sqlPath = "/images/"+filename;
-      System.out.println(sqlPath);
-	  return sqlPath;
+	public OutputObject upload(MultipartFile file,HttpServletRequest request,Model model) throws Exception{
+		OutputObject outputObj = new OutputObject();
+		//保存数据库的路径
+		String sqlPath = null; 
+		//定义文件保存的本地路径
+		String localPath="F:\\codeImg\\";
+		//定义 文件名
+		String filename=null;  
+		if(!file.isEmpty()){  
+			//生成uuid作为文件名称  
+			String uuid = UUID.randomUUID().toString().replaceAll("-","");  
+			//获得文件类型（可以判断如果不是图片，禁止上传）  
+			String contentType=file.getContentType();  
+			//获得文件后缀名 
+			String suffixName=contentType.substring(contentType.indexOf("/")+1);
+			//得到 文件名
+			filename=uuid+"."+suffixName; 
+			//文件保存路径
+			file.transferTo(new File(localPath+filename));  
+		}
+		//把图片的相对路径保存至数据库
+		sqlPath = "/codeImg/"+filename;
+		System.out.println(sqlPath);
+		String linkUrl = QRUtil.readQR(localPath+filename);
+		Map<String, String> map = new HashMap<>();
+		map.put("imagePath", localPath+filename);
+		map.put("linkUrl", linkUrl);
+		outputObj.setBean(map);
+		System.out.println(map);
+		return outputObj;
 	}
 	
 }

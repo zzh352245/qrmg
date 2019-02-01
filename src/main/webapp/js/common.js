@@ -9,7 +9,7 @@ $(function() {
 	}
 	/* 验证码刷新*/
 	function changeImg() {
-		$("#identifyingValue").attr('src', src = 'http://172.18.64.67:28080/qrmg/front/mana/loginCode' + Math.random());
+		$("#identifyingValue").attr('src', src = 'front/mana/loginCode' + Math.random());
 	}
 	$("#userName").blur(function() {
 		if ($(this).val() == '') {
@@ -47,7 +47,7 @@ $(function() {
 			$(".reg_error3").html('请输入验证码').removeClass("fn-hide");
 		};
 		$.ajax({
-			url: "http://172.18.64.67:28080/qrmg/front/mana/account/login?userName=admin&userPass=admin.123",
+			url: "front/mana/account/login?userName=admin&userPass=admin.123",
 			dataType: "json",
 			type: "get",
 			async: false,
