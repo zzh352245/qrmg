@@ -2,7 +2,7 @@
  * Created by Administrator on 2016/8/4.
  */
 
-var userName, phoneNum, currentID,channelCode, demo, flag = true;
+var userName, phoneNum, currentID, flag = true;
 function Noticeload() {
     $('#table').bootstrapTable({
         method: "get",
@@ -44,17 +44,6 @@ function Noticeload() {
                 title: '手机号码',
                 field: 'userPhone',
                 align: 'center'
-            },
-           
-            {
-                title: '操作',
-                field: '',
-                align: 'center',
-                formatter: function (value, row) {
-                    var e = '<button button="#" mce_href="#" onclick="delNotice(\'' + row.WORKRECORDID + '\')">删除</button> '
-                    var d = '<button button="#" mce_href="#" onclick="editNotice(\'' + row.WORKRECORDID + '\')">编辑</button> ';
-                    return e + d;
-                }
             }
         ]
     });
@@ -64,24 +53,18 @@ function getNoticeTableData() {
     if (flag) {
         userName = "";
         phoneNum = "";
-        demo = "";
-        channelCode="";
         flag = false;
     } else {
         userName = $("#userName").val();
         phoneNum = $("#phoneNum").val();
-        demo = $("#demo").val();
-        channelCode = $("#channelCode option:selected").val();
     }
     $.ajax({
         type: "GET",
-        url: "/qrmg/person/queryPersonList?start=0&length=20",
+        url: "/qrmg/person/queryPersonList?",
         dataType: "json",
         data:{
-        	user_name: userName,
-        	user_phone: phoneNum,
-        	create_time: demo,
-        	channel_code: channelCode
+        	userName: userName,
+        	phoneNumber: phoneNum
         },
         success: function (result) {
             if (result.object) {
