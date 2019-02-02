@@ -20,7 +20,6 @@
 		SELECT id,user_name,user_phone,(SELECT channel_name FROM qrmg_channel WHERE channel_level='2' AND channel_code=a.`channel_code`) channel_code,
 		create_time FROM qrmg_person a
 		<include refid="personWhere" />
-		limit ${start},${length}
 	</select>
     <select id="getCountPerson" parameterType="java.util.Map"
 		resultType="java.lang.Integer">

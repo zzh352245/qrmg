@@ -67,7 +67,6 @@
 		CASE mg_code WHEN '1' THEN '超级管理员' ELSE '普通操作员' END mg_code,
 		create_time FROM qrmg_manager
 		<include refid="managerWhere" />
-		limit ${start},${length}
 	</select>
 	<select id="getCountManager" parameterType="java.util.Map"
 		resultType="java.lang.Integer">

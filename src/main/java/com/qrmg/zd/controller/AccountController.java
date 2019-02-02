@@ -185,27 +185,10 @@ public class AccountController {
 	@RequestMapping(value="/queryManager", method=RequestMethod.GET)
 	public OutputObject queryManager(HttpServletRequest request){
 		OutputObject outputObj = new OutputObject();
-		String start = request.getParameter("start");
-		String length = request.getParameter("length");
-		if(StringUtil.isEmpty(start) || StringUtil.isEmpty(length)){
-			outputObj.setReturnCode("9999");
-			outputObj.setReturnMessage("参数格式不正确！");
-			return outputObj;
-		}
-		try {
-			Integer.parseInt(start);
-			Integer.parseInt(length);
-		} catch (NumberFormatException e) {
-			outputObj.setReturnCode("9999");
-			outputObj.setReturnMessage("分页格式不正确！");
-			return outputObj;
-		}
 		String mgCode = request.getParameter("code");
 		String mgName = request.getParameter("name");
 		Map<String, String> map = new HashMap<>();
 		map.put("mgCode", mgCode);
-		map.put("start", start);
-		map.put("length", length);
 		if(StringUtil.isNotEmpty(mgName)){
 			map.put("mgName", "%" + mgName + "%");
 		}

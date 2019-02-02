@@ -75,7 +75,7 @@ function getNoticeTableData() {
     }
     $.ajax({
         type: "GET",
-        url: "/qrmg/person/queryPersonList?start=0&length=10",
+        url: "/qrmg/person/queryPersonList?start=0&length=20",
         dataType: "json",
         data:{
         	user_name: userName,

@@ -26,7 +26,6 @@
 		resultMap="channelResultMap">
 		SELECT * FROM qrmg_channel
 		<include refid="channelWhere" />
-		limit ${start},${length}
 	</select>
 	<select id="getCountChannel" parameterType="java.util.Map"
 		resultType="java.lang.Integer">

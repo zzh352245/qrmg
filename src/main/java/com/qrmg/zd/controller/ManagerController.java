@@ -119,7 +119,7 @@ public class ManagerController {
 	}
 	
 	/**
-	 * @Description: 查询渠道列表。type=0不分页
+	 * @Description: 查询渠道列表
 	 * @author zz
 	 * @date 2019年1月23日 下午4:26:44
 	 * @return 
@@ -134,42 +134,15 @@ public class ManagerController {
 		String channelName = request.getParameter("channelName");
 		String createMg = request.getParameter("createMg");
 		String channelQrcodeType = request.getParameter("channelQrcodeType");
-		String start = request.getParameter("start");
-		String length = request.getParameter("length");
-		String type = request.getParameter("type");
-		if(StringUtil.isEmpty(type)){
-			outputObj.setReturnCode("9999");
-			outputObj.setReturnMessage("参数格式不正确！");
-			return outputObj;
+		if(StringUtil.isNotEmpty(createMg)){
+			map.put("createMg", "%" + createMg + "%");
 		}
-		if(StringUtils.equals("0", type)){
-			outputObj = channelService.queryChannel(map);
-		}else{
-			if(StringUtil.isEmpty(start) || StringUtil.isEmpty(length)){
-				outputObj.setReturnCode("9999");
-				outputObj.setReturnMessage("参数格式不正确！");
-				return outputObj;
-			}
-			try {
-				Integer.parseInt(start);
-				Integer.parseInt(length);
-			} catch (NumberFormatException e) {
-				outputObj.setReturnCode("9999");
-				outputObj.setReturnMessage("分页格式不正确！");
-				return outputObj;
-			}
-			if(StringUtil.isNotEmpty(createMg)){
-				map.put("createMg", "%" + createMg + "%");
-			}
-			if(StringUtil.isNotEmpty(channelName)){
-				map.put("channelName", "%" + channelName + "%");
-			}
-			map.put("channelQrcodeType", channelQrcodeType);
-			map.put("channelLevel", channelLevel);
-			map.put("start", start);
-			map.put("length", length);
-			outputObj = channelService.queryChannelList(map);
+		if(StringUtil.isNotEmpty(channelName)){
+			map.put("channelName", "%" + channelName + "%");
 		}
+		map.put("channelQrcodeType", channelQrcodeType);
+		map.put("channelLevel", channelLevel);
+		outputObj = channelService.queryChannelList(map);
 		return outputObj;
 	}
 	
