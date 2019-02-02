@@ -37,7 +37,7 @@ function Noticeload() {
             },
             {
                 title: '登记时间',
-                createTime: 'createTime',
+                field: 'createTime',
                 align: 'center'
             },
             {
