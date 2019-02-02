@@ -16,16 +16,9 @@
     	<div class="hd-wrap ue-clear">
         	<div class="top-light"></div>
             <h1 class="logo"></h1>
-           <!-- <div class="login-info ue-clear">
-                <div class="welcome ue-clear"><span>欢迎您,</span><a href="javascript:void(0)" class="user-name">Admin</a></div>
-                <div class="login-msg ue-clear">
-                    <a href="javascript:void(0)" class="msg-txt">消息</a>
-                    <a href="javascript:void(0)" class="msg-num">10</a>
-                </div>
-            </div> -->
             <div class="toolbar ue-clear">
                 <a href="javascript:;" class="home-btn userShow" target="right"></a>
-                <a href="javascript:void(0)" class="home-btn1" target="right" onclick="openlayer()">修改账号</a>
+                <a href="javascript:void(0)" class="home-btn1" target="right" onclick="openlayer()">修改密码</a>
                 <a href="javascript:void(0)" class="quit-btn exit home-btn">退出</a>
             </div>
         </div>
@@ -47,14 +40,6 @@
         </div>
     </div>
     <div id="ft" class="foot_div">
-<!-- 
-            <span>xxxxxx</span>
-            <em>Office&nbsp;System</em>
-
-        <div class="ft-right">
-            <span>Automation</span>
-            <em>V1.0&nbsp;2016</em>
-        </div> -->
     </div>
 </div>
 <div class="exitDialog">
@@ -80,6 +65,7 @@
 <script src="../js/layer_v2.1/layer/layer.js"></script>
 <script type="text/javascript">
 var userName = localStorage.getItem('userName');
+var account = localStorage.getItem('account');
 if(userName == null || userName == ''){
 	window.location.href = "../login.html";
 }else{
@@ -92,11 +78,9 @@ if(userName == null || userName == ''){
             shadeClose: false,
             shade: 0.5,
             skin: 'layui-layer-rim',
-//            maxmin: true,
             closeBtn:2,
             area: ['35%', '40%'],
             content: 'password.html'
-            //iframe的url
         });
     }
 </script>

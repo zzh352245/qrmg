@@ -38,6 +38,7 @@ public class ManagerServiceImpl implements ManagerService {
 		if(islogin){
 			returnMap.put("mgCode", manager.getMgCode());
 			returnMap.put("mgName", manager.getMgName());
+			returnMap.put("mgAccount", manager.getMgAccount());
 		}
 		return returnMap;
 	}

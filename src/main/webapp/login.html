@@ -96,7 +96,7 @@
 			$(".reg_error3").html('请输入验证码').removeClass("fn-hide");
 		};
 		$.ajax({
-			url: "front/mana/account/login?userName=admin&userPass=admin.123",
+			url: "front/mana/account/login?",
 			dataType: "json",
 			type: "get",
 			async: false,
@@ -110,8 +110,11 @@
 				if(reCode == 0){
 					var mgCode = json.bean.mgCode;
 					var mgName = json.bean.mgName;
+					var mgAccount = json.bean.mgAccount;
 					localStorage.clear();
-					localStorage.setItem("userName", mgName)
+					localStorage.setItem("userName", mgName);
+					localStorage.setItem("account", mgAccount);
+					localStorage.setItem("acode", mgCode)
 					window.location.href = "../qrmg/module/homePage.html";
 					
 				}else if(reCode == '9999'){
