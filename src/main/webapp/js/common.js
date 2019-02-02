@@ -1,71 +1,109 @@
-$(function() {
-	/* 登录 */
-	document.onkeydown = function(e) {
-		var theEvent = window.event || e;
-		var code = theEvent.keyCode || theEvent.which;
-		if (code == 13) {
-			$(".userLogBtn").click();
-		}
-	}
-	/* 验证码刷新*/
-	function changeImg() {
-		$("#identifyingValue").attr('src', src = 'front/mana/loginCode' + Math.random());
-	}
-	$("#userName").blur(function() {
-		if ($(this).val() == '') {
-			$(".reg_error1").html('请输入正确的账号').removeClass("fn-hide");
-		} else {
-			$(".reg_error1").addClass("fn-hide");
-		}
-	});
-	$("#password").blur(function() {
-		if ($(this).val().replace(/\s+/g, "") == '') {
-			$(".reg_error2").html('请输入密码').removeClass("fn-hide");
-		} else {
-			$(".reg_error2").addClass("fn-hide");
-		}
-	})
-	$("#smsCode").blur(function() {
-		if ($(this).val() == '') {
-			$(".reg_error3").html('请输入验证码').removeClass("fn-hide");
-		} else {
-			$(".reg_error3").addClass("fn-hide");
-		}
-	})
-	/* 提交 */
-	$(".userLogBtn").on("click", function() {
-		var userName = $("#userName").val();
-		var password = $("#password").val();
-		var smsCode = $("#smsCode").val();
-		if (userNamereplace(/\s+/g, "") == '') {
-			$(".reg_error1").html('请输入正确的账号').removeClass("fn-hide");
-		};
-		if (password.replace(/\s+/g, "") == '') {
-			$(".reg_error2").html('请输入密码').removeClass("fn-hide");
-		};
-		if (smsCode == '') {
-			$(".reg_error3").html('请输入验证码').removeClass("fn-hide");
-		};
-		$.ajax({
-			url: "front/mana/account/login?userName=admin&userPass=admin.123",
-			dataType: "json",
-			type: "get",
-			async: false,
-			data: {
-				userName: userName,
-				userPass: password,
-				smsCode: smsCode
-			},
-			success: function(json) {
-				var code = json.
 
-
-			},
-			error: function(json) {
-
+$(document).ready(function(){
+	
+	// 去除虚线框（会影响效率）
+	$("a").on('focus',function(){$(this).blur();});
+	
+	
+	$('.file input[type=file]').change(function(e) {
+        $(this).siblings('.text').text($(this).val());
+    });
+	
+	if(!-[1,]){
+		$('input[type=radio]').bind('click',function(){
+			var name = $(this).attr('name');
+			$('input[type=radio]["name="'+ name +']').removeClass('checked');
+			if($(this).prop('checked')){
+				$(this).addClass('checked');
 			}
 		});
+	}
+	if(!!!$('.opt-panel').size() &&!!!$('.system-switch').size()){
+		$(document).click(function(e) {
+			$(top.window.document).find('.opt-panel').hide().end().find('.system-switch').hide();
+			$(top.window.document).find('.more-info').removeClass('active').end().find('.logo-icon').removeClass('active');
+		});
+	}
+	
+	if(!!!$('.more-bab-list').size()){
+		$(document).click(function(e) {
+			$(top.window.document).find('iframe').contents().find('.more-bab-list').hide();
+			$(top.window.document).find('iframe').contents().find('.tab-more').removeClass('active');
+		});	
+	}
+});
 
-	})
 
+function hideElement(currentElement, targetElement, fn) {
+	if (!$.isArray(targetElement)) {
+		targetElement = [ targetElement ];
+	}
+	$(document).on("click.hideElement", function(e) {
+		var len = 0, $target = $(e.target);
+		for (var i = 0, length = targetElement.length; i < length; i++) {
+			$.each(targetElement[i], function(j, n) {
+				if ($target.is($(n)) || $.contains($(n)[0], $target[0])) {
+					len++;
+				}
+			});
+		}
+		if ($.contains(currentElement[0], $target[0])) {
+			len = 1;
+		}
+		if (len == 0) {
+			currentElement.hide();
+			fn && fn(currentElement, targetElement);
+		}
+	});
+};
+
+
+/*
+ *  用来给不支持HTML5 placeholder属性的浏览器增加此功能。
+ *  @param element {String or Object} 需要添加placeholder提示的输入框选择器或者输入框jquery对象。
+ *  @param defualtCss {String} 提示默认的样式class。
+ */
+
+function showRemind(element,defualtCss){
+	if(-[1,]){
+		return false;
+	}
+
+	$(element).each(function(el, i){
+		var placeholder = $(this).attr('placeholder');
+		if(placeholder){
+			$(this).addClass(defualtCss).val(placeholder);
+			$(this).focus(function(e){
+				if($(this).attr('placeholder') === $(this).val()){
+					$(this).val('').removeClass(defualtCss);
+				}
+			});
+
+			$(this).blur(function(e){
+				if($(this).val() === ""){
+					$(this).addClass(defualtCss).val($(this).attr('placeholder'));
+				}
+			});
+		}
+	});
+}
+
+function resize(resizeHandle){
+	var d = document.documentElement;
+	var timer;//避免resize触发多次,影响性能
+	var width = d.clientWidth, height = d.clientHeight;
+	$(top.window).on('resize',function(e){
+		if((width != d.clientWidth || height != d.clientHeight)){
+			width = d.clientWidth, height = d.clientHeight;
+			if(timer){clearTimeout(timer);}
+			timer = setTimeout(function(){
+				resizeHandle();
+			},10);	
+		}
+	});
+	
+}
+
+$(document).click(function(){
+	$(".select-list").hide();
 })

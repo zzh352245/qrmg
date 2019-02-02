@@ -27,7 +27,7 @@
 						<div class="userLog userSmsCode">
 							<input type="text" id="smsCode" maxlength="6" name="smsCode" autocomplete="off" class="login_fields_input"/> 
 							<!-- <canvas id="canvas" width="120" height="45" id="btnSendCode" class="btnSendCode"></canvas> -->
-							<img id="identifyingValue" alt="验证码" src="front/mana/loginCode" class="btnSendCode"/>
+							<img id="identifyingValue" alt="验证码" src="front/mana/loginCode?" class="btnSendCode"/>
 							<span class="btnSendText" id="changeImg">刷新</span>
 							<div class="reg_error3 fn-left fn-red fn-marLeft fn-hide"></div>
 						</div> 
@@ -37,7 +37,93 @@
 			</div>
 		</div>
 	</body>
-	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="js/common.js"></script>
+	<!-- <script type="text/javascript" src="lib/jquery/3.0.0/jquery-3.2.1.min.js"></script> -->
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<!-- <script type="text/javascript" src="js/common.js"></script> -->
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 </html>
+<script type="text/javascript">
+	$(function() {
+	/* 登录 */
+	document.onkeydown = function(e) {
+		var theEvent = window.event || e;
+		var code = theEvent.keyCode || theEvent.which;
+		if (code == 13) {
+			$(".userLogBtn").click();
+		}
+	}
+	
+	/* 验证码刷新*/
+	$("#changeImg").on("click",function(){
+		//$("#identifyingValue").attr('src', src = 'front/mana/loginCode'+Math.random());
+		   var img=$("#identifyingValue")[0];
+	        img.src="front/mana/loginCode?"+new Date().getTime();
+	});
+	
+	$("#userName").blur(function() {
+		if ($(this).val() == '') {
+			$(".reg_error1").html('请输入正确的账号').removeClass("fn-hide");
+		} else {
+			$(".reg_error1").addClass("fn-hide");
+		}
+	});
+	$("#password").blur(function() {
+		if ($(this).val().replace(/\s+/g, "") == '') {
+			$(".reg_error2").html('请输入密码').removeClass("fn-hide");
+		} else {
+			$(".reg_error2").addClass("fn-hide");
+		}
+	})
+	$("#smsCode").blur(function() {
+		if ($(this).val() == '') {
+			$(".reg_error3").html('请输入验证码').removeClass("fn-hide");
+		} else {
+			$(".reg_error3").addClass("fn-hide");
+		}
+	})
+	/* 提交 */
+	$(".userLogBtn").on("click", function() {
+		var userName = $("#userName").val();
+		var password = $("#password").val();
+		var smsCode = $("#smsCode").val();
+		if (userName.replace(/\s+/g, "") == '') {
+			$(".reg_error1").html('请输入正确的账号').removeClass("fn-hide");
+		};
+		if (password.replace(/\s+/g, "") == '') {
+			$(".reg_error2").html('请输入密码').removeClass("fn-hide");
+		};
+		if (smsCode == '') {
+			$(".reg_error3").html('请输入验证码').removeClass("fn-hide");
+		};
+		$.ajax({
+			url: "front/mana/account/login?userName=admin&userPass=admin.123",
+			dataType: "json",
+			type: "get",
+			async: false,
+			data: {
+				userName: userName,
+				userPass: password,
+				vcode: smsCode
+			},
+			success: function(json) {
+				var reCode = json.returnCode;
+				if(reCode == 0){
+					var mgCode = json.bean.mgCode;
+					var mgName = json.bean.mgName;
+					window.location.href = "../qrmg/module/homePage.html?mgName=" + mgName;
+					
+				}else if(reCode == '9999'){
+					alert(json.returnMessage);
+				}
+			},
+			error: function(json) {
+				alert('操作失败');
+			}
+		});
+
+	})
+
+})
+
+	
+</script>
