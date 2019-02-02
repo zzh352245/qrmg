@@ -11,7 +11,7 @@
         .tabe_bot label{width: 70px;text-align: right;font-size: 14px;font-weight: 900;color: #46647e}
         .l_left{float: left}
         .tabe_bot input,.tabe_bot  select{width: 180px;height: 30px;border-radius: 6px;margin:0 20px 0 0;text-indent:1em;border: none;border: 1px #ccc solid}
-        .tabe_btn{width: 60px;height: 30px;background-color: #68b86c;border: none;border-radius: 6px;color: #fff}
+        .tabe_btn{width: 60px;height: 30px;border: none;border-radius: 6px;color: #fff}
     </style>
 		<title>用户管理</title>
 	</head>
@@ -22,17 +22,17 @@
 		</div>
 		<div class="query">
 			<div class="tabe_bot">
-				<div class="l_left"><label>用户姓名：</label><input type="text" placeholder="请输入用户姓名" id="userName"></div>
-				<div class="l_left"><label>手机号码：</label><input type="text" placeholder="请输入手机号码" id="phoneNum"></div>
+				<div class="l_left"><label>用户姓名：</label><input type="text" placeholder="请输入用户姓名" id="userName" name="user_name"></div>
+				<div class="l_left"><label>手机号码：</label><input type="text" placeholder="请输入手机号码" id="phoneNum" name="user_phone"></div>
 				<div class="l_left"><label>渠道等级：</label>
-					<select id="channelCode">
-						<option value="全部">全部</option>
+					<select id="channelCode" name="channel_code">
+						<option value="">全部</option>
 						<option value="一级渠道">一级渠道</option>
 						<option value="二级渠道">二级渠道</option>
 					</select>
 				</div>
 				<!-- <div class="l_left"><label>发布人：</label><input type="text" placeholder="请输入发布人" id="noticePuer"></div> -->
-				<div class="l_left"><label>创建时间：</label><input id="demo" placeholder="输入年月"/></div>
+				<div class="l_left"><label>创建时间：</label><input id="demo" placeholder="输入年月" name="create_time"/></div>
 				<button class="tabe_btn " onclick="getNoticeTableData()">查询</button>
 				<div class="clear"></div>
 			</div>
