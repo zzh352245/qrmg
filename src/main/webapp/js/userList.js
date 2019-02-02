@@ -77,6 +77,12 @@ function getNoticeTableData() {
         type: "GET",
         url: "/qrmg/person/queryPersonList?start=0&length=10",
         dataType: "json",
+        data:{
+        	user_name: userName,
+        	user_phone: phoneNum,
+        	create_time: demo,
+        	channel_code: channelCode
+        },
         success: function (result) {
             if (result.object) {
                 var NoticeTableData = result.object;
