@@ -110,7 +110,9 @@
 				if(reCode == 0){
 					var mgCode = json.bean.mgCode;
 					var mgName = json.bean.mgName;
-					window.location.href = "../qrmg/module/homePage.html?mgName=" + mgName;
+					localStorage.clear();
+					localStorage.setItem("userName", mgName)
+					window.location.href = "../qrmg/module/homePage.html";
 					
 				}else if(reCode == '9999'){
 					alert(json.returnMessage);

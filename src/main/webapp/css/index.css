@@ -20,7 +20,7 @@ h1{ float:left; margin:8px 0 0 20px; width:260px;height: 64px;
 .login-info .login-msg a.msg-num{ display:block;float:left; width:16px; height:9px; margin:6px 0 0 4px; background:url(../images/countbg.png); color:#fff; line-height:9px; font-size:9px; text-align: center;}
 .toolbar{ float:right; margin:20px 14px 0 0;}
 .toolbar a{ float:left; height:42px; line-height:42px;}
-.toolbar a.home-btn{ width:40px; padding-left:46px; background:url(../images/home.png) no-repeat left top; color:#fff; font-size:14px;}
+.toolbar a.home-btn{ width:100px; padding-left:46px; background:url(../images/home.png) no-repeat left top; color:#fff; font-size:14px;}
 .toolbar a.quit-btn{ width:39px; background:url(../images/exit.png) no-repeat left top;}
 .toolbar a.home-btn1{ width:70px; padding-left:36px; background:url(../images/icon03.png) no-repeat left top; color:#fff; font-size:14px;background-size: 38px 38px}
 

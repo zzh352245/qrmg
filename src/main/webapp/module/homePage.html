@@ -24,7 +24,7 @@
                 </div>
             </div> -->
             <div class="toolbar ue-clear">
-                <a href="javascript:;" class="home-btn" target="right">andime</a>
+                <a href="javascript:;" class="home-btn userShow" target="right"></a>
                 <a href="javascript:void(0)" class="home-btn1" target="right" onclick="openlayer()">修改账号</a>
                 <a href="javascript:void(0)" class="quit-btn exit home-btn">退出</a>
             </div>
@@ -79,6 +79,12 @@
 <script type="text/javascript" src="../js/index.js"></script>
 <script src="../js/layer_v2.1/layer/layer.js"></script>
 <script type="text/javascript">
+var userName = localStorage.getItem('userName');
+if(userName == null || userName == ''){
+	window.location.href = "../login.html";
+}else{
+	$(".userShow").html(userName);
+}
     function openlayer(id){
         layer.open({
             type: 2,
