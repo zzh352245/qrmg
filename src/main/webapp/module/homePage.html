@@ -75,11 +75,11 @@
 	<script type="text/javascript">
 		var userName = localStorage.getItem('userName');
 		var account = localStorage.getItem('account');
-		/* 	if (userName == null || userName == '') {
-				window.location.href = "../login.html";
-			} else {
-				$(".userShow").html(userName);
-			} */
+		if (userName == null || userName == '') {
+			window.location.href = "../login.html";
+		} else {
+			$(".userShow").html(userName);
+		} 
 		$(".exit").on("click", function() {
 			var exit = layer.open({
 				id: 1,
