@@ -158,6 +158,7 @@
 				moveType: 1,
 				fixed: false,   
 				scrollbar: false,
+				offset: ['100px', '700px'],
 				area: ['600px', 'auto'],
 				shadeClose: false,
 				moveOut: false,
@@ -178,8 +179,8 @@
 								'</tr>'+
 								'<tr>'+
 									'<td colspan="2">'+
-										'<div class="l_left"><label>连接地址：</label>'+
-											'<input type="text" placeholder="请输入连接地址" class="channelUrl" id="channelUrl" name="channelUrl">'+
+										'<div class="l_left"><label class="channelLabel">连接地址：</label>'+
+											'<textarea rows="3" cols="20" class="channelUrl" id="channelUrl" name="channelUrl"  style="resize:none" ></textarea>'+
 										'</div>'+
 									'</td>'+
 								'</tr>'+
@@ -211,6 +212,13 @@
 					var channelName = $("#channelName",parent.document).val();
 					var channelParent = $("#channelParent",parent.document).children('option:selected').val();
 					var channelUrl = $("#channelUrl",parent.document).val();
+					if(channelName == ''){
+						parent.layer.msg();
+					};
+					if(channelParent == ''){
+						parent.layer.msg();
+					};
+				
 					$.ajax({
 						type: "GET",
 						url: "/qrmg/front/mana/addChannel",
@@ -271,7 +279,7 @@
 						
 					},
 					btn2: function (layero, index){
-						layer.close(witchNotice);
+						parent.layer.close(witchNotice);
 					}
 			 })
 		 }

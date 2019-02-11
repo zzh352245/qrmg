@@ -1,296 +1,349 @@
 <!doctype html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="../css/bootstrap-table.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="../css/base.css" />
-    <link rel="stylesheet" href="../css/info-mgt.css" />
-    <style>
-        .layui-layer-title{background:url(images/righttitlebig.png) repeat-x;font-weight:bold;color:#46647e; border:1px solid #c1d3de;height: 33px;line-height: 33px;}
+	<head>
+		<meta charset="utf-8">
+		<link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<link href="../css/bootstrap-table.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="../css/base.css" />
+		<link rel="stylesheet" href="../css/info-mgt.css" />
+		<style>
+			.layui-layer-title{background:url(images/righttitlebig.png) repeat-x;font-weight:bold;color:#46647e; border:1px solid #c1d3de;height: 33px;line-height: 33px;}
         .tabe_bot label{width: 70px;text-align: right;font-size: 14px;font-weight: 900;color: #46647e}
         .l_left{float: left}
         .tabe_bot input,.tabe_bot  select{width: 180px;height: 30px;border-radius: 6px;margin:0 20px 0 0;border: none;border: 1px #ccc solid}
-        .tabe_btn{width: 60px;height: 30px;background-color: #68b86c;border: none;border-radius: 6px;color: #fff}
+        .tabe_btn{width: 60px;height: 30px;border: none;border-radius: 6px;color: #fff}
         .aucsacc{margin:10px 10px;text-align: center;float: left;}
         .aucsacc input{border: 1px #ccc solid;width: 140px;height: 30px;border-radius: 6px;margin: 0 20px 0 0;text-indent: 1em;}
     </style>
-    <title>账号管理</title>
-</head>
+		<title>账号管理</title>
+	</head>
 
-<body>
-<div class="title"><h2>账号管理</h2></div>
-<div class="query">
-    <div class="tabe_bot">
-        <div class="l_left"><label>姓名：</label><input type="text" placeholder="请输入姓名" id="accouname" name="accouname"></div>
-		<div class="l_left"><label>权限等级：</label>
-			<select id="accoucode">
-				<option value="">全部</option>
-				<option value="1">超级管理员</option>
-				<option value="2">普通管理员</option>
-			</select>
+	<body>
+		<div class="title">
+			<h2>账号管理</h2>
 		</div>
-        <button class="tabe_btn " onclick="getAccouTableData()">查询</button>
-        <button class="tabe_btn " onclick="addaccount()">新增</button>
-        <div class="clear"></div>
-    </div>
-</div>
-<!-- <div class="table-operate ue-clear"> -->
-<!-- </div> -->
-<div class="table-box">
-    <table id="table" class="table_style"></table>
-</div>
-<div class="pagination ue-clear"></div>
-</body>
-<script type="text/javascript" src="../js/jquery.js"></script>
+		<div class="query">
+			<div class="tabe_bot">
+				<div class="l_left"><label>姓名：</label><input type="text" placeholder="请输入姓名" id="accouname" name="accouname"></div>
+				<div class="l_left"><label>权限等级：</label>
+					<select id="accoucode">
+						<option value="">全部</option>
+						<option value="1">超级管理员</option>
+						<option value="2">普通管理员</option>
+					</select>
+				</div>
+				<button class="tabe_btn " onclick="getAccouTableData()">查询</button>
+				<!-- <button class="tabe_btn " >新增</button> -->
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="table-operate ue-clear">
+			<a href="#" class="add addChannel" onclick="addaccount()">添加账号</a>
+		</div>
+		<div class="table-box">
+			<table id="table" class="table_style"></table>
+		</div>
+		<div class="pagination ue-clear"></div>
+	</body>
+	<script type="text/javascript" src="../js/jquery.js"></script>
 
-<script src="../js/bootstrap.min.js"></script>
-<script src="../js/bootstrap-table.js"></script>
-<script src="../js/bootstrap-table-zh-CN.min.js"></script>
-<script src="../js/date/js/laydate.js"></script>
-<script type="text/javascript" src="../js/layer_v2.1/layer/layer.js"></script>
-<script>
-    $(function () {
-        $('#table').bootstrapTable({
-            method: "get",
-            striped: true,
-            singleSelect: false,
-            url: "/qrmg/front/mana/account/queryManager?",
-            dataType: "json",
-            pagination: true, //分页
-            pageSize: 10,
-            pageNumber: 1,
-            search: false, //显示搜索框
-            contentType: "application/x-www-form-urlencoded",
-            queryParams: null,
-            columns: [
-                {
-                    title: "姓名",
-                    field: 'mgName',
-                    align: 'center',
-                    valign: 'middle'
-                },
-                {
-                    title: '权限',
-                    field: 'mgCode',
-                    align: 'center',
-                    valign: 'middle'
-                },
-                {
-                    title: '账号',
-                    field: 'mgAccount',
-                    align: 'center',
-                    valign: 'middle'
-                },
-                {
-                    title: '手机号',
-                    field: 'mgPhone',
-                    align: 'center',
-                    valign: 'middle'
-                },
-                {
-                    title: '邮箱',
-                    field: 'mgEmail',
-                    align: 'center',
-                    valign: 'middle'
-                },
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/bootstrap-table.js"></script>
+	<script src="../js/bootstrap-table-zh-CN.min.js"></script>
+	<script src="../js/date/js/laydate.js"></script>
+	<script type="text/javascript" src="../js/layer_v2.1/layer/layer.js"></script>
+	<script>
+		$(function() {
+			$('#table').bootstrapTable({
+				method: "get",
+				striped: true,
+				singleSelect: false,
+				url: "/qrmg/front/mana/account/queryManager?",
+				dataType: "json",
+				pagination: true, //分页
+				pageSize: 10,
+				pageNumber: 1,
+				search: false, //显示搜索框
+				contentType: "application/x-www-form-urlencoded",
+				queryParams: null,
+				columns: [{
+						title: "姓名",
+						field: 'mgName',
+						align: 'center',
+						valign: 'middle'
+					},
+					{
+						title: '权限',
+						field: 'mgCode',
+						align: 'center',
+						valign: 'middle'
+					},
+					{
+						title: '账号',
+						field: 'mgAccount',
+						align: 'center',
+						valign: 'middle'
+					},
+					{
+						title: '手机号',
+						field: 'mgPhone',
+						align: 'center',
+						valign: 'middle'
+					},
+					{
+						title: '邮箱',
+						field: 'mgEmail',
+						align: 'center',
+						valign: 'middle'
+					},
 
-                {
-                    title: '备注',
-                    field: 'mgContact',
-                    align: 'center',
-                    valign: 'middle'
-                },
-                
-                {
-                    title: '操作',
-                    field: '',
-                    align: 'center',
-                    formatter: function (value, row) {
-                    	if(localStorage.getItem('account') == row.mgAccount){
-	                        var d = '<button button="#" mce_href="#" onclick="updateaccount('+row+')">编辑</button> ';
-	                        return d;
-                    	}else{
-                    		var d = '<button button="#" disabled="true" mce_href="#" onclick="">编辑</button> ';
-	                        return d;
-                    	}
-                    }
-                }
-            ]
-        });
-        getAccouTableData();
-    });
-    var flag=true,accouname,accoucode;
-    function getAccouTableData() {
-        if (flag) {
-        	accouname = "";
-        	accoucode = "";
-            flag = false;
-        } else {
-        	accouname = $("#accouname").val();
-        	accoucode = $("#accoucode option:selected").val();
-        }
-        $.ajax({
-            type: "GET",
-            url: "/qrmg/front/mana/account/queryManager?",
-            dataType: "json",
-            data:{
-            	name: accouname,
-            	code: accoucode
-            },
-            success: function (result) {
-                if (result.object) {
-                    var NoticeTableData = result.object;
-                    $('#table').bootstrapTable("load", NoticeTableData);
-                }
-            }
-        })
-    }
-    
-    function addaccount() {
-		var openlayer = layer.open({
-			id: 2,
-			type: 1,
-			title: '新增账号',
-			shadeClose: false,
-			shade: 0.5,
-			skin: 'layui-layer-rim', 
-			moveType: 1,
-			area: ['500px', 'auto'],
-			content: '<div class="passTable">' +
-				'<div class="aucsacc"><label>姓名：</label><input type="text" placeholder="请输入姓名" id="name" name="name"></div>' +
-				'<div class="aucsacc"><label>手机号：</label><input type="text" placeholder="请输入11位手机号" id="phone" name="phone"></div>' +
-				'<div class="aucsacc"><label>账号：</label><input type="text" placeholder="请输入账号" id="account" name="account"></div>' +
-				'<div class="aucsacc"><label>密码：</label><input type="text" placeholder="6-16位长度" id="password" name="password"></div>' +
-				'<div class="aucsacc"><label>邮箱：</label><input type="text" placeholder="请输入邮箱" id="email" name="email"></div>' +
-				'<div class="aucsacc"><label>备注：</label><input type="text" placeholder="请输入备注信息" id="contact" name="contact"></div>' +
-				'<div class="aucsacc"><label>权限等级：</label><select id="accolevel"><option value="1">超级管理员</option>' +
-				'<option value="2">普通管理员</option></select></div>' +
-				'</div>',
-			btn: ['保存', '取消'],
-			yes: function(index, layero) {
-				var name=$("#name").val();
-				var password=$("#password").val();
-				var phone=$("#phone").val();
-				var account=$("#account").val();
-				if (name == '' || name == undefined || name == null) {
-		        	alert("姓名不可为空！");
-		        	return;
-		        }
-				if (password == '' || password == undefined || password == null) {
-		        	alert("密码不可为空！");
-		        	return;
-		        }
-				if (password.length > 16 || password.length < 6) {
-		        	alert("密码长度应该在6-16位！");
-		        	return;
-		        }
-				if (account == '' || account == undefined || account == null) {
-		        	alert("账号不可为空！");
-		        	return;
-		        }
-				if (phone == '' || phone == undefined || phone == null) {
-		        	alert("手机号不可为空！");
-		        	return;
-		        }
-				if (phone.length > 11 || phone.length < 11) {
-		        	alert("手机号长度为11位！");
-		        	return;
-		        }
-				$.ajax({
-		            type: "GET",
-		            url: "/qrmg/front/mana/account/addAccount?",
-		            dataType: "json",
-		            data:{
-		            	name: name,
-		            	userName: account,
-		            	password: password,
-		            	phone: phone,
-		            	email: $("#email").val(),
-		            	contact: $("#contact").val(),
-		            	level: $("#accolevel option:selected").val()
-		            },
-		            success: function (result) {
-		            	if (result.returnCode) {
-		                    alert(result.returnMessage);
-		                }
-		            }
-		        })
-			},
-			btn2: function(index, layero) {
-				layer.close(openlayer);
-			}
+					{
+						title: '备注',
+						field: 'mgContact',
+						align: 'center',
+						valign: 'middle'
+					},
 
+					{
+						title: '操作',
+						field: '',
+						align: 'center',
+						formatter: function(value, row) {
+							if (localStorage.getItem('account') == row.mgAccount) {
+								var d = '<button class="btn btn-warning btnPadding" button="#" mce_href="#" onclick="updateaccount(' + row + ')">编辑</button> ';
+								return d;
+							} else {
+								var d = '<button class="btn btn-warning btnPadding" button="#" disabled="true" mce_href="#" onclick="">编辑</button> ';
+								return d;
+							}
+						}
+					}
+				]
+			});
+			getAccouTableData();
 		});
+		var flag = true,
+			accouname, accoucode;
 
-	}
-    
-    function updateaccount(thisrow){
-		var openlayer = layer.open({
-			id: 2,
-			type: 1,
-			title: '修改账号',
-			shadeClose: false,
-			shade: 0.5,
-			skin: 'layui-layer-rim', 
-			moveType: 1,
-			area: ['500px', 'auto'],
-			content: '<div class="passTable">' +
-				'<div class="aucsacc"><label>姓名：</label><input type="text" id="name" name="name"></div>' +
-				'<div class="aucsacc"><label>手机号：</label><input type="text" id="phone" name="phone"></div>' +
-				'<div class="aucsacc"><label>邮箱：</label><input type="text" id="email" name="email"></div>' +
-				'<div class="aucsacc"><label>备注：</label><input type="text" id="contact" name="contact"></div>' +
-				'<div class="aucsacc"><label>权限等级：</label><select id="accolevel"><option value="1">超级管理员</option>' +
-				'<option value="2">普通管理员</option></select></div>' +
-				'</div>',
-			btn: ['保存', '取消'],
-			yes: function(index, layero) {
-				var name=$("#name").val();
-				var phone=$("#phone").val();
-				if (name == '' || name == undefined || name == null) {
-		        	alert("姓名不可为空！");
-		        	return;
-		        }
-				if (phone == '' || phone == undefined || phone == null) {
-		        	alert("手机号不可为空！");
-		        	return;
-		        }
-				if (phone.length > 11 || phone.length < 11) {
-		        	alert("手机号长度为11位！");
-		        	return;
-		        }
-				$.ajax({
-		            type: "GET",
-		            url: "/qrmg/front/mana/account/updateAccount?",
-		            dataType: "json",
-		            data:{
-		            	type: "1",
-		            	name: name,
-		            	userName: localStorage.getItem('account'),
-		            	phone: phone,
-		            	email: $("#email").val(),
-		            	contact: $("#contact").val(),
-		            	level: $("#accolevel option:selected").val()
-		            },
-		            success: function (result) {
-		            	if (result.returnCode) {
-		                    alert(result.returnMessage);
-		                }
-		            }
-		        })
-
-			},
-			btn2: function(index, layero) {
-				layer.close(openlayer);
+		function getAccouTableData() {
+			if (flag) {
+				accouname = "";
+				accoucode = "";
+				flag = false;
+			} else {
+				accouname = $("#accouname").val();
+				accoucode = $("#accoucode option:selected").val();
 			}
+			$.ajax({
+				type: "GET",
+				url: "/qrmg/front/mana/account/queryManager?",
+				dataType: "json",
+				data: {
+					name: accouname,
+					code: accoucode
+				},
+				success: function(result) {
+					if (result.object) {
+						var NoticeTableData = result.object;
+						$('#table').bootstrapTable("load", NoticeTableData);
+					}
+				}
+			})
+		}
 
-		});
-    }
-</script>
-<script>
-    !function(){
-        laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
-        laydate({elem: '#demo'});//绑定元素
-    }();
-</script>
+		function addaccount() {
+			var addaccount = parent.layer.open({
+				id: 5,
+				type: 1,
+				title: '新增账号',
+				shadeClose: false,
+				shade: 0.5,
+				offset: ['100px', '700px'],
+				skin: 'layui-layer-rim',
+				moveType: 1,
+				area: ['500px', 'auto'],
+				content: '<div class="countAdd" id="">' +
+							'<table class="tabe_bot">' +
+								'<tr>' +
+									'<td>' +
+										'<div class="l_left"><label class="labelStyle">姓名：</label>' +
+											'<input type="text" placeholder="请输入姓名" id="name" name="name">' +
+										'</div>' +
+									'</td>' +
+								'</tr>' +
+								'<tr>' +
+									'<td>' +
+										'<div class="l_left"><label class="labelStyle">手机号：</label>' +
+											'<input type="text" placeholder="请输入11位手机号" id="phone" name="phone">' +
+										'</div>' +
+									'</td>' +
+								'</tr>' +
+								'<tr>' +
+									'<td>' +
+										'<div class="l_left"><label class="labelStyle">账号：</label>' +
+											'<input type="text" placeholder="请输入账号" id="account" name="account">' +
+										'</div>' +
+									'</td>' +
+								'</tr>' +
+								'<tr>' +
+									'<td>' +
+										'<div class="l_left"><label class="labelStyle">密码：</label>' +
+											'<input type="text" placeholder="6-16位长度" id="password" name="password">' +
+										'</div>' +
+									'</td>' +
+								'</tr>' +
+								'<tr>' +
+									'<td>' +
+										'<div class="l_left"><label class="labelStyle">邮箱：</label>' +
+											'<input type="text" placeholder="请输入邮箱" id="email" name="email">' +
+										'</div>' +
+									'</td>' +
+								'</tr>' +
+								'<tr>' +
+									'<td>' +
+										'<div class="l_left"><label class="labelStyle">备注：</label>' +
+											'<input type="text" placeholder="请输入备注信息" id="contact" name="contact">' +
+										'</div>' +
+									'</td>' +
+								'</tr>' +
+								'<tr>' +
+									'<td>' +
+										'<div class="l_left"><label class="labelStyle">权限等级：</label>' +
+										'<select id="accolevel"><option value="1">超级管理员</option>' +
+											'<option value="2">普通管理员</option></select>' +
+										'</div>' +
+									'</td>' +
+								'</tr>' +
+							'</table>' +
+						'</div>',
+				btn: ['保存', '取消'],
+				yes: function(index, layero) {
+					var name = $("#name",parent.document).val();
+					var password = $("#password",parent.document).val();
+					var phone = $("#phone",parent.document).val();
+					var account = $("#account",parent.document).val();
+					if (name == '' || name == undefined || name == null) {
+						parent.layer.msg('姓名不可为空！',{offset: 'auto'});
+						return;
+					}
+					if (password == '' || password == undefined || password == null) {
+						parent.layer.msg("密码不可为空！");
+						return;
+					}
+					if (password.length > 16 || password.length < 6) {
+						parent.layer.msg("密码长度应该在6-16位！");
+						return;
+					}
+					if (account == '' || account == undefined || account == null) {
+						parent.layer.msg("账号不可为空！");
+						return;
+					}
+					if (phone == '' || phone == undefined || phone == null) {
+						parent.layer.msg("手机号不可为空！");
+						return;
+					}
+					if (phone.length > 11 || phone.length < 11) {
+						parent.layer.msg("手机号长度为11位！");
+						return;
+					}
+					$.ajax({
+						type: "GET",
+						url: "/qrmg/front/mana/account/addAccount?",
+						dataType: "json",
+						data: {
+							name: name,
+							userName: account,
+							password: password,
+							phone: phone,
+							email: $("#email",parent.document).val(),
+							contact: $("#contact",parent.document).val(),
+							level: $("#accolevel option:selected",parent.document).val()
+						},
+						success: function(result) {
+							if (result.returnCode) {
+								parent.layer.msg(result.returnMessage);
+								parent.layer.close(addaccount);
+								getAccouTableData();
+							}
+						}
+					})
+				},
+				btn2: function(index, layero) {
+					parent.layer.close(addaccount);
+				}
+
+			});
+
+		}
+
+		function updateaccount(thisrow) {
+			var openlayer = layer.open({
+				id: 2,
+				type: 1,
+				title: '修改账号',
+				shadeClose: false,
+				shade: 0.5,
+				skin: 'layui-layer-rim',
+				moveType: 1,
+				area: ['500px', 'auto'],
+				content: '<div class="passTable">' +
+					'<div class="aucsacc"><label>姓名：</label><input type="text" id="name" name="name"></div>' +
+					'<div class="aucsacc"><label>手机号：</label><input type="text" id="phone" name="phone"></div>' +
+					'<div class="aucsacc"><label>邮箱：</label><input type="text" id="email" name="email"></div>' +
+					'<div class="aucsacc"><label>备注：</label><input type="text" id="contact" name="contact"></div>' +
+					'<div class="aucsacc"><label>权限等级：</label><select id="accolevel"><option value="1">超级管理员</option>' +
+					'<option value="2">普通管理员</option></select></div>' +
+					'</div>',
+				btn: ['保存', '取消'],
+				yes: function(index, layero) {
+					var name = $("#name").val();
+					var phone = $("#phone").val();
+					if (name == '' || name == undefined || name == null) {
+						alert("姓名不可为空！");
+						return;
+					}
+					if (phone == '' || phone == undefined || phone == null) {
+						alert("手机号不可为空！");
+						return;
+					}
+					if (phone.length > 11 || phone.length < 11) {
+						alert("手机号长度为11位！");
+						return;
+					}
+					$.ajax({
+						type: "GET",
+						url: "/qrmg/front/mana/account/updateAccount?",
+						dataType: "json",
+						data: {
+							type: "1",
+							name: name,
+							userName: localStorage.getItem('account'),
+							phone: phone,
+							email: $("#email").val(),
+							contact: $("#contact").val(),
+							level: $("#accolevel option:selected").val()
+						},
+						success: function(result) {
+							if (result.returnCode) {
+								alert(result.returnMessage);
+							}
+						}
+					})
+
+				},
+				btn2: function(index, layero) {
+					layer.close(openlayer);
+				}
+
+			});
+		}
+	</script>
+	<script>
+		! function() {
+			laydate.skin('molv'); //切换皮肤，请查看skins下面皮肤库
+			laydate({
+				elem: '#demo'
+			}); //绑定元素
+		}();
+	</script>
 </html>

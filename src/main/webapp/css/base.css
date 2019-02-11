@@ -387,15 +387,26 @@ line-height: 50px;
     margin: 10px auto;
  }
 .channelUrl{
-	width: 260px;
+	width: 440px;
 }
 .witchCon{
 	margin: 20px;
     font-size: 16px;
 }
-
-
-
+.labelStyle{
+	width: 60px;
+    float: left;
+    display: block;
+    text-align: left;
+    line-height: 30px;
+}
+.countAdd{
+	margin: 20px 0 0px 50px;
+}
+.channelLabel{
+	display: block;
+    float: left;
+}
 
 
 
