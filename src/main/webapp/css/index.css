@@ -93,3 +93,7 @@ h1{ float:left; margin:8px 0 0 20px; width:260px;height: 64px;
 
 /*弹窗内容样式*/
 .dialog-content .buttons{margin-top:30px;}
+.passTable{text-align: center;}
+.passTab{margin:20px auto}
+#oldpass,#newpass,#newpass1{width: 180px;height: 30px;border-radius: 6px;margin: 0 20px 0 0;text-indent: 1em;border: none; border: 1px #ccc solid;}
+.passTab3{margin-left: -10px;}

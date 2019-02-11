@@ -4,7 +4,7 @@ $(window).resize(function(e) {
 	$(".nav").css("minHeight", $(".sidebar").height() - $(".sidebar-header").height()-1);
 	$("#iframe").height($(window).height() - $("#hd").height() - $("#ft").height()-12);
 }).resize();
-$('.exitDialog').Dialog({
+/* $('.exitDialog').Dialog({
 	title:'提示信息',
 	autoOpen: false,
 	width:400,
@@ -21,7 +21,7 @@ $('.exitDialog input[type=button]').click(function(e) {
 	if($(this).hasClass('ok')){
 		window.location.href = "../login.html"	;
 	}
-});
+}); */
 $(function() {
 	$('.nav>li').click(function () {
 		$('.nav>li').removeClass("current");
@@ -45,4 +45,7 @@ $(function() {
 	//$(".nav").click(function(){
     //
 	//})
+	//修改密码
+	
+	
 });

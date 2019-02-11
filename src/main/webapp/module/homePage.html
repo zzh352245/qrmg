@@ -1,88 +1,190 @@
 <!doctype html>
 <html>
-<head>
-<meta charset="utf-8">
-<link rel="stylesheet" href="../css/base.css" />
-<link rel="stylesheet" type="text/css" href="../css/jquery.dialog.css" />
-<link rel="stylesheet" href="../css/index.css" />
-    <style>
-        .layui-layer-title{background:url(images/righttitlebig.png) repeat-x;font-weight:bold;color:#46647e; border:1px solid #c1d3de;height: 33px;line-height: 33px;}
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="../css/base.css" />
+		<link rel="stylesheet" type="text/css" href="../css/jquery.dialog.css" />
+		<link rel="stylesheet" href="../css/index.css" />
+		<style>
+			.layui-layer-title{background:url(images/righttitlebig.png) repeat-x;font-weight:bold;color:#46647e; border:1px solid #c1d3de;height: 33px;line-height: 33px;}
     </style>
-<title>系统首页</title>
-</head>
-<body>
-<div id="container">
-	<div id="hd">
-    	<div class="hd-wrap ue-clear">
-        	<div class="top-light"></div>
-            <h1 class="logo"></h1>
-            <div class="toolbar ue-clear">
-                <a href="javascript:;" class="home-btn userShow" target="right"></a>
-                <a href="javascript:void(0)" class="home-btn1" target="right" onclick="openlayer()">修改密码</a>
-                <a href="javascript:void(0)" class="quit-btn exit home-btn">退出</a>
-            </div>
-        </div>
-    </div>
-    <div id="bd">
-    	<div class="wrap ue-clear">
-        	<div class="sidebar">
-            	<h2 class="sidebar-header"><p>功能导航</p></h2>
-                <ul class="nav">
-                    <li class="news_m current"><div class="nav-header"><a href="userList.html" class="ue-clear"  target="right"><span>用户信息</span><i class="icon"></i></a></div></li>
-                    <li class="email"><div class="nav-header"><a href="accountList.html"class="ue-clear"  target="right"><span>账号管理</span><i class="icon"></i></a></div></li>
-                    <li class="list_m"><div class="nav-header"><a href="channelList.html" class="ue-clear" target="right"><span>渠道管理</span><i class="icon"></i></a></div></li>
+		<title>系统首页</title>
+	</head>
+	<body>
+		<div id="container">
+			<div id="hd">
+				<div class="hd-wrap ue-clear">
+					<div class="top-light"></div>
+					<h1 class="logo"></h1>
+					<div class="toolbar ue-clear">
+						<a href="javascript:;" class="home-btn userShow" target="right"></a>
+						<a href="javascript:void(0)" class="home-btn1" target="right" onclick="openlayer()">修改密码</a>
+						<a href="javascript:void(0)" class="quit-btn exit home-btn">退出</a>
+					</div>
+				</div>
+			</div>
+			<div id="bd">
+				<div class="wrap ue-clear">
+					<div class="sidebar">
+						<h2 class="sidebar-header">
+							<p>功能导航</p>
+						</h2>
+						<ul class="nav">
+							<li class="news_m current">
+								<div class="nav-header"><a href="userList.html" class="ue-clear" target="right"><span>用户信息</span><i class="icon"></i></a></div>
+							</li>
+							<li class="email">
+								<div class="nav-header"><a href="accountList.html" class="ue-clear" target="right"><span>账号管理</span><i class="icon"></i></a></div>
+							</li>
+							<li class="list_m">
+								<div class="nav-header"><a href="channelList.html" class="ue-clear" target="right"><span>渠道管理</span><i class="icon"></i></a></div>
+							</li>
 
-                </ul>
-            </div>
-            <div class="content">
-<!--             	<iframe src="accountList.html" id="iframe" width="100%" height="100%" frameborder="0" name="right" style="min-width: 1100px"></iframe> -->
-            	<iframe src="userList.html" id="iframe" width="100%" height="100%" frameborder="0" name="right" style="min-width: 1100px"></iframe>
-            </div>
-        </div>
-    </div>
-    <div id="ft" class="foot_div">
-    </div>
-</div>
-<div class="exitDialog">
-	<div class="dialog-content">
-    	<div class="ui-dialog-icon"></div>
-        <div class="ui-dialog-text">
-        	<p class="dialog-content">你确定要退出系统？</p>
-            <p class="tips">如果是请点击“确定”，否则点“取消”</p>
-            
-            <div class="buttons">
-                <input type="button" class="button long2 ok" value="确定" />
-                <input type="button" class="button long2 normal" value="取消" />
-            </div>
-        </div>
-        
-    </div>
-</div>
-</body>
-<script type="text/javascript" src="../js/jquery.js"></script>
-<script type="text/javascript" src="../js/core.js"></script>
-<script type="text/javascript" src="../js/jquery.dialog.js"></script>
-<script type="text/javascript" src="../js/index.js"></script>
-<script src="../js/layer_v2.1/layer/layer.js"></script>
-<script type="text/javascript">
-var userName = localStorage.getItem('userName');
-var account = localStorage.getItem('account');
-if(userName == null || userName == ''){
-	window.location.href = "../login.html";
-}else{
-	$(".userShow").html(userName);
-}
-    function openlayer(id){
-        layer.open({
-            type: 2,
-            title: '修改密码',
-            shadeClose: false,
-            shade: 0.5,
-            skin: 'layui-layer-rim',
-            closeBtn:2,
-            area: ['35%', '40%'],
-            content: 'password.html'
-        });
-    }
-</script>
+						</ul>
+					</div>
+					<div class="content">
+						<!--             	<iframe src="accountList.html" id="iframe" width="100%" height="100%" frameborder="0" name="right" style="min-width: 1100px"></iframe> -->
+						<iframe src="userList.html" id="iframe" width="100%" height="100%" frameborder="0" name="right" style="min-width: 1100px"></iframe>
+					</div>
+				</div>
+			</div>
+			<div id="ft" class="foot_div">
+			</div>
+		</div>
+		<!-- 		<div class="exitDialog">
+			<div class="dialog-content">
+				<div class="ui-dialog-icon"></div>
+				<div class="ui-dialog-text">
+					<p class="dialog-content">你确定要退出系统？</p>
+					<p class="tips">如果是请点击“确定”，否则点“取消”</p>
+
+					<div class="buttons">
+						<input type="button" class="button long2 ok" value="确定" />
+						<input type="button" class="button long2 normal" value="取消" />
+					</div>
+				</div>
+
+			</div>
+		</div> -->
+	</body>
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript" src="../js/core.js"></script>
+	<!-- <script type="text/javascript" src="../js/jquery.dialog.js"></script> -->
+	<script type="text/javascript" src="../js/index.js"></script>
+	<script type="text/javascript" src="../js/layer_v2.1/layer/layer.js"></script>
+	<script type="text/javascript">
+		var userName = localStorage.getItem('userName');
+		var account = localStorage.getItem('account');
+		/* 	if (userName == null || userName == '') {
+				window.location.href = "../login.html";
+			} else {
+				$(".userShow").html(userName);
+			} */
+		$(".exit").on("click", function() {
+			var exit = layer.open({
+				id: 1,
+				type: 1,
+				title: '提示信息',
+				skin: 'exitClass',
+				moveType: 1,
+				scrollbar: false,
+				area: ['450px', 'auto'],
+				shadeClose: false,
+				moveOut: false,
+				content: '<div class="exitDialog">' +
+					'<div class="dialog-content">' +
+					'<div class="ui-dialog-icon"></div>' +
+					'<div class="ui-dialog-text">' +
+					'<p class="dialog-content">你确定要退出系统？</p>' +
+					'<p class="tips">如果是请点击“确定”，否则点“取消”</p>' +
+					'</div>' +
+					'</div>' +
+					'</div>',
+				btn: ['确定', '取消'],
+				btn1: function(index, layero) {
+					window.location.href = "../login.html";
+					localStorage.clear();
+				},
+				btn2: function(index, layero) {
+					layer.close(exit);
+				}
+			});
+		})
+
+		function openlayer() {
+			var openlayer = layer.open({
+				id: 2,
+				type: 1,
+				title: '修改密码',
+				shadeClose: false,
+				shade: 0.5,
+				skin: 'layui-layer-rim', 
+				moveType: 1,
+				area: ['500px', 'auto'],
+				content: '<div class="passTable">' +
+					'<div class="passTab"><label>原密码：</label><input type="text" placeholder="请输入原密码" id="oldpass" name="oldpass"></div>' +
+					'<div class="passTab"><label>新密码：</label><input type="text" placeholder="请输入新密码" id="newpass" name="newpass"></div>' +
+					'<div class="passTab passTab3"><label>确认密码：</label><input type="text" placeholder="请确认信密码" id="newpass1" name="newpass1"></div>' +
+					'</div>',
+				btn: ['修改', '取消'],
+				yes: function(index, layero) {
+					var oldpass = $("#oldpass").val().replace(/(^\s*)|(\s*$)/g, '');
+					var newpass = $("#newpass").val().replace(/(^\s*)|(\s*$)/g, '');
+					var newpass1 = $("#newpass1").val().replace(/(^\s*)|(\s*$)/g, '');
+					if (oldpass == '' || oldpass == undefined || oldpass == null) {
+						layer.msg('密码不可为空！');
+						return false;
+					}
+					if (newpass == '' || newpass == undefined || newpass == null) {
+						layer.msg('新密码不可为空！');
+						return false;
+					}
+					if (newpass1 == '' || newpass1 == undefined || newpass1 == null) {
+						layer.msg('确认密码不可为空！');
+						return false;
+					}
+					if (newpass != newpass1) {
+						layer.msg('输入的两个新密码不一致！');
+						return false;
+					}
+					$.ajax({
+						type: "GET",
+						url: "/qrmg/front/mana/account/updateAccount?",
+						dataType: "json",
+						data: {
+							type: "0",
+							userName: localStorage.getItem('account'),
+							newpassword: newpass,
+							oldpassword: oldpass
+						},
+						success: function(result) {
+							if (result.returnCode) {
+								var restr = result.returnCode;
+								layer.msg('修改成功，请重新登录！');
+								layer.close(openlayer);
+								localStorage.clear();
+						}
+						window.location.href = "../login.html";
+						}
+					})
+
+				},
+				btn2: function(index, layero) {
+					layer.close(openlayer);
+				}
+
+			});
+
+		}
+		/* 	layer.open({
+				type: 2,
+				title: '修改密码',
+				shadeClose: false,
+				shade: 0.5,
+				skin: 'layui-layer-rim',
+				closeBtn: 2,
+				area: ['35%', '40%'],
+				content: 'password.html'
+			}); */
+	</script>
 </html>
