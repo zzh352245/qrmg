@@ -56,11 +56,39 @@
 		channel_link_url=#{channelLinkUrl},create_mg=#{createMg}
 	</insert>
 	<update id="updateChannel" parameterType="com.qrmg.zd.model.Channel">
-		update qrmg_channel set channel_level=#{channelLevel},channel_parent_code=#{channelParentCode},channel_code=#{channelCode},
-		channel_name=#{channelName},channel_qrcode=#{channelQrcode},
-		channel_link_url=#{channelLinkUrl},update_mg=#{updateMg},update_time=NOW()
+		update qrmg_channel 
+		<include refid="setChannelUp" />
 		where id=#{id}
 	</update>
+	<sql id="setChannelUp">
+		<set>
+			update_time=NOW(),
+			<if test="channelLevel != null and channelLevel != 'null' and channelLevel != ''">
+				channel_level = #{channelLevel},
+			</if>
+			<if test="channelParentCode != null and channelParentCode != 'null' and channelParentCode != ''">
+				channel_parent_code = #{channelParentCode},
+			</if>
+			<if test="channelCode != null and channelCode != 'null' and channelCode != ''">
+				channel_code = #{channelCode},
+			</if>
+			<if test="channelName != null and channelName != 'null' and channelName != ''">
+				channel_name = #{channelName},
+			</if>
+			<if test="channelQrcode != null and channelQrcode != 'null' and channelQrcode != ''">
+				channel_qrcode = #{channelQrcode},
+			</if>
+			<if test="channelLinkUrl != null and channelLinkUrl != 'null' and channelLinkUrl != ''">
+				channel_link_url = #{channelLinkUrl},
+			</if>
+			<if test="updateMg != null and updateMg != 'null' and updateMg != ''">
+				update_mg = #{updateMg},
+			</if>
+			<if test="channelQrcodeType != null and channelQrcodeType != 'null' and channelQrcodeType != ''">
+				channel_qrcode_type = #{channelQrcodeType}
+			</if>
+		</set>
+	</sql>
 	<select id="queryChannel" parameterType="java.util.Map"
 		resultMap="channelResultMap">
 		SELECT * FROM qrmg_channel

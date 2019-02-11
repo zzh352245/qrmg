@@ -160,7 +160,6 @@ public class ManagerController {
 		String channelLevel = request.getParameter("channelLevel");
 		String channelParentCode = request.getParameter("channelParentCode");
 		String channelName = request.getParameter("channelName");
-		String channelQrcode = request.getParameter("channelQrcode");
 		String channelLinkUrl = request.getParameter("channelLinkUrl");
 		String createMg = request.getParameter("mgName");
 		String type = request.getParameter("type");
@@ -173,19 +172,24 @@ public class ManagerController {
 		Channel channel = new Channel();
 		long cc = System.currentTimeMillis();
 		String channelCode = String.valueOf(cc).substring(3, 11);
-		if(StringUtils.equals("1", type)){
-			//需要生成二维码突破
-			String fileUrl = QRUtil.createQR(channelLinkUrl, channelCode);
-			if(StringUtil.isEmpty(fileUrl)){
+		//一级渠道，输入链接地址，生成二维码。二级渠道，只需要选择对应的一级渠道，自动生成链接地址和二维码
+		if(StringUtils.equals(channelLevel, "2")){
+			if(StringUtil.isEmpty(channelParentCode)){
 				outputObj.setReturnCode("9999");
-				outputObj.setReturnMessage("二维码生成失败！");
+				outputObj.setReturnMessage("请选择一级渠道！");
 				return outputObj;
 			}
-			channel.setChannelQrcode(fileUrl);
-		}else{
-			//已经上传了二维码图片
-			channel.setChannelQrcode(channelQrcode);
+			//二级渠道统一跳转自己做的页面，h5页面地址拼上渠道编码生成新二维码
+			channelLinkUrl = "http://localhost:28080/qrmg/module/homePage.html?channelCode=" + channelCode;
 		}
+		//需要生成二维码
+		String fileUrl = QRUtil.createQR(channelLinkUrl, channelCode);
+		if(StringUtil.isEmpty(fileUrl)){
+			outputObj.setReturnCode("9999");
+			outputObj.setReturnMessage("二维码生成失败！");
+			return outputObj;
+		}
+		channel.setChannelQrcode(fileUrl);
 		channel.setCreateMg(createMg);
 		channel.setChannelCode(channelCode);
 		channel.setChannelLevel(channelLevel);
@@ -253,6 +257,7 @@ public class ManagerController {
 		channel.setChannelLinkUrl(channelLinkUrl);
 		channel.setUpdateMg(updateMg);
 		channel.setChannelCode(channelCode);
+		channel.setChannelQrcodeType(channelQrcodeType);
 		channelService.updateChannel(channel);
 		outputObj.setReturnCode("0");
 		outputObj.setReturnMessage("修改成功！");
