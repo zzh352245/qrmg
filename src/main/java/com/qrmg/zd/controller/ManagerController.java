@@ -217,6 +217,7 @@ public class ManagerController {
 		String channelLinkUrl = request.getParameter("channelLinkUrl");
 		String channelCode = request.getParameter("channelCode");
 		String updateMg = request.getParameter("updateMg");
+		String channelQrcodeType = request.getParameter("channelQrcodeType");//二维码开启状态
 		String type = request.getParameter("type");//1-修改了链接地址 0-未修改链接地址
 		if(StringUtil.isEmpty(id) || StringUtil.isEmpty(updateMg)
 				|| StringUtil.isEmpty(channelQrcode) || StringUtil.isEmpty(channelName)
