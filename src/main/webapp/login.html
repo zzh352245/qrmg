@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="utf-8">
 		<title>登录</title>
-		<link rel="stylesheet" type="text/css" href="css/common.css"/>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/common.css"/>
 	</head>
 	<body>
 		<div class="wrap">
@@ -26,7 +26,6 @@
 						</div>
 						<div class="userLog userSmsCode">
 							<input type="text" id="smsCode" maxlength="6" name="smsCode" autocomplete="off" class="login_fields_input"/> 
-							<!-- <canvas id="canvas" width="120" height="45" id="btnSendCode" class="btnSendCode"></canvas> -->
 							<img id="identifyingValue" alt="验证码" src="front/mana/loginCode?" class="btnSendCode"/>
 							<span class="btnSendText" id="changeImg">刷新</span>
 							<div class="reg_error3 fn-left fn-red fn-marLeft fn-hide"></div>
@@ -34,13 +33,12 @@
 						<button class="userLog userLogBtn">立即登录</button>
 					</div>
 				</div> 
-			</div>
+			</div> 
 		</div>
 	</body>
-	<!-- <script type="text/javascript" src="lib/jquery/3.0.0/jquery-3.2.1.min.js"></script> -->
 	<script type="text/javascript" src="js/jquery.js"></script>
-	<!-- <script type="text/javascript" src="js/common.js"></script> -->
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/layer_v2.1/layer/layer.js"></script>
 </html>
 <script type="text/javascript">
 	$(function() {
@@ -118,11 +116,11 @@
 					window.location.href = "../qrmg/module/homePage.html";
 					
 				}else if(reCode == '9999'){
-					alert(json.returnMessage);
+					layer.msg(json.returnMessage);
 				}
 			},
 			error: function(json) {
-				alert('操作失败');
+				layer.msg('操作失败');
 			}
 		});
 
