@@ -54,6 +54,7 @@
 	<script type="text/javascript" src="../js/layer_v2.1/layer/layer.js"></script>
 	<script>
 		$(function() {
+			var $table = $('#table');
 			$('#table').bootstrapTable({
 				method: "get",
 				striped: true,
@@ -110,7 +111,9 @@
 						align: 'center',
 						formatter: function(value, row) {
 							if (localStorage.getItem('account') == row.mgAccount) {
-								var d = '<button class="btn btn-warning btnPadding" button="#" mce_href="#" onclick="updateaccount(' + row + ')">编辑</button> ';
+								/* JSON.stringify(row)*/
+								var d = '<button class="btn btn-warning btnPadding" button="#" mce_href="#" onclick="updateaccount(\'' +
+								row.id + '\',\'' + row.mgName + '\',\'' + row.mgCode + '\',\'' + row.mgAccount + '\',\'' + row.mgPhone + '\',\'' + row.mgEmail + '\',\'' + row.mgContact + '\',\'' + row.mgPassword + '\')">编辑</button> ';
 								return d;
 							} else {
 								var d = '<button class="btn btn-warning btnPadding" button="#" disabled="true" mce_href="#" onclick="">编辑</button> ';
@@ -276,8 +279,8 @@
 
 		}
 
-		function updateaccount(thisrow) {
-			var openlayer = layer.open({
+		function updateaccount(id, mgName, mgCode, mgAccount, mgPhone, mgEmail, mgContact, mgPassword){
+			var updateaccount = parent.layer.open({
 				id: 2,
 				type: 1,
 				title: '修改账号',
@@ -285,29 +288,76 @@
 				shade: 0.5,
 				skin: 'layui-layer-rim',
 				moveType: 1,
+				offset: ['100px', '700px'],
 				area: ['500px', 'auto'],
-				content: '<div class="passTable">' +
-					'<div class="aucsacc"><label>姓名：</label><input type="text" id="name" name="name"></div>' +
-					'<div class="aucsacc"><label>手机号：</label><input type="text" id="phone" name="phone"></div>' +
-					'<div class="aucsacc"><label>邮箱：</label><input type="text" id="email" name="email"></div>' +
-					'<div class="aucsacc"><label>备注：</label><input type="text" id="contact" name="contact"></div>' +
-					'<div class="aucsacc"><label>权限等级：</label><select id="accolevel"><option value="1">超级管理员</option>' +
-					'<option value="2">普通管理员</option></select></div>' +
-					'</div>',
+				content: '<div class="countAdd" id="">' +
+							'<table class="tabe_bot">' +
+								'<tr>' +
+									'<td>' +
+										'<div class="l_left"><label class="labelStyle">姓名：</label>' +
+											'<input type="text" placeholder="请输入姓名" id="name" value="'+mgName+'" name="name">' +
+										'</div>' +
+									'</td>' +
+								'</tr>' +
+								'<tr>' +
+									'<td>' +
+										'<div class="l_left"><label class="labelStyle">手机号：</label>' +
+											'<input type="text" placeholder="请输入11位手机号" id="phone" value="'+mgPhone+'" name="phone">' +
+										'</div>' +
+									'</td>' +
+								'</tr>' +
+								'<tr>' +
+									'<td>' +
+										'<div class="l_left"><label class="labelStyle">账号：</label>' +
+											'<input type="text" placeholder="请输入账号" id="account" value="'+mgAccount+'" name="account">' +
+										'</div>' +
+									'</td>' +
+								'</tr>' +
+								'<tr>' +
+									'<td>' +
+										'<div class="l_left"><label class="labelStyle">密码：</label>' +
+											'<input type="text" placeholder="6-16位长度" id="password" value="'+mgPassword+'" name="password">' +
+										'</div>' +
+									'</td>' +
+								'</tr>' +
+								'<tr>' +
+									'<td>' +
+										'<div class="l_left"><label class="labelStyle">邮箱：</label>' +
+											'<input type="text" placeholder="请输入邮箱" id="email" value="'+mgEmail+'" name="email">' +
+										'</div>' +
+									'</td>' +
+								'</tr>' +
+								'<tr>' +
+									'<td>' +
+										'<div class="l_left"><label class="labelStyle">备注：</label>' +
+											'<input type="text" placeholder="请输入备注信息" id="contact" value="'+mgContact+'" name="contact">' +
+										'</div>' +
+									'</td>' +
+								'</tr>' +
+								'<tr>' +
+									'<td>' +
+										'<div class="l_left"><label class="labelStyle">权限等级：</label>' +
+										'<select id="accolevel"><option value="1">超级管理员</option>' +
+											'<option value="">'+mgCode+'</option></select>' +
+										'</div>' +
+									'</td>' +
+								'</tr>' +
+							'</table>' +
+						'</div>',
 				btn: ['保存', '取消'],
 				yes: function(index, layero) {
-					var name = $("#name").val();
-					var phone = $("#phone").val();
+					var name = $("#name",parent.document).val();
+					var phone = $("#phone",parent.document).val();
 					if (name == '' || name == undefined || name == null) {
-						alert("姓名不可为空！");
+						parent.layer.msg("姓名不可为空！");
 						return;
 					}
 					if (phone == '' || phone == undefined || phone == null) {
-						alert("手机号不可为空！");
+						parent.layer.msg("手机号不可为空！");
 						return;
 					}
 					if (phone.length > 11 || phone.length < 11) {
-						alert("手机号长度为11位！");
+						parent.layer.msg("手机号长度为11位！");
 						return;
 					}
 					$.ajax({
@@ -319,23 +369,25 @@
 							name: name,
 							userName: localStorage.getItem('account'),
 							phone: phone,
-							email: $("#email").val(),
-							contact: $("#contact").val(),
-							level: $("#accolevel option:selected").val()
+							email: $("#email",parent.document).val(),
+							contact: $("#contact",parent.document).val(),
+							level: $("#accolevel option:selected",parent.document).val()
 						},
 						success: function(result) {
 							if (result.returnCode) {
-								alert(result.returnMessage);
+								parent.layer.msg(result.returnMessage);
+								parent.layer.close(updateaccount);
+								getAccouTableData();
 							}
 						}
 					})
 
 				},
 				btn2: function(index, layero) {
-					layer.close(openlayer);
+					parent.layer.close(updateaccount);
 				}
 
-			});
+			}); 
 		}
 	</script>
 	<script>

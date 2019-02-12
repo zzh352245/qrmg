@@ -374,6 +374,9 @@ line-height: 50px;
 .tabe_bot input,.tabe_bot  select{width: 180px;height: 30px;border-radius: 6px;margin:0 20px 0 0;border: none;border: 1px #ccc solid}
 .tabe_btn{width: 60px;height: 30px;border: none;border-radius: 6px;color: #fff;line-height: 30px;}
 .table-operate .addChannel{width: 70px;}
+.tabe_bot input{
+	padding-left:5px;	
+}
 .border{    
 	width: 180px;
     height: 30px;
