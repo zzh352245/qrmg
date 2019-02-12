@@ -49,3 +49,33 @@ $(function() {
 	
 	
 });
+
+function zhbulr(){
+	var account = $("#account",parent.document).val();
+	if (account == '' || account == undefined || account == null) {
+		parent.layer.msg("账号不可为空！");
+		return;
+	}
+	$.ajax({
+		type: "get",
+		url: "/qrmg/front/mana/account/getIsReg?",
+		dataType: "json",
+		data: {
+			userName: account
+		},
+		success: function(result) {
+			if (result.object=="false") {
+				alert("账号已存在！");
+				$("#account",parent.document).val("");
+			}
+		}
+	})
+}
+
+function showchannelurl(showchanurl){
+	if(showchanurl == ""){
+		$("#churlshowdiv",parent.document).show();
+	}else{
+		$("#churlshowdiv",parent.document).hide();
+	}
+}

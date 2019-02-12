@@ -172,12 +172,12 @@
 									'</td>'+
 									'<td>'+
 										'<div class="l_left"><label>父集渠道：</label>'+
-											'<select id="channelParent" name="channelParent">'+
+											'<select id="channelParent" onchange="showchannelurl(this.options[this.options.selectedIndex].value)" name="channelParent">'+
 											'</select>'+
 										'</div>'+
 									'</td>'+
 								'</tr>'+
-								'<tr>'+
+								'<tr id="churlshowdiv">'+
 									'<td colspan="2">'+
 										'<div class="l_left"><label class="channelLabel">连接地址：</label>'+
 											'<textarea rows="3" cols="20" class="channelUrl" id="channelUrl" name="channelUrl"  style="resize:none" ></textarea>'+
@@ -196,14 +196,12 @@
 							channelLevel: 1
 						},
 						success: function(result) {
-							console.log(result);
 							$("#channelParent",parent.document).empty();
-			                $("#channelParent",parent.document).append("<option value=''>全部</option>");
+			                $("#channelParent",parent.document).append("<option value=''>无</option>");
 							var channelLevel = result.object[0].channelLevel;
 							var channelLinkUrl = result.object[0].channelLinkUrl;
 							var channelName = result.object[0].channelName;
 							$("#channelParent",parent.document).append("<option value='" + channelLevel + "'>" + channelName + "</option>");
-						
 						}
 					})
 					
@@ -267,10 +265,12 @@
 					yes: function (layero, index){
 						$.ajax({
 							type: "GET",
-							url: "/qrmg/front/mana/addChannel",
+							url: "/qrmg/front/mana/updateChannel",
 							dataType: "json",
 							data: {
-								
+								type: "1",
+								id: id,
+								channelQrcodeType: channelQrcodeType
 							},
 							success: function(result) {
 								

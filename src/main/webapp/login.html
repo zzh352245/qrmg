@@ -21,7 +21,7 @@
 							<div class="reg_error1 fn-left fn-red fn-marLeft fn-hide"></div>
 						</div>
 						<div class="userLog usePassWord userLogHover">
-							<input class="inputWidth" name="password" id="password" type="text" maxlength="255" value="" placeholder="请输入您的登录密码"/> 
+							<input class="inputWidth" name="password" id="password" type="password" maxlength="255" value="" placeholder="请输入您的登录密码"/> 
 							<div class="reg_error2 fn-left fn-red fn-marLeft fn-hide"></div>
 						</div>
 						<div class="userLog userSmsCode">
@@ -94,15 +94,16 @@
 			$(".reg_error3").html('请输入验证码').removeClass("fn-hide");
 		};
 		$.ajax({
-			url: "front/mana/account/login?",
+			url: "front/mana/account/login",
 			dataType: "json",
-			type: "get",
+			contentType:"application/json",
+			type: "post",
 			async: false,
-			data: {
+			data: JSON.stringify({
 				userName: userName,
 				userPass: password,
 				vcode: smsCode
-			},
+			}),
 			success: function(json) {
 				var reCode = json.returnCode;
 				if(reCode == 0){

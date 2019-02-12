@@ -148,15 +148,16 @@
 						return false;
 					}
 					$.ajax({
-						type: "GET",
-						url: "/qrmg/front/mana/account/updateAccount?",
+						type: "post",
+						url: "/qrmg/front/mana/account/updateAccount",
 						dataType: "json",
-						data: {
+						contentType:"application/json",
+						data: JSON.stringify({
 							type: "0",
 							userName: localStorage.getItem('account'),
 							newpassword: newpass,
 							oldpassword: oldpass
-						},
+						}),
 						success: function(result) {
 							if (result.returnCode) {
 								var restr = result.returnCode;
@@ -176,6 +177,7 @@
 			});
 
 		}
+		
 		/* 	layer.open({
 				type: 2,
 				title: '修改密码',

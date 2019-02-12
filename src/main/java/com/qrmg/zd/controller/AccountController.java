@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,14 +32,13 @@ public class AccountController {
 	@Resource(name="managerService")
 	private ManagerServiceImpl managerService;
 	
-//	@RequestMapping(value="/login", method=RequestMethod.POST, consumes="application/json")
-	@RequestMapping(value="/login", method=RequestMethod.GET)
-//	public OutputObject login(@RequestBody Map<String, Object> params, HttpServletRequest request){
-	public OutputObject login(HttpServletRequest request){
+	@RequestMapping(value="/login", method=RequestMethod.POST, consumes="application/json")
+	public OutputObject login(@RequestBody Map<String, Object> params, HttpServletRequest request){
+//	public OutputObject login(HttpServletRequest request){
 		OutputObject outputObj = new OutputObject();
-		String userName = request.getParameter("userName");
-		String password = request.getParameter("userPass");
-		String vcode = request.getParameter("vcode");
+		String userName = params.get("userName") == null ? "" : String.valueOf(params.get("userName"));
+		String password = params.get("userPass") == null ? "" : String.valueOf(params.get("userPass"));
+		String vcode = params.get("vcode") == null ? "" : String.valueOf(params.get("vcode"));
 		if(StringUtil.isEmpty(userName)){
 			outputObj.setReturnCode("9999");
 			outputObj.setReturnMessage("用户名不能为空！");
@@ -82,16 +82,16 @@ public class AccountController {
 	 * @return 
 	 * @param
 	 */
-	@RequestMapping(value="/addAccount", method=RequestMethod.GET)
-	public OutputObject addAccount(HttpServletRequest request){
+	@RequestMapping(value="/addAccount", method=RequestMethod.POST, consumes="application/json")
+	public OutputObject addAccount(@RequestBody Map<String, Object> params, HttpServletRequest request){
 		OutputObject outputObj = new OutputObject();
-		String mgName = request.getParameter("name");
-		String mgAccount = request.getParameter("userName");
-		String mgPassword = request.getParameter("password");
-		String mgPhone = request.getParameter("phone");
-		String mgEmail = request.getParameter("email");
-		String mgContact = request.getParameter("contact");
-		String mgCode = request.getParameter("level");
+		String mgName = params.get("name") == null ? "" : String.valueOf(params.get("name"));
+		String mgAccount = params.get("userName") == null ? "" : String.valueOf(params.get("userName"));
+		String mgPassword = params.get("password") == null ? "" : String.valueOf(params.get("password"));
+		String mgPhone = params.get("phone") == null ? "" : String.valueOf(params.get("phone"));
+		String mgEmail = params.get("email") == null ? "" : String.valueOf(params.get("email"));
+		String mgContact = params.get("contact") == null ? "" : String.valueOf(params.get("contact"));
+		String mgCode = params.get("level") == null ? "" : String.valueOf(params.get("level"));
 		if(StringUtil.isEmpty(mgName) || StringUtil.isEmpty(mgAccount) || StringUtil.isEmpty(mgPassword)
 				|| StringUtil.isEmpty(mgPhone) || StringUtil.isEmpty(mgCode)){
 			outputObj.setReturnCode("9999");
@@ -119,11 +119,11 @@ public class AccountController {
 	 * @return 
 	 * @param
 	 */
-	@RequestMapping(value="/updateAccount", method=RequestMethod.GET)
-	public OutputObject updateAccount(HttpServletRequest request){
+	@RequestMapping(value="/updateAccount", method=RequestMethod.POST, consumes="application/json")
+	public OutputObject updateAccount(@RequestBody Map<String, Object> params, HttpServletRequest request){
 		OutputObject outputObj = new OutputObject();
-		String type = request.getParameter("type");
-		String username = request.getParameter("userName");
+		String type = params.get("type") == null ? "" : String.valueOf(params.get("type"));
+		String username = params.get("userName") == null ? "" : String.valueOf(params.get("userName"));
 		if(StringUtil.isEmpty(type) || StringUtil.isEmpty(username)){
 			outputObj.setReturnCode("9999");
 			outputObj.setReturnMessage("修改类型不可为空！");
@@ -132,8 +132,8 @@ public class AccountController {
 		Manager manager = new Manager();
 		try {
 			if(StringUtils.equals("0", type)){
-				String newpassword = request.getParameter("newpassword");
-				String oldpassword = request.getParameter("oldpassword");
+				String newpassword = params.get("newpassword") == null ? "" : String.valueOf(params.get("newpassword"));
+				String oldpassword = params.get("oldpassword") == null ? "" : String.valueOf(params.get("oldpassword"));
 				if(StringUtil.isEmpty(newpassword) || StringUtil.isEmpty(oldpassword)
 						|| StringUtil.isEmpty(username)){
 					outputObj.setReturnCode("9999");
@@ -152,11 +152,11 @@ public class AccountController {
 					outputObj.setReturnMessage("原密码错误！");
 				}
 			}else{
-				String name = request.getParameter("name");
-				String phone = request.getParameter("phone");
-				String code = request.getParameter("code");
-				String email = request.getParameter("email");
-				String contact = request.getParameter("contact");
+				String name = params.get("name") == null ? "" : String.valueOf(params.get("name"));
+				String phone = params.get("phone") == null ? "" : String.valueOf(params.get("phone"));
+				String code = params.get("code") == null ? "" : String.valueOf(params.get("code"));
+				String email = params.get("email") == null ? "" : String.valueOf(params.get("email"));
+				String contact = params.get("contact") == null ? "" : String.valueOf(params.get("contact"));
 				manager.setMgCode(code);
 				manager.setMgContact(contact);
 				manager.setMgEmail(email);

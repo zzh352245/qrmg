@@ -157,19 +157,23 @@ public class ManagerController {
 	@RequestMapping(value="/addChannel", method=RequestMethod.GET)
 	public OutputObject addChannel(HttpServletRequest request){
 		OutputObject outputObj = new OutputObject();
-		String channelLevel = request.getParameter("channelLevel");
 		String channelParentCode = request.getParameter("channelParentCode");
 		String channelName = request.getParameter("channelName");
 		String channelLinkUrl = request.getParameter("channelLinkUrl");
 		String createMg = request.getParameter("mgName");
-		String type = request.getParameter("type");
-		if(StringUtil.isEmpty(channelLevel) || StringUtil.isEmpty(channelName)
-				|| StringUtil.isEmpty(createMg) || StringUtil.isEmpty(type)){
+		if(StringUtil.isEmpty(channelName)
+				|| StringUtil.isEmpty(createMg)){
 			outputObj.setReturnCode("9999");
 			outputObj.setReturnMessage("参数格式不正确！");
 			return outputObj;
 		}
 		Channel channel = new Channel();
+		String channelLevel;
+		if(StringUtil.isEmpty(channelParentCode)){
+			channelLevel="1";
+		}else{
+			channelLevel="2";
+		}
 		long cc = System.currentTimeMillis();
 		String channelCode = String.valueOf(cc).substring(3, 11);
 		//一级渠道，输入链接地址，生成二维码。二级渠道，只需要选择对应的一级渠道，自动生成链接地址和二维码
@@ -216,17 +220,12 @@ public class ManagerController {
 		String id = request.getParameter("id");
 		String channelParentCode = request.getParameter("channelParentCode");
 		String channelName = request.getParameter("channelName");
-		String channelQrcode = request.getParameter("channelQrcode");
-		String channelLevel = request.getParameter("channelLevel");
 		String channelLinkUrl = request.getParameter("channelLinkUrl");
 		String channelCode = request.getParameter("channelCode");
 		String updateMg = request.getParameter("updateMg");
 		String channelQrcodeType = request.getParameter("channelQrcodeType");//二维码开启状态
-		String type = request.getParameter("type");//1-修改了链接地址 0-未修改链接地址
-		if(StringUtil.isEmpty(id) || StringUtil.isEmpty(updateMg)
-				|| StringUtil.isEmpty(channelQrcode) || StringUtil.isEmpty(channelName)
-				|| StringUtil.isEmpty(channelLevel) || StringUtil.isEmpty(channelCode)
-				|| StringUtil.isEmpty(type) || StringUtil.isEmpty(channelLinkUrl)){
+		String type=request.getParameter("type");//1-开启/关闭二维码 0-修改渠道信息
+		if(StringUtil.isEmpty(id)){
 			outputObj.setReturnCode("9999");
 			outputObj.setReturnMessage("参数格式不正确！");
 			return outputObj;
@@ -239,8 +238,15 @@ public class ManagerController {
 			outputObj.setReturnMessage("没有获取到要修改的渠道！");
 			return outputObj;
 		}
-		if(StringUtils.equals("1", type)){
-			//修改了链接地址，重新生成二维码
+		if(StringUtils.equals(type, "0")){
+			if(StringUtil.isEmpty(channelParentCode)){
+				channel.setChannelLevel("1");
+			}else{
+				channel.setChannelLevel("2");
+				//二级渠道统一跳转自己做的页面，h5页面地址拼上渠道编码生成新二维码
+				channelLinkUrl = "http://localhost:28080/qrmg/module/homePage.html?channelCode=" + channelCode;
+			}
+			//重新生成二维码
 			String fileUrl = QRUtil.createQR(channelLinkUrl, channelCode);
 			if(StringUtil.isEmpty(fileUrl)){
 				outputObj.setReturnCode("9999");
@@ -248,16 +254,14 @@ public class ManagerController {
 				return outputObj;
 			}
 			channel.setChannelQrcode(fileUrl);
+			channel.setChannelParentCode(channelParentCode);
+			channel.setChannelName(channelName);
+			channel.setChannelLinkUrl(channelLinkUrl);
+			channel.setUpdateMg(updateMg);
+			channel.setChannelCode(channelCode);
 		}else{
-			channel.setChannelQrcode(channelQrcode);
+			channel.setChannelQrcodeType(channelQrcodeType);
 		}
-		channel.setChannelLevel(channelLevel);
-		channel.setChannelParentCode(channelParentCode);
-		channel.setChannelName(channelName);
-		channel.setChannelLinkUrl(channelLinkUrl);
-		channel.setUpdateMg(updateMg);
-		channel.setChannelCode(channelCode);
-		channel.setChannelQrcodeType(channelQrcodeType);
 		channelService.updateChannel(channel);
 		outputObj.setReturnCode("0");
 		outputObj.setReturnMessage("修改成功！");
