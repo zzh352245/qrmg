@@ -40,6 +40,9 @@
 			<if test="channelName != null and channelName != 'null' and channelName != ''">
 				and channel_name like #{channelName}
 			</if>
+			<if test="channelCode != null and channelCode != 'null' and channelCode != ''">
+				and channel_code = #{channelCode}
+			</if>
 			<if test="channelQrcodeType != null and channelQrcodeType != 'null' and channelQrcodeType != ''">
 				and channel_qrcode_type = #{channelQrcodeType}
 			</if>

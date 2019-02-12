@@ -22,7 +22,7 @@
 						<option value="1">关闭</option>
 					</select>
 				</div>
-				<button class="tabe_btn" onclick="getAccouTableData()">查询</button>
+				<button class="tabe_btn" onclick="getChannTableData()">查询</button>
 				<div class="clear"></div>
 			</div>
 		</div>
@@ -107,23 +107,33 @@
 						formatter: function(value, row) {
 							if (row.channelQrcodeType == '0') {
 								var d = '<button class="btn btn-warning btnPadding" button="#" mce_href="#" onclick="witchNotice(\'' +
-									row.id + '\',\'' + 0 + '\')">开启</button> ';
+									row.id + '\',\'' + 1 + '\')">开启</button> ';
 							} else {
 								var d = '<button class="btn btn-warning btnPadding" button="#" mce_href="#" onclick="witchNotice(\'' +
-									row.id + '\',\'' + 1 + '\')">关闭</button> ';
+									row.id + '\',\'' + 0 + '\')">关闭</button> ';
 							}
 
+							return d;
+						}
+					},
+					{
+						title: '操作',
+						field: '',
+						align: 'center',
+						formatter: function(value, row) {
+							var d = '<button class="btn btn-warning btnPadding" button="#" mce_href="#" onclick="updatechannel(\'' +
+							row.id + '\',\'' + row.channelName + '\',\'' + row.channelParentCode + '\',\'' + row.channelLinkUrl + '\',\'' + row.channelCode + '\')">编辑</button> ';
 							return d;
 						}
 					}
 				]
 			});
-			getAccouTableData();
+			getChannTableData();
 		});
 		var flag = true,
 			channelname, channelLevel;
 
-		function getAccouTableData() {
+		function getChannTableData() {
 			if (flag) {
 				channelname = "";
 				channelLevel = "";
@@ -148,6 +158,100 @@
 				}
 			})
 		}
+		
+		function updatechannel(id,channelName,channelParentCode,channelLinkUrl,channelCode){
+			var updateaccount = parent.layer.open({
+				id: 2,
+				type: 1,
+				title: '修改渠道',
+				shadeClose: false,
+				shade: 0.5,
+				skin: 'layui-layer-rim',
+				moveType: 1,
+				offset: ['100px', '700px'],
+				area: ['600px', 'auto'],
+				content: '<div class="channelAdd " id="channelAdd">'+
+							'<table class="tabe_bot">'+
+								'<tr>'+
+									'<td>'+
+										'<div class="l_left"><label>渠道名称：</label>'+
+											'<input type="text" placeholder="请输入渠道姓名" id="channelName" value="'+channelName+'" name="channelName">'+
+										'</div>'+
+									'</td>'+
+									'<td>'+
+										'<div class="l_left"><label>父级渠道：</label>'+
+											'<select id="channelParent" onchange="showchannelurl(this.options[this.options.selectedIndex].value)" name="channelParent">'+
+											'</select>'+
+										'</div>'+
+									'</td>'+
+								'</tr>'+
+								'<tr id="churlshowdiv">'+
+									'<td colspan="2">'+
+										'<div class="l_left"><label class="channelLabel">链接地址：</label>'+
+											'<textarea rows="3" cols="20" class="channelUrl" id="channelUrl" name="channelUrl" style="resize:none" >'+channelLinkUrl+'</textarea>'+
+										'</div>'+
+									'</td>'+
+								'</tr>'+
+							'</table>'+
+						'</div>',
+				btn: ['保存', '取消'],
+				success : function(index, layero){
+					$.ajax({
+						type: "GET",
+						url: "/qrmg/front/mana/queryChannel",
+						dataType: "json",
+						data: {
+							channelLevel: 1
+						},
+						success: function(result) {
+							$("#channelParent",parent.document).empty();
+			                $("#channelParent",parent.document).append("<option value=''>无</option>");
+							var channelLevel = result.object[0].channelLevel;
+							var channelLinkUrl = result.object[0].channelLinkUrl;
+							var channelName = result.object[0].channelName;
+							$("#channelParent",parent.document).append("<option value='" + channelLevel + "'>" + channelName + "</option>");
+						}
+					})
+					
+				},
+				yes: function(index, layero) {
+					var channelName = $("#channelName",parent.document).val();
+					var channelParent = $("#channelParent",parent.document).children('option:selected').val();
+					var channelUrl = $("#channelUrl",parent.document).val();
+					if(channelName == ''){
+						parent.layer.msg();
+					};
+					if(channelParent == ''){
+						parent.layer.msg();
+					};
+				
+					$.ajax({
+						type: "GET",
+						url: "/qrmg/front/mana/updateChannel?",
+						dataType: "json",
+						data: {
+							id: id,
+							type: "0",
+							channelName: channelName,
+							channelParentCode: channelParent,
+							channelLinkUrl: channelUrl,
+							channelCode: channelCode,
+							updateMg: localStorage.getItem('account')
+						},
+						success: function(result) {
+							parent.layer.msg(result.returnMessage);
+							parent.layer.close(updatechannel);
+							getChannTableData();
+						}
+					})
+
+				},
+				btn2: function(index, layero) {
+					layer.close(updatechannel);
+				}
+			}); 
+		}
+		
 		/* 添加渠道 */
 		function openChannel() {
 			var openChannel = parent.layer.open({
@@ -171,7 +275,7 @@
 										'</div>'+
 									'</td>'+
 									'<td>'+
-										'<div class="l_left"><label>父集渠道：</label>'+
+										'<div class="l_left"><label>父级渠道：</label>'+
 											'<select id="channelParent" onchange="showchannelurl(this.options[this.options.selectedIndex].value)" name="channelParent">'+
 											'</select>'+
 										'</div>'+
@@ -179,7 +283,7 @@
 								'</tr>'+
 								'<tr id="churlshowdiv">'+
 									'<td colspan="2">'+
-										'<div class="l_left"><label class="channelLabel">连接地址：</label>'+
+										'<div class="l_left"><label class="channelLabel">链接地址：</label>'+
 											'<textarea rows="3" cols="20" class="channelUrl" id="channelUrl" name="channelUrl"  style="resize:none" ></textarea>'+
 										'</div>'+
 									'</td>'+
@@ -219,15 +323,16 @@
 				
 					$.ajax({
 						type: "GET",
-						url: "/qrmg/front/mana/addChannel",
+						url: "/qrmg/front/mana/addChannel?",
 						dataType: "json",
 						data: {
 							channelName: channelName,
-							channelParent: channelParent,
-							channelUrl: channelUrl
+							channelParentCode: channelParent,
+							channelLinkUrl: channelUrl,
+							mgName: localStorage.getItem('account')
 						},
 						success: function(result) {
-							
+							alert(result.returnMessage);
 						}
 					})
 					

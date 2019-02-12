@@ -1,11 +1,14 @@
 package com.qrmg.zd.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +38,36 @@ public class PersonController {
 	private PersonServiceImpl personService;
 	@Resource(name="channelService")
 	private ChannelServiceImpl channelService;
+	
+	/**
+	 * @Description: 二维码地址，重定向到登记页面
+	 * @author zz
+	 * @date 2019年2月12日 下午4:10:26
+	 * @return 
+	 * @param
+	 */
+	@RequestMapping(value="/resChannelCode", method=RequestMethod.GET)
+	public String resChannelCode(HttpServletRequest request, HttpServletResponse response){
+		String channelCode=request.getParameter("channelCode");
+		try {
+			if(StringUtil.isEmpty(channelCode)){
+				response.sendError(404);
+				return null;
+			}
+			Map<String, String> map = new HashMap<>();
+			map.put("channelCode", channelCode);
+			map.put("channelQrcodeType", "0");
+			OutputObject outputObj = channelService.queryChannel(map);
+			if(StringUtils.equals(outputObj.getReturnCode(), "0")){
+				response.sendRedirect("http://localhost:28080/qrmg/login.html?ChannelCode="+channelCode);
+			}else{
+				response.sendError(404);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	/**
 	 * @Description: 用户登记

@@ -184,7 +184,12 @@ public class ManagerController {
 				return outputObj;
 			}
 			//二级渠道统一跳转自己做的页面，h5页面地址拼上渠道编码生成新二维码
-			channelLinkUrl = "http://localhost:28080/qrmg/module/homePage.html?channelCode=" + channelCode;
+			channelLinkUrl = "http://localhost:28080/qrmg/person/resChannelCode?channelCode=" + channelCode;
+		}
+		if(StringUtil.isEmpty(channelLinkUrl)){
+			outputObj.setReturnCode("9999");
+			outputObj.setReturnMessage("请输入渠道链接地址！");
+			return outputObj;
 		}
 		//需要生成二维码
 		String fileUrl = QRUtil.createQR(channelLinkUrl, channelCode);
@@ -244,7 +249,7 @@ public class ManagerController {
 			}else{
 				channel.setChannelLevel("2");
 				//二级渠道统一跳转自己做的页面，h5页面地址拼上渠道编码生成新二维码
-				channelLinkUrl = "http://localhost:28080/qrmg/module/homePage.html?channelCode=" + channelCode;
+				channelLinkUrl = "http://localhost:28080/qrmg/person/resChannelCode?channelCode=" + channelCode;
 			}
 			//重新生成二维码
 			String fileUrl = QRUtil.createQR(channelLinkUrl, channelCode);
