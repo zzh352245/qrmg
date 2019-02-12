@@ -364,3 +364,6 @@ body{
 	margin:0 auto;
 	table-layout:fixed;
 }
+.login_fields_input{
+	padding-left:5px;
+}
