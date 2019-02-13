@@ -10,7 +10,7 @@
     </style>
 		<title>系统首页</title>
 	</head>
-	<body>
+	<body onbeforeunload="javascript:return false">
 		<div id="container">
 			<div id="hd">
 				<div class="hd-wrap ue-clear">
@@ -120,6 +120,7 @@
 				shade: 0.5,
 				skin: 'layui-layer-rim', 
 				moveType: 1,
+				offset: ['20%', '30%'],//设置位移
 				area: ['500px', 'auto'],
 				content: '<div class="passTable">' +
 					'<div class="passTab"><label>原密码：</label><input type="text" placeholder="请输入原密码" id="oldpass" name="oldpass"></div>' +
@@ -177,9 +178,51 @@
 			});
 
 		}
-		window.onbeforeunload=function(){
-			localStorage.clear();
-		};
+		//页面离开或者浏览器关闭的时判断
+		window.onbeforeunload = function(event) {  
+		    return beforunload(event);  
+		};  
+		function beforunload(event) {  
+		    event = event ? event : (window.event ? window.event : null);  
+		    var myIE = myBrowser();  
+		    if (myIE=="IE") { // IE  
+		        var cy = event.clientY || event.target.event.clientY;  
+		        var ak = event.altKey || event.target.event.altKey;  
+		        if (cy < 0 || ak) {  
+		        	localStorage.clear();
+		        	return localStorage.clear();
+		        }  
+		    } else {  
+		        // Firefox、Chrome  
+		        var nodeName = event.currentTarget.document.activeElement.nodeName;  
+		        if (nodeName!="A") {
+		            return localStorage.clear();  
+		        }  
+		    }  
+		}  
+		  
+		/* 获取当前浏览器类型 */  
+		function myBrowser() {  
+		    var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串  
+		    var isOpera = userAgent.indexOf("Opera") > -1;  
+		    if (isOpera) { //判断是否Opera浏览器  
+		        return "Opera"  
+		    };  
+		    if (userAgent.indexOf("Firefox") > -1) { //判断是否Firefox浏览器  
+		        return "FF";  
+		    };  
+		    if (userAgent.indexOf("Chrome") > -1){  
+		        return "Chrome";  
+		    };  
+		    if (userAgent.indexOf("Safari") > -1) { //判断是否Safari浏览器  
+		        return "Safari";  
+		    };  
+		    if (userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera) { //判断是否IE浏览器  
+		        return "IE";  
+		    };  
+		}  
+		
+		
 		/* 	layer.open({
 				type: 2,
 				title: '修改密码',
