@@ -306,4 +306,32 @@ public class ManagerController {
 		return outputObj;
 	}
 	
+	/**
+	 * @Description: 查询渠道列表
+	 * @author zz
+	 * @date 2019年1月23日 下午4:26:44
+	 * @return 
+	 * @param
+	 */
+	@ResponseBody
+	@RequestMapping(value="/queryChannel1", method=RequestMethod.GET)
+	public OutputObject queryChannel1(HttpServletRequest request){
+		OutputObject outputObj = new OutputObject();
+		Map<String, String> map = new HashMap<>();
+		String channelLevel = request.getParameter("channelLevel");
+		String channelName = request.getParameter("channelName");
+		String createMg = request.getParameter("createMg");
+		String channelQrcodeType = request.getParameter("channelQrcodeType");
+		if(StringUtil.isNotEmpty(createMg)){
+			map.put("createMg", "%" + createMg + "%");
+		}
+		if(StringUtil.isNotEmpty(channelName)){
+			map.put("channelName", "%" + channelName + "%");
+		}
+		map.put("channelQrcodeType", channelQrcodeType);
+		map.put("channelLevel", channelLevel);
+		outputObj = channelService.queryChannel(map);
+		return outputObj;
+	}
+	
 }
