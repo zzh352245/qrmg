@@ -111,8 +111,30 @@
 						formatter: function(value, row) {
 							if (localStorage.getItem('account') == row.mgAccount) {
 								/* JSON.stringify(row)*/
+								var mgName = '',mgCode = '',mgAccount = '',mgPhone = '',mgEmail = '',mgContact = '',mgPassword = '';
+								if(row.mgName != '' && row.mgName != null){
+									mgName = row.mgName;
+								};
+								if(row.mgCode != '' && row.mgCode != null){
+									mgCode = row.mgCode;
+								};
+								if(row.mgAccount != '' && row.mgAccount != null){
+									mgAccount = row.mgAccount;
+								};
+								if(row.mgPhone != '' && row.mgPhone != null){
+									mgPhone = row.mgPhone;
+								};
+								if(row.mgEmail != '' && row.mgEmail != null){
+									mgEmail = row.mgEmail;
+								};
+								if(row.mgContact != '' && row.mgContact != null){
+									mgContact = row.mgContact;
+								};
+								if(row.mgPassword != '' && row.mgPassword != null){
+									mgPassword = row.mgPassword;
+								};
 								var d = '<button class="btn btn-warning btnPadding" button="#" mce_href="#" onclick="updateaccount(\'' +
-								row.id + '\',\'' + row.mgName + '\',\'' + row.mgCode + '\',\'' + row.mgAccount + '\',\'' + row.mgPhone + '\',\'' + row.mgEmail + '\',\'' + row.mgContact + '\',\'' + row.mgPassword + '\')">编辑</button> ';
+								row.id + '\',\'' + mgName + '\',\'' + mgCode + '\',\'' + mgAccount + '\',\'' + mgPhone + '\',\'' + mgEmail + '\',\'' + mgContact + '\',\'' + mgPassword + '\')">编辑</button> ';
 								return d;
 							} else {
 								var d = '<button class="btn btn-warning btnPadding" button="#" disabled="true" mce_href="#" onclick="">编辑</button> ';
@@ -271,9 +293,13 @@
 						}
 					})
 				},
-				btn2: function(index, layero) {
-					parent.layer.close(addaccount);
-				}
+				cancel: function(index, layero){ 
+					  if(confirm('确定要关闭么?')){ //只有当点击confirm框的确定时，该层才会关闭
+						  parent.layer.close(addaccount);
+					  }
+					  return false; 
+				}  
+				
 
 			});
 
@@ -361,9 +387,13 @@
 					})
 
 				},
-				btn2: function(index, layero) {
-					parent.layer.close(updateaccount);
-				}
+				cancel: function(index, layero){ 
+					  if(confirm('确定要关闭么?')){ //只有当点击confirm框的确定时，该层才会关闭
+						  parent.layer.close(updateaccount);
+					  }
+					  return false; 
+				}  
+				
 
 			}); 
 		}

@@ -107,10 +107,10 @@
 						formatter: function(value, row) {
 							if (row.channelQrcodeType == '0') {
 								var d = '<button class="btn btn-warning btnPadding" button="#" mce_href="#" onclick="witchNotice(\'' +
-									row.id + '\',\'' + 1 + '\')">开启</button> ';
+									row.id + '\',\'' + 0 + '\')">开启</button> ';
 							} else {
 								var d = '<button class="btn btn-warning btnPadding" button="#" mce_href="#" onclick="witchNotice(\'' +
-									row.id + '\',\'' + 0 + '\')">关闭</button> ';
+									row.id + '\',\'' + 1 + '\')">关闭</button> ';
 							}
 
 							return d;
@@ -121,8 +121,21 @@
 						field: '',
 						align: 'center',
 						formatter: function(value, row) {
+							var channelName = '',channelParentCode='',channelLinkUrl='',channelCode='';
+							if(row.channelName != '' && row.channelName != null){
+								channelName = row.channelName;
+							};
+							if(row.channelParentCode != '' && row.channelParentCode != null){
+								channelParentCode = row.channelParentCode;
+							};
+							if(row.channelLinkUrl != '' && row.channelLinkUrl != null){
+								channelLinkUrl = row.channelLinkUrl;
+							};
+							if(row.channelCode != '' && row.channelCode != null){
+								channelCode = row.channelCode;
+							};
 							var d = '<button class="btn btn-warning btnPadding" button="#" mce_href="#" onclick="updatechannel(\'' +
-							row.id + '\',\'' + row.channelName + '\',\'' + row.channelParentCode + '\',\'' + row.channelLinkUrl + '\',\'' + row.channelCode + '\')">编辑</button> ';
+							row.id + '\',\'' + channelName + '\',\'' + channelParentCode + '\',\'' + channelLinkUrl + '\',\'' + channelCode + '\')">编辑</button> ';
 							return d;
 						}
 					}
@@ -158,17 +171,17 @@
 				}
 			})
 		}
-		
+		/* 编辑渠道 */
 		function updatechannel(id,channelName,channelParentCode,channelLinkUrl,channelCode){
-			var updateaccount = parent.layer.open({
+			var account = parent.layer.open({
 				id: 2,
 				type: 1,
-				title: '修改渠道',
+				title: '编辑渠道',
 				shadeClose: false,
 				shade: 0.5,
 				skin: 'layui-layer-rim',
 				moveType: 1,
-				offset: ['100px', '700px'],
+				offset: ['250px', '600px'],
 				area: ['600px', 'auto'],
 				content: '<div class="channelAdd " id="channelAdd">'+
 							'<table class="tabe_bot">'+
@@ -218,12 +231,10 @@
 					var channelName = $("#channelName",parent.document).val();
 					var channelParent = $("#channelParent",parent.document).children('option:selected').val();
 					var channelUrl = $("#channelUrl",parent.document).val();
-					if(channelName == ''){
-						parent.layer.msg();
-					};
-					if(channelParent == ''){
-						parent.layer.msg();
-					};
+					/* if(channelName == ''){
+						parent.layer.msg('渠道名称不能为空');
+						return;
+					}; */
 				
 					$.ajax({
 						type: "GET",
@@ -240,15 +251,19 @@
 						},
 						success: function(result) {
 							parent.layer.msg(result.returnMessage);
-							parent.layer.close(updatechannel);
+							parent.layer.close(account);
 							getChannTableData();
 						}
 					})
 
 				},
-				btn2: function(index, layero) {
-					layer.close(updatechannel);
-				}
+				cancel: function(index, layero){ 
+					  if(confirm('确定要关闭么?')){ //只有当点击confirm框的确定时，该层才会关闭
+						  parent.layer.close(account);
+					  }
+					  return false; 
+				}  
+				
 			}); 
 		}
 		
@@ -262,7 +277,7 @@
 				moveType: 1,
 				fixed: false,   
 				scrollbar: false,
-				offset: ['100px', '700px'],
+				offset: ['250px', '600px'],
 				area: ['600px', 'auto'],
 				shadeClose: false,
 				moveOut: false,
@@ -315,12 +330,9 @@
 					var channelParent = $("#channelParent",parent.document).children('option:selected').val();
 					var channelUrl = $("#channelUrl",parent.document).val();
 					if(channelName == ''){
-						parent.layer.msg();
+						parent.layer.msg('渠道名称不能为空');
+						return;
 					};
-					if(channelParent == ''){
-						parent.layer.msg();
-					};
-				
 					$.ajax({
 						type: "GET",
 						url: "/qrmg/front/mana/addChannel?",
@@ -339,9 +351,12 @@
 					/* window.location.href = "../login.html";
 					localStorage.clear(); */
 				},
-				btn2: function(index, layero) {
-					layer.close(openChannel);
-				}
+				cancel: function(index, layero){ 
+					  if(confirm('确定要关闭么?')){ //只有当点击confirm框的确定时，该层才会关闭
+						  parent.layer.close(openChannel);
+					  }
+					  return false; 
+				}  
 			});
 		}
 		 //开启
@@ -378,7 +393,9 @@
 								channelQrcodeType: channelQrcodeType
 							},
 							success: function(result) {
-								
+								parent.layer.msg('操作成功');
+								parent.layer.close(witchNotice);
+								getChannTableData();
 							}
 						})
 						
@@ -390,11 +407,11 @@
 		 }
 	</script>
 	<script>
-		! function() {
+		/* ! function() {
 			laydate.skin('molv'); //切换皮肤，请查看skins下面皮肤库
 			laydate({
 				elem: '#demo'
 			}); //绑定元素
-		}();
+		}(); */
 	</script>
 </html>
