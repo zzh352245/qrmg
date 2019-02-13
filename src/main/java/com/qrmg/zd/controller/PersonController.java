@@ -59,7 +59,7 @@ public class PersonController {
 			map.put("channelQrcodeType", "0");
 			OutputObject outputObj = channelService.queryChannel(map);
 			if(StringUtils.equals(outputObj.getReturnCode(), "0")){
-				response.sendRedirect("http://localhost:28080/qrmg/login.html?ChannelCode="+channelCode);
+				response.sendRedirect("http://localhost:28080/qrmg/module/h5Login/h5_login.html?ChannelCode="+channelCode);
 			}else{
 				response.sendError(404);
 			}

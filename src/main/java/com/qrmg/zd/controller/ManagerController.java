@@ -230,7 +230,7 @@ public class ManagerController {
 		String updateMg = request.getParameter("updateMg");
 		String channelQrcodeType = request.getParameter("channelQrcodeType");//二维码开启状态
 		String type=request.getParameter("type");//1-开启/关闭二维码 0-修改渠道信息
-		if(StringUtil.isEmpty(id)){
+		if(StringUtil.isEmpty(id) || StringUtil.isEmpty(updateMg)){
 			outputObj.setReturnCode("9999");
 			outputObj.setReturnMessage("参数格式不正确！");
 			return outputObj;
@@ -244,8 +244,10 @@ public class ManagerController {
 			return outputObj;
 		}
 		if(StringUtils.equals(type, "0")){
+			channel.setChannelParentCode(channelParentCode);
 			if(StringUtil.isEmpty(channelParentCode)){
 				channel.setChannelLevel("1");
+				channel.setChannelParentCode("");
 			}else{
 				channel.setChannelLevel("2");
 				//二级渠道统一跳转自己做的页面，h5页面地址拼上渠道编码生成新二维码
@@ -259,13 +261,13 @@ public class ManagerController {
 				return outputObj;
 			}
 			channel.setChannelQrcode(fileUrl);
-			channel.setChannelParentCode(channelParentCode);
 			channel.setChannelName(channelName);
 			channel.setChannelLinkUrl(channelLinkUrl);
 			channel.setUpdateMg(updateMg);
 			channel.setChannelCode(channelCode);
 		}else{
 			channel.setChannelQrcodeType(channelQrcodeType);
+			channel.setUpdateMg(updateMg);
 		}
 		channelService.updateChannel(channel);
 		outputObj.setReturnCode("0");

@@ -78,7 +78,7 @@
 						valign: 'middle'
 					},
 					{
-						title: '父级渠道',
+						title: '父级渠道编码',
 						field: 'channelParentCode',
 						align: 'center',
 						valign: 'middle'
@@ -207,6 +207,12 @@
 										'</div>'+
 									'</td>'+
 								'</tr>'+
+								'<tr id="churlshowdiv">'+
+								'<td colspan="2">'+
+									'<div class="l_left"><label class="channelLabel" style="color:red;">如需将一级渠道修改为二级渠道，请同步修改原渠道下的二级渠道信息！</label>'+
+									'</div>'+
+								'</td>'+
+							'</tr>'+
 							'</table>'+
 						'</div>',
 				btn: ['保存', '取消'],
@@ -223,7 +229,7 @@
 			               	for (var i = 0; i < result.object.length; i++) {
 	                        	$("#channelParent",parent.document).append("<option value='" + result.object[i].channelCode + "'>" + result.object[i].channelName + "</option>");
 		                    }
-			               	$("#channelParent option[value="+channelParentCode+"]").attr("selected","selected");
+			               	$("#channelParent", parent.document).val(channelParentCode).attr("selected",true);
 						}
 					})
 					
@@ -248,7 +254,7 @@
 							channelParentCode: channelParent,
 							channelLinkUrl: channelUrl,
 							channelCode: channelCode,
-							updateMg: localStorage.getItem('account')
+							updateMg: localStorage.getItem('userName')
 						},
 						success: function(result) {
 							parent.layer.msg(result.returnMessage);
@@ -346,7 +352,7 @@
 							channelName: channelName,
 							channelParentCode: channelParent,
 							channelLinkUrl: channelUrl,
-							mgName: localStorage.getItem('account')
+							mgName: localStorage.getItem('userName')
 						},
 						success: function(result) {
 							parent.layer.msg(result.returnMessage);
@@ -397,6 +403,7 @@
 							data: {
 								type: "1",
 								id: id,
+								updateMg: localStorage.getItem('userName'),
 								channelQrcodeType: channelQrcodeType
 							},
 							success: function(result) {
