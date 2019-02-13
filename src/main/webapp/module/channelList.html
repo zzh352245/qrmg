@@ -217,12 +217,19 @@
 							channelLevel: 1
 						},
 						success: function(result) {
-							$("#channelParent",parent.document).empty();
-			                $("#channelParent",parent.document).append("<option value=''>无</option>");
-							var channelLevel = result.object[0].channelLevel;
-							var channelLinkUrl = result.object[0].channelLinkUrl;
-							var channelName = result.object[0].channelName;
-							$("#channelParent",parent.document).append("<option value='" + channelLevel + "'>" + channelName + "</option>");
+							if(channelParentCode == ''){
+								$("#channelParent",parent.document).append("<option value=''>无</option>");
+							}else{
+								$("#channelParent",parent.document).append("<option value='"+channelCode+"'>"+channelParentCode+"</option>");
+							}
+							 var channelList = result.object;
+			               	 for (var i = 0; i < channelList.length; i++) {
+		                        var dep = channelList[i];
+		                        var channelCode = dep.channelCode;
+		                        var channelLinkUrl = dep.channelLinkUrl;
+		                        var channelParentCode = dep.channelParentCode;
+		                        $("#channelParent",parent.document).append("<option value='" + channelCode + "'>" + channelParentCode + "</option>");
+		                     }
 						}
 					})
 					
@@ -317,10 +324,14 @@
 						success: function(result) {
 							$("#channelParent",parent.document).empty();
 			                $("#channelParent",parent.document).append("<option value=''>无</option>");
-							var channelLevel = result.object[0].channelLevel;
-							var channelLinkUrl = result.object[0].channelLinkUrl;
-							var channelName = result.object[0].channelName;
-							$("#channelParent",parent.document).append("<option value='" + channelLevel + "'>" + channelName + "</option>");
+			                var channelList = result.object;
+			                for (var i = 0; i < channelList.length; i++) {
+		                        var dep = channelList[i];
+		                        var channelCode = dep.channelCode;
+		                        var channelLinkUrl = dep.channelLinkUrl;
+		                        var channelName = dep.channelName;
+		                        $("#channelParent",parent.document).append("<option value='" + channelCode + "'>" + channelName + "</option>");
+		                    }
 						}
 					})
 					
