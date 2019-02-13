@@ -105,14 +105,23 @@
 						field: '',
 						align: 'center',
 						formatter: function(value, row) {
-							if (row.channelQrcodeType == '0') {
-								var d = '<button class="btn btn-warning btnPadding" button="#" mce_href="#" onclick="witchNotice(\'' +
-									row.id + '\',\'' + 0 + '\')">开启</button> ';
-							} else {
-								var d = '<button class="btn btn-warning btnPadding" button="#" mce_href="#" onclick="witchNotice(\'' +
-									row.id + '\',\'' + 1 + '\')">关闭</button> ';
+							if(row.channelLevel=='2'){
+								if (row.channelQrcodeType == '0') {
+									var d = '<button class="btn btn-warning btnPadding" button="#" mce_href="#" onclick="witchNotice(\'' +
+										row.id + '\',\'' + 1 + '\')">开启</button> ';
+								} else {
+									var d = '<button class="btn btn-warning btnPadding" button="#" mce_href="#" onclick="witchNotice(\'' +
+										row.id + '\',\'' + 0 + '\')">关闭</button> ';
+								}
+							}else{
+								if (row.channelQrcodeType == '0') {
+									var d = '<button class="btn btn-warning btnPadding" disabled="true" button="#" mce_href="#" onclick="witchNotice(\'' +
+										row.id + '\',\'' + 1 + '\')">开启</button> ';
+								} else {
+									var d = '<button class="btn btn-warning btnPadding" disabled="true" button="#" mce_href="#" onclick="witchNotice(\'' +
+										row.id + '\',\'' + 0 + '\')">关闭</button> ';
+								}
 							}
-
 							return d;
 						}
 					},

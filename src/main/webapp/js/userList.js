@@ -50,21 +50,13 @@ function Noticeload() {
     getNoticeTableData();
 }
 function getNoticeTableData() {
-    if (flag) {
-        userName = "";
-        phoneNum = "";
-        flag = false;
-    } else {
-        userName = $("#userName").val();
-        phoneNum = $("#phoneNum").val();
-    }
     $.ajax({
         type: "GET",
         url: "/qrmg/person/queryPersonList?",
         dataType: "json",
         data:{
-        	userName: userName,
-        	phoneNumber: phoneNum
+        	userName: $("#userName").val(),
+			channelCode: $("#channelCode option:selected").val()
         },
         success: function (result) {
             if (result.object) {
