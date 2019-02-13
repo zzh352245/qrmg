@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>用户登录手机版</title>
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+		<meta content="yes" name="apple-mobile-web-app-capable" />
+		<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+		<meta content="telephone=no" name="format-detection" />
+		<link href="../../css/h5_login.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+
+		<section class="aui-flexView">
+
+			<section class="aui-scrollView">
+				<div class="aui-jop-chang">
+					<img src="../../img/H5_bt.png" />
+				</div>
+				<div class="aui-jop-top">
+					<div class="aui-jop-top-box">
+						<form action="">
+							<div class="aui-flex b-line">
+								<div class="aui-form-item">
+									<img src="../../img/yh.png" alt="">
+								</div>
+								<div class="aui-flex-box">
+									<input type="text" placeholder="请输入姓名" class="name">
+								</div>
+							</div>
+							<div class="aui-flex b-line b-linephone">
+								<div class="aui-form-item aui-form-item2">
+									<img src="../../images/img/phone.png" alt="">
+								</div>
+								<div class="aui-flex-box">
+									<input type="text" placeholder="请输入手机号码" class="phone">
+								</div>
+								<!-- <div class="aui-psd">
+									<a href="javascript:;">忘记密码</a>
+								</div> -->
+							</div>
+							<div class="aui-form-button">
+								<div class="getAway">提交</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="register">
+					<p class="register_top">苏宁签约中心</p>
+					<p class="register_bottom">苏宁融资一站式服务平台</p>
+				</div>
+				
+			</section>
+			
+		</section>
+
+	</body>
+</html>
+<script type="text/javascript" src="../../js/jquery.js"></script>
+<script type="text/javascript" src="../../js/layer_v2.1/layer/layer.js"></script>
+<script>
+	(function() {
+		function w() {
+			var r = document.documentElement;
+			var a = r.getBoundingClientRect().width;
+			if (a > 750) {
+				a = 750;
+			}
+			//750/w = 100/font-size
+			rem = a / 7.5;
+			r.style.fontSize = rem + "px";
+			r.style.fontFamily = "微软雅黑"
+		}
+		var t;
+		w();
+		window.addEventListener("resize", function() {
+			clearTimeout(t);
+			t = setTimeout(w, 300)
+		}, false);
+	})();
+	$(".getAway").on("click",function(){
+		var name = $(".name").val();
+		var phone = $(".phone").val();
+		var isPhoneNum = /^1[345789]\d{9}$/;
+		if(name == ''){
+			layer.msg('请输入姓名');
+		}
+		if(phone == ''){
+			layer.msg('请输入号码');
+		}else if(isPhoneNum.test(phone)){
+			layer.msg('您输入的号码格式有误');
+		}
+		
+		$.ajax({
+			type: "GET",
+			url: "",
+			dataType: "json",
+			data: {
+				name: name,
+				phone: phone
+			},
+			success: function(result) {
+				
+			}
+		})
+		
+	})
+
+	
+	
+</script>
