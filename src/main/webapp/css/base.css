@@ -31,7 +31,11 @@ dl, dt, dd, ol, ul, li{ list-style:none;}
 /*some common class*/
 .left{float:left;}
 .right{float:right;}
-
+/* 自动换行 */
+#table{
+	white-space: normal;
+    word-break: break-word; 
+}
 /*clear*/
 .ue-clear:after{content: "";display:block;height:0;clear:both;visibility:hidden;}
 .ue-clear{display:inline-block;}
