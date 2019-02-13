@@ -18,6 +18,7 @@
 				<div class="l_left"><label>创建人：</label><input type="text" placeholder="请输入创建人" id="createMg" name="createMg"></div>
 				<div class="l_left"><label>二维码状态：</label>
 					<select id="channelQrcodeType" name="channelQrcodeType">
+						<option value="">全部</option>
 						<option value="0">开启</option>
 						<option value="1">关闭</option>
 					</select>
@@ -156,21 +157,13 @@
 			channelname, channelLevel;
 
 		function getChannTableData() {
-			if (flag) {
-				channelname = "";
-				channelLevel = "";
-				flag = false;
-			} else {
-				channelname = $("#channelname").val();
-				channelLevel = $("#channelLevel option:selected").val();
-			}
 			$.ajax({
 				type: "GET",
-				url: "/qrmg/front/mana/queryChannel",
+				url: "/qrmg/front/mana/queryChannel?",
 				dataType: "json",
 				data: {
-					channelName: channelname,
-					channelLevel: channelLevel
+					channelQrcodeType: $("#channelQrcodeType option:selected").val(),
+					createMg: $("#createMg").val()
 				},
 				success: function(result) {
 					if (result.object) {
@@ -220,25 +213,17 @@
 				success : function(index, layero){
 					$.ajax({
 						type: "GET",
-						url: "/qrmg/front/mana/queryChannel",
+						url: "/qrmg/front/mana/queryChannel1",
 						dataType: "json",
 						data: {
-							channelLevel: 1
+							channelLevel: "1"
 						},
 						success: function(result) {
-							if(channelParentCode == ''){
-								$("#channelParent",parent.document).append("<option value=''>无</option>");
-							}else{
-								$("#channelParent",parent.document).append("<option value='"+channelCode+"'>"+channelParentCode+"</option>");
-							}
-							 var channelList = result.object;
-			               	 for (var i = 0; i < channelList.length; i++) {
-		                        var dep = channelList[i];
-		                        var channelCode = dep.channelCode;
-		                        var channelLinkUrl = dep.channelLinkUrl;
-		                        var channelParentCode = dep.channelParentCode;
-		                        $("#channelParent",parent.document).append("<option value='" + channelCode + "'>" + channelParentCode + "</option>");
-		                     }
+							$("#channelParent",parent.document).append("<option value=''>无</option>");
+			               	for (var i = 0; i < result.object.length; i++) {
+	                        	$("#channelParent",parent.document).append("<option value='" + result.object[i].channelCode + "'>" + result.object[i].channelName + "</option>");
+		                    }
+			               	$("#channelParent option[value="+channelParentCode+"]").attr("selected","selected");
 						}
 					})
 					
@@ -364,7 +349,9 @@
 							mgName: localStorage.getItem('account')
 						},
 						success: function(result) {
-							alert(result.returnMessage);
+							parent.layer.msg(result.returnMessage);
+							parent.layer.close(addaccount);
+							getChannTableData();
 						}
 					})
 					
