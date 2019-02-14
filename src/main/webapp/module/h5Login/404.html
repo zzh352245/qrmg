@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+		<meta content="yes" name="apple-mobile-web-app-capable" />
+		<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+		<meta content="telephone=no" name="format-detection" />
+		<title>404</title>
+		<style>
+			*{margin: 0;padding: 0;}
+			html,body{
+				width: 100%;
+				height: 100%;
+				background: #f8f8f8;
+			}
+			.sy_no{
+				text-align: center;
+			}
+			.sy_no img{
+				 margin: 100px auto;
+				
+			} 
+		</style>
+	</head>
+	<body>
+		<div class="sy_no">
+			<img src="../../img/404.png" id="img"/> 
+		</div>
+	</body>
+</html>
+<script>
+	var w = document.body.clientWidth;
+	var h = document.body.clientHeight;
+	document.getElementById('img').width = w/2;
+</script>
