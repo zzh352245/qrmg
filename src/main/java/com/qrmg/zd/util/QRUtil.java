@@ -37,11 +37,11 @@ public class QRUtil {
 	 * @param
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static String createQR(String url, String channelCode){
+	public static String createQR(String url, String channelCode, String fileUrl){
         int width = 400;
         int height = 400;
         String format = "png";
-        String filePath = "F:/codeImg/" + channelCode + ".png";
+        String filePath = fileUrl + "/" + channelCode + ".png";
         try {
 			Hashtable hints= new Hashtable();
 			hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
