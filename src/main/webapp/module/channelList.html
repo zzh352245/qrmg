@@ -58,7 +58,17 @@
 				pageNumber: 1,
 				search: false, //显示搜索框
 				contentType: "application/x-www-form-urlencoded",
-				queryParams: null,
+				queryParams: function(params){
+					return{
+						limit: params.limit,                         //页面大小
+	                    offset: (params.offset / params.limit) + 1,   //页码
+	                    sort: params.sort,      //排序列名  
+	                    sortOrder: params.order, //排位命令（desc，asc） 
+	                    channelQrcodeType: $("#channelQrcodeType option:selected").val(),
+	                    createMg: $("#createMg").val()
+					}
+				},
+				showColums: false,
 				columns: [{
 						title: "渠道名称",
 						field: 'channelName',
@@ -153,9 +163,8 @@
 			});
 			getChannTableData();
 		});
-		var flag = true,
+		 var flag = true,
 			channelname, channelLevel;
-
 		function getChannTableData() {
 			$.ajax({
 				type: "GET",
@@ -166,12 +175,17 @@
 					createMg: $("#createMg").val()
 				},
 				success: function(result) {
-					if (result.object) {
+					if (result.returnCode == 0) {
 						var NoticeTableData = result.object;
 						$('#table').bootstrapTable("load", NoticeTableData);
+					} else {
+						layer.msg(result.returnMessage);
+						var tBody = $("#table").find("tbody");
+						$(tBody).empty().append('<tr class="no-records-found"><td colspan="9">没有找到匹配的记录</td></tr>');
+						$(".fixed-table-pagination").hide();
 					}
 				}
-			})
+			}) 
 		}
 		/* 编辑渠道 */
 		function updatechannel(id,channelName,channelParentCode,channelLinkUrl,channelCode){
@@ -183,7 +197,7 @@
 				shade: 0.5,
 				skin: 'layui-layer-rim',
 				moveType: 1,
-				offset: ['250px', '600px'],
+				offset: ['20%', '30%'],//设置位移
 				area: ['600px', 'auto'],
 				content: '<div class="channelAdd " id="channelAdd">'+
 							'<table class="tabe_bot">'+
@@ -284,7 +298,7 @@
 				moveType: 1,
 				fixed: false,   
 				scrollbar: false,
-				offset: ['250px', '600px'],
+				offset: ['20%', '30%'],//设置位移
 				area: ['600px', 'auto'],
 				shadeClose: false,
 				moveOut: false,

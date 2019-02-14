@@ -59,10 +59,15 @@ function getNoticeTableData() {
 			channelCode: $("#channelCode option:selected").val()
         },
         success: function (result) {
-            if (result.object) {
-                var NoticeTableData = result.object;
-                $('#table').bootstrapTable("load", NoticeTableData);
-            }
+        	if (result.returnCode == 0) {
+				var NoticeTableData = result.object;
+				$('#table').bootstrapTable("load", NoticeTableData);
+			} else {
+				layer.msg(result.returnMessage);
+				var tBody = $("#table").find("tbody");
+				$(tBody).empty().append('<tr class="no-records-found"><td colspan="9">没有找到匹配的记录</td></tr>');
+				$(".fixed-table-pagination").hide();
+			}
         }
     })
 }
