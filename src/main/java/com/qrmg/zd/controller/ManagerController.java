@@ -106,7 +106,8 @@ public class ManagerController {
 			outputObj.setReturnMessage("参数格式不正确！");
 			return outputObj;
 		}
-		String fileUrl = QRUtil.createQR(url, channelCode);
+		String filU = request.getSession().getServletContext().getRealPath("/QRCode");
+		String fileUrl = QRUtil.createQR(url, channelCode, filU);
 		if(StringUtil.isEmpty(fileUrl)){
 			outputObj.setReturnCode("9999");
 			outputObj.setReturnMessage("二维码生成失败！");
@@ -192,7 +193,8 @@ public class ManagerController {
 			return outputObj;
 		}
 		//需要生成二维码
-		String fileUrl = QRUtil.createQR(channelLinkUrl, channelCode);
+		String filU = request.getSession().getServletContext().getRealPath("/QRCode");
+		String fileUrl = QRUtil.createQR(channelLinkUrl, channelCode, filU);
 		if(StringUtil.isEmpty(fileUrl)){
 			outputObj.setReturnCode("9999");
 			outputObj.setReturnMessage("二维码生成失败！");
@@ -254,7 +256,8 @@ public class ManagerController {
 				channelLinkUrl = "http://localhost:28080/qrmg/person/resChannelCode?channelCode=" + channelCode;
 			}
 			//重新生成二维码
-			String fileUrl = QRUtil.createQR(channelLinkUrl, channelCode);
+			String filU = request.getSession().getServletContext().getRealPath("/QRCode");
+			String fileUrl = QRUtil.createQR(channelLinkUrl, channelCode, filU);
 			if(StringUtil.isEmpty(fileUrl)){
 				outputObj.setReturnCode("9999");
 				outputObj.setReturnMessage("二维码生成失败！");
@@ -281,7 +284,7 @@ public class ManagerController {
 		//保存数据库的路径
 		String sqlPath = null; 
 		//定义文件保存的本地路径
-		String localPath="F:\\codeImg\\";
+		String localPath=request.getSession().getServletContext().getRealPath("/QRCode");
 		//定义 文件名
 		String filename=null;  
 		if(!file.isEmpty()){  
