@@ -73,7 +73,7 @@ public class PersonController {
 	 * @param
 	 */
 	@RequestMapping(value="/addPerson", method=RequestMethod.GET)
-	public String addPerson(HttpServletRequest request, HttpServletResponse response){
+	public OutputObject addPerson(HttpServletRequest request, HttpServletResponse response){
 		OutputObject output = new OutputObject();
 		String name = request.getParameter("userName");
 		String phone = request.getParameter("userPhone");
@@ -81,7 +81,7 @@ public class PersonController {
 		if(StringUtil.isEmpty(channel)){
 			output.setReturnCode("9999");
 			output.setReturnMessage("参数不符合规范！");
-			return null;
+			return output;
 		}
 		try {
 			Person person = new Person();
@@ -95,18 +95,9 @@ public class PersonController {
 		}finally{
 			Map<String, String> map = new HashMap<>();
 			map.put("channelCode", channel);
-			Map<String, String> map1 = channelService.getChannel(map);
-			try {
-				if(StringUtil.isNotEmpty(map1.get("url"))){
-					response.sendRedirect(map1.get("url"));
-				}else{
-					response.sendError(404);
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			output.setBean(channelService.getChannel(map));
 		}
-		return null;
+		return output;
 	}
 	
 	/**
