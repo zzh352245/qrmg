@@ -7,12 +7,12 @@
 		<meta content="yes" name="apple-mobile-web-app-capable" />
 		<meta content="black" name="apple-mobile-web-app-status-bar-style" />
 		<meta content="telephone=no" name="format-detection" />
+		<link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon" />
 		<link href="../../css/h5_login.css" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
 
 		<section class="aui-flexView">
-
 			<section class="aui-scrollView">
 				<div class="aui-jop-chang">
 					<img src="../../img/H5_bt.png" />
@@ -82,6 +82,8 @@
 		var name = $(".name").val();
 		var phone = $(".phone").val();
 		var isPhoneNum = /^1[345789]\d{9}$/;
+		var Url = window.location.href;
+		var UrlSplit1 = Url.split("?ChannelCode=")[1];
 		if(name == ''){
 			layer.msg('请输入姓名');
 		}
@@ -97,7 +99,8 @@
 			dataType: "json",
 			data: {
 				userName: name,
-				userPhone: phone
+				userPhone: phone,
+				channelCode: UrlSplit1
 			},
 			success: function(result) {
 				
