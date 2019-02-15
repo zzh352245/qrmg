@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,8 +30,6 @@ import com.qrmg.zd.util.StringUtil;
 @RequestMapping(value="/person")
 public class PersonController {
 
-	protected Logger logger = LoggerFactory.getLogger(getClass());
-	
 	@Resource(name="personService")
 	private PersonServiceImpl personService;
 	@Resource(name="channelService")
@@ -77,7 +73,7 @@ public class PersonController {
 	 * @param
 	 */
 	@RequestMapping(value="/addPerson", method=RequestMethod.GET)
-	public OutputObject addPerson(HttpServletRequest request){
+	public String addPerson(HttpServletRequest request, HttpServletResponse response){
 		OutputObject output = new OutputObject();
 		String name = request.getParameter("userName");
 		String phone = request.getParameter("userPhone");
@@ -85,7 +81,7 @@ public class PersonController {
 		if(StringUtil.isEmpty(channel)){
 			output.setReturnCode("9999");
 			output.setReturnMessage("参数不符合规范！");
-			return output;
+			return null;
 		}
 		try {
 			Person person = new Person();
@@ -96,12 +92,21 @@ public class PersonController {
 		} catch (Exception e) {
 			output.setReturnCode("9999");
 			output.setReturnMessage("登记失败！");
+		}finally{
+			Map<String, String> map = new HashMap<>();
+			map.put("channelCode", channel);
+			Map<String, String> map1 = channelService.getChannel(map);
+			try {
+				if(StringUtil.isNotEmpty(map1.get("url"))){
+					response.sendRedirect(map1.get("url"));
+				}else{
+					response.sendError(404);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		Map<String, String> map = new HashMap<>();
-		map.put("channelCode", channel);
-		output.setBean(channelService.getChannel(map));
-		output.setReturnCode("0");
-		return output;
+		return null;
 	}
 	
 	/**

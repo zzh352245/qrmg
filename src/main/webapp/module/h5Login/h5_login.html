@@ -93,11 +93,11 @@
 		
 		$.ajax({
 			type: "GET",
-			url: "",
+			url: "/qrmg/front/mana/addPerson",
 			dataType: "json",
 			data: {
-				name: name,
-				phone: phone
+				userName: name,
+				userPhone: phone
 			},
 			success: function(result) {
 				
