@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -95,7 +96,18 @@ public class PersonController {
 		}finally{
 			Map<String, String> map = new HashMap<>();
 			map.put("channelCode", channel);
-			output.setBean(channelService.getChannel(map));
+			Map<String, String> map1 = channelService.getChannel(map);
+			if(CollectionUtils.isEmpty(map1)){
+				try {
+					response.sendError(404);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				return null;
+			}else{
+				output.setBean(map1);
+				output.setReturnCode("0");
+			}
 		}
 		return output;
 	}
