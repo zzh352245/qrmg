@@ -19,9 +19,6 @@ import javax.imageio.stream.ImageOutputStream;
 
 import org.w3c.dom.Element;
 
-import com.ai.frame.logger.Logger;
-import com.ai.frame.logger.LoggerFactory;
-
 /**
  * 工具类：生成验证码图片
  *
@@ -36,7 +33,6 @@ public class SecurityImage {
 	 * @param securityCode
 	 * @return
 	 */
-    private static final Logger logger = LoggerFactory.getActionLog(SecurityImage.class);
 	public static BufferedImage createImage(String securityCode) {
 		int codeLength = securityCode.length();//验证码长度
 		int fontSize = 15;//字体大小
@@ -89,7 +85,7 @@ public class SecurityImage {
 			byte[] b = outStream.toByteArray();
 			inputStream = new ByteArrayInputStream(b);
 		} catch (Exception e) {
-			logger.error("ByteArrayInputStream", "将BufferedImage转换成ByteArrayinputStream", e);
+			e.printStackTrace();
 		}
 		return inputStream;
 	}
