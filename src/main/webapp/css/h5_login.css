@@ -322,7 +322,7 @@ a {
 .aui-flex-box input{
     width:100%;
     height:auto;
-    color:#e54e31;
+    color:#121111;
     background:none;
     border:none;
 }
@@ -343,6 +343,7 @@ a {
     border:none;
     color:#fff;
 	font-size: 0.24rem;
+	cursor:pointer;
 }
 .register{
 	width: 100%;

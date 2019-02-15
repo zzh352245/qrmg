@@ -86,11 +86,14 @@
 		var UrlSplit1 = Url.split("?ChannelCode=")[1];
 		if(name == ''){
 			layer.msg('请输入姓名');
+			return;
 		}
 		if(phone == ''){
 			layer.msg('请输入号码');
-		}else if(isPhoneNum.test(phone)){
+			return;
+		}else if(!isPhoneNum.test(phone)){
 			layer.msg('您输入的号码格式有误');
+			return;
 		}
 		
 		$.ajax({
@@ -103,8 +106,15 @@
 				channelCode: UrlSplit1
 			},
 			success: function(result) {
-				
-			}
+				if(result.returnCode){
+					window.location.href = result.bean.url; 
+				} else {
+					window.location.href = '404.html';
+				}
+			},
+			error: function(result){
+				layer.msg('操作有误');
+			} 
 		})
 		
 	})
