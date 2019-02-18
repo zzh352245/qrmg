@@ -54,8 +54,8 @@
 	<insert id="addChannel" useGeneratedKeys="true" keyProperty="id"
 		parameterType="com.qrmg.zd.model.Channel">
 		insert into qrmg_channel
-		set channel_level=#{channelLevel},channel_parent_code=#{channelParentCode},channel_code=#{channelCode},
-		channel_name=#{channelName},channel_qrcode=#{channelQrcode},
+		set channel_level=#{channelLevel},channel_parent_code=#{channelParentCode,jdbcType=VARCHAR},channel_code=#{channelCode},
+		channel_name=#{channelName},channel_qrcode=#{channelQrcode,jdbcType=VARCHAR},
 		channel_link_url=#{channelLinkUrl},create_mg=#{createMg}
 	</insert>
 	<update id="updateChannel" parameterType="com.qrmg.zd.model.Channel">

@@ -147,6 +147,14 @@ public class ManagerController {
 		return outputObj;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/ceshi", method=RequestMethod.GET)
+	public String ceshi(HttpServletRequest request){
+		String u = request.getScheme() +"://" + request.getServerName() + ":" 
+				+ request.getServerPort() ;
+		return u;
+	}
+	
 	/**
 	 * @Description: 添加渠道信息
 	 * @author zz
@@ -185,7 +193,9 @@ public class ManagerController {
 				return outputObj;
 			}
 			//二级渠道统一跳转自己做的页面，h5页面地址拼上渠道编码生成新二维码
-			channelLinkUrl = "http://localhost:28080/qrmg/person/resChannelCode?channelCode=" + channelCode;
+			String u = request.getScheme() +"://" + request.getServerName() + ":" 
+						+ request.getServerPort();
+			channelLinkUrl = u+"/qrmg/person/resChannelCode?channelCode=" + channelCode;
 		}
 		if(StringUtil.isEmpty(channelLinkUrl)){
 			outputObj.setReturnCode("9999");
@@ -253,7 +263,9 @@ public class ManagerController {
 			}else{
 				channel.setChannelLevel("2");
 				//二级渠道统一跳转自己做的页面，h5页面地址拼上渠道编码生成新二维码
-				channelLinkUrl = "http://localhost:28080/qrmg/person/resChannelCode?channelCode=" + channelCode;
+				String u = request.getScheme() +"://" + request.getServerName() + ":" 
+						+ request.getServerPort();
+				channelLinkUrl = u+"/qrmg/person/resChannelCode?channelCode=" + channelCode;
 			}
 			//重新生成二维码
 			String filU = request.getSession().getServletContext().getRealPath("/QRCode");
