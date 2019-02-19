@@ -1,5 +1,6 @@
 package com.qrmg.zd.controller;
 
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -85,30 +86,35 @@ public class AccountController {
 	@RequestMapping(value="/addAccount", method=RequestMethod.POST, consumes="application/json")
 	public OutputObject addAccount(@RequestBody Map<String, Object> params, HttpServletRequest request){
 		OutputObject outputObj = new OutputObject();
-		String mgName = params.get("name") == null ? "" : String.valueOf(params.get("name"));
-		String mgAccount = params.get("userName") == null ? "" : String.valueOf(params.get("userName"));
-		String mgPassword = params.get("password") == null ? "" : String.valueOf(params.get("password"));
-		String mgPhone = params.get("phone") == null ? "" : String.valueOf(params.get("phone"));
-		String mgEmail = params.get("email") == null ? "" : String.valueOf(params.get("email"));
-		String mgContact = params.get("contact") == null ? "" : String.valueOf(params.get("contact"));
-		String mgCode = params.get("level") == null ? "" : String.valueOf(params.get("level"));
-		if(StringUtil.isEmpty(mgName) || StringUtil.isEmpty(mgAccount) || StringUtil.isEmpty(mgPassword)
-				|| StringUtil.isEmpty(mgPhone) || StringUtil.isEmpty(mgCode)){
+		try{
+			String mgName = URLDecoder.decode(params.get("name") == null ? "" : String.valueOf(params.get("name")), "UTF-8");
+			String mgAccount = params.get("userName") == null ? "" : String.valueOf(params.get("userName"));
+			String mgPassword = params.get("password") == null ? "" : String.valueOf(params.get("password"));
+			String mgPhone = params.get("phone") == null ? "" : String.valueOf(params.get("phone"));
+			String mgEmail = URLDecoder.decode(params.get("email") == null ? "" : String.valueOf(params.get("email")), "UTF-8");
+			String mgContact = URLDecoder.decode(params.get("contact") == null ? "" : String.valueOf(params.get("contact")), "UTF-8");
+			String mgCode = params.get("level") == null ? "" : String.valueOf(params.get("level"));
+			if(StringUtil.isEmpty(mgName) || StringUtil.isEmpty(mgAccount) || StringUtil.isEmpty(mgPassword)
+					|| StringUtil.isEmpty(mgPhone) || StringUtil.isEmpty(mgCode)){
+				outputObj.setReturnCode("9999");
+				outputObj.setReturnMessage("请完善账号信息！");
+				return outputObj;
+			}
+			Manager manager = new Manager();
+			manager.setMgAccount(mgAccount);
+			manager.setMgCode(mgCode);
+			manager.setMgContact(mgContact);
+			manager.setMgEmail(mgEmail);
+			manager.setMgName(mgName);
+			manager.setMgPassword(mgPassword);
+			manager.setMgPhone(mgPhone);
+			managerService.addAccount(manager);
+			outputObj.setReturnCode("0");
+			outputObj.setReturnMessage("注册成功！");
+		}catch(Exception e){
 			outputObj.setReturnCode("9999");
-			outputObj.setReturnMessage("请完善账号信息！");
-			return outputObj;
+			outputObj.setReturnMessage("注册失败！");
 		}
-		Manager manager = new Manager();
-		manager.setMgAccount(mgAccount);
-		manager.setMgCode(mgCode);
-		manager.setMgContact(mgContact);
-		manager.setMgEmail(mgEmail);
-		manager.setMgName(mgName);
-		manager.setMgPassword(mgPassword);
-		manager.setMgPhone(mgPhone);
-		managerService.addAccount(manager);
-		outputObj.setReturnCode("0");
-		outputObj.setReturnMessage("注册成功！");
 		return outputObj;
 	}
 	
@@ -122,15 +128,15 @@ public class AccountController {
 	@RequestMapping(value="/updateAccount", method=RequestMethod.POST, consumes="application/json")
 	public OutputObject updateAccount(@RequestBody Map<String, Object> params, HttpServletRequest request){
 		OutputObject outputObj = new OutputObject();
-		String type = params.get("type") == null ? "" : String.valueOf(params.get("type"));
-		String username = params.get("userName") == null ? "" : String.valueOf(params.get("userName"));
-		if(StringUtil.isEmpty(type) || StringUtil.isEmpty(username)){
-			outputObj.setReturnCode("9999");
-			outputObj.setReturnMessage("修改类型不可为空！");
-			return outputObj;
-		}
-		Manager manager = new Manager();
 		try {
+			String type = params.get("type") == null ? "" : String.valueOf(params.get("type"));
+			String username = URLDecoder.decode(params.get("userName") == null ? "" : String.valueOf(params.get("userName")), "UTF-8");
+			if(StringUtil.isEmpty(type) || StringUtil.isEmpty(username)){
+				outputObj.setReturnCode("9999");
+				outputObj.setReturnMessage("修改类型不可为空！");
+				return outputObj;
+			}
+			Manager manager = new Manager();
 			if(StringUtils.equals("0", type)){
 				String newpassword = params.get("newpassword") == null ? "" : String.valueOf(params.get("newpassword"));
 				String oldpassword = params.get("oldpassword") == null ? "" : String.valueOf(params.get("oldpassword"));
@@ -152,11 +158,11 @@ public class AccountController {
 					outputObj.setReturnMessage("原密码错误！");
 				}
 			}else{
-				String name = params.get("name") == null ? "" : String.valueOf(params.get("name"));
+				String name = URLDecoder.decode(params.get("name") == null ? "" : String.valueOf(params.get("name")), "UTF-8");
 				String phone = params.get("phone") == null ? "" : String.valueOf(params.get("phone"));
 				String code = params.get("code") == null ? "" : String.valueOf(params.get("code"));
 				String email = params.get("email") == null ? "" : String.valueOf(params.get("email"));
-				String contact = params.get("contact") == null ? "" : String.valueOf(params.get("contact"));
+				String contact = URLDecoder.decode(params.get("contact") == null ? "" : String.valueOf(params.get("contact")), "UTF-8");
 				manager.setMgCode(code);
 				manager.setMgContact(contact);
 				manager.setMgEmail(email);
@@ -185,14 +191,19 @@ public class AccountController {
 	@RequestMapping(value="/queryManager", method=RequestMethod.GET)
 	public OutputObject queryManager(HttpServletRequest request){
 		OutputObject outputObj = new OutputObject();
-		String mgCode = request.getParameter("code");
-		String mgName = request.getParameter("name");
-		Map<String, String> map = new HashMap<>();
-		map.put("mgCode", mgCode);
-		if(StringUtil.isNotEmpty(mgName)){
-			map.put("mgName", "%" + mgName + "%");
+		try {
+			String mgCode = request.getParameter("code");
+			String mgName = URLDecoder.decode(request.getParameter("name") == null ? "" : request.getParameter("name"), "UTF-8");
+			Map<String, String> map = new HashMap<>();
+			map.put("mgCode", mgCode);
+			if(StringUtil.isNotEmpty(mgName)){
+				map.put("mgName", "%" + mgName + "%");
+			}
+			outputObj = managerService.queryManagerList(map);
+		} catch (Exception e) {
+			outputObj.setReturnCode("9999");
+			outputObj.setReturnMessage("获取失败！");
 		}
-		outputObj = managerService.queryManagerList(map);
 		return outputObj;
 	}
 	

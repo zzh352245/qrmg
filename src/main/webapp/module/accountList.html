@@ -163,7 +163,7 @@
 				url: "/qrmg/front/mana/account/queryManager?",
 				dataType: "json",
 				data: {
-					name: accouname,
+					name: encodeURI(accouname),
 					code: accoucode
 				},
 				success: function(result) {
@@ -281,12 +281,12 @@
 						dataType: "json",
 						contentType:"application/json",
 						data: JSON.stringify({
-							name: name,
+							name: encodeURI(name),
 							userName: account,
 							password: password,
 							phone: phone,
 							email: $("#email",parent.document).val(),
-							contact: $("#contact",parent.document).val(),
+							contact: encodeURI($("#contact",parent.document).val()),
 							level: $("#accolevel option:selected",parent.document).val()
 						}),
 						success: function(result) {
@@ -376,11 +376,11 @@
 						contentType:"application/json",
 						data: JSON.stringify({
 							type: "1",
-							name: name,
-							userName: localStorage.getItem('account'),
+							name: encodeURI(name),
+							userName: encodeURI(localStorage.getItem('account')),
 							phone: phone,
 							email: $("#email",parent.document).val(),
-							contact: $("#contact",parent.document).val()
+							contact: encodeURI($("#contact",parent.document).val())
 						}),
 						success: function(result) {
 							if (result.returnCode) {

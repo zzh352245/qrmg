@@ -172,7 +172,7 @@
 				dataType: "json",
 				data: {
 					channelQrcodeType: $("#channelQrcodeType option:selected").val(),
-					createMg: $("#createMg").val()
+					createMg: encodeURI($("#createMg").val())
 				},
 				success: function(result) {
 					if (result.returnCode == 0) {
@@ -264,11 +264,11 @@
 						data: {
 							id: id,
 							type: "0",
-							channelName: channelName,
+							channelName: encodeURI(channelName),
 							channelParentCode: channelParent,
 							channelLinkUrl: channelUrl,
 							channelCode: channelCode,
-							updateMg: localStorage.getItem('userName')
+							updateMg: encodeURI(localStorage.getItem('userName'))
 						},
 						success: function(result) {
 							parent.layer.msg(result.returnMessage);
@@ -363,14 +363,14 @@
 						url: "/qrmg/front/mana/addChannel?",
 						dataType: "json",
 						data: {
-							channelName: channelName,
+							channelName: encodeURI(channelName),
 							channelParentCode: channelParent,
 							channelLinkUrl: channelUrl,
-							mgName: localStorage.getItem('userName')
+							mgName: encodeURI(localStorage.getItem('userName'))
 						},
 						success: function(result) {
 							parent.layer.msg(result.returnMessage);
-							parent.layer.close(addaccount);
+							parent.layer.close(openChannel);
 							getChannTableData();
 						}
 					})
@@ -417,7 +417,7 @@
 							data: {
 								type: "1",
 								id: id,
-								updateMg: localStorage.getItem('userName'),
+								updateMg: encodeURI(localStorage.getItem('userName')),
 								channelQrcodeType: channelQrcodeType
 							},
 							success: function(result) {

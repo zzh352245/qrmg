@@ -55,7 +55,7 @@ function getNoticeTableData() {
         url: "/qrmg/person/queryPersonList?",
         dataType: "json",
         data:{
-        	userName: $("#userName").val(),
+        	userName: encodeURI($("#userName").val()),
 			channelCode: $("#channelCode option:selected").val()
         },
         success: function (result) {
@@ -117,22 +117,6 @@ function openlayer() {
     });
     
 }
-/* function openlayer(id){
-    layer.open({
-        type: 2,
-        title: '添加信息',
-        shadeClose: true,
-        shade: 0.5,
-        skin: 'layui-layer-rim',
-//            maxmin: true,
-        closeBtn:2,
-        area: ['80%', '90%'],
-        shadeClose: true,
-        closeBtn: 2,
-        content: 'announcer_tail01.html'
-        //iframe的url
-    });
-} */
 
 
 

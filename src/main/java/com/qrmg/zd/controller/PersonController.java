@@ -1,6 +1,7 @@
 package com.qrmg.zd.controller;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,21 +79,21 @@ public class PersonController {
 	@RequestMapping(value="/addPerson", method=RequestMethod.GET)
 	public OutputObject addPerson(HttpServletRequest request, HttpServletResponse response){
 		OutputObject output = new OutputObject();
-		String name = request.getParameter("userName");
-		String phone = request.getParameter("userPhone");
 		String channel = request.getParameter("channelCode");
 		if(StringUtil.isEmpty(channel)){
 			output.setReturnCode("9999");
 			output.setReturnMessage("参数不符合规范！");
 			return output;
 		}
-		try {
+		try{
+			String name = URLDecoder.decode(request.getParameter("userName"), "UTF-8");
+			String phone = request.getParameter("userPhone");
 			Person person = new Person();
 			person.setUserName(name);
 			person.setUserPhone(phone);
 			person.setChannelCode(channel);
 			personService.addPersonRegister(person);
-		} catch (Exception e) {
+		}catch(Exception e){
 			output.setReturnCode("9999");
 			output.setReturnMessage("登记失败！");
 		}finally{
@@ -125,14 +126,19 @@ public class PersonController {
 	@RequestMapping(value="/queryPersonList", method=RequestMethod.GET)
 	public OutputObject queryPersonList(HttpServletRequest request){
 		OutputObject output = new OutputObject();
-		String name = request.getParameter("userName");
-		String channel = request.getParameter("channelCode");
-		Map<String, String> map = new HashMap<>();
-		map.put("channelCode", channel);
-		if(StringUtil.isNotEmpty(name)){
-			map.put("userName", "%" + name + "%");
+		try{
+			String name = URLDecoder.decode(request.getParameter("userName") == null ? "" : request.getParameter("userName"), "UTF-8");
+			String channel = request.getParameter("channelCode");
+			Map<String, String> map = new HashMap<>();
+			map.put("channelCode", channel);
+			if(StringUtil.isNotEmpty(name)){
+				map.put("userName", "%" + name + "%");
+			}
+			output = personService.queryPerson(map);
+		}catch(Exception e){
+			output.setReturnCode("9999");
+			output.setReturnMessage("查询失败！");
 		}
-		output = personService.queryPerson(map);
 		return output;
 	}
 	

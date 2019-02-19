@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -113,7 +114,10 @@ public class ManagerController {
 			outputObj.setReturnMessage("二维码生成失败！");
 			return outputObj;
 		}
-		outputObj.getBean().put("QRUrl", fileUrl);
+		String qrurl = request.getScheme() +"://" + request.getServerName() + ":" 
+				+ request.getServerPort();
+		
+		outputObj.getBean().put("QRUrl", qrurl + "/qrmg/QRCode/" + channelCode + ".png");
 		outputObj.setReturnCode("0");
 		outputObj.setReturnMessage("二维码生成成功！");
 		return outputObj;
@@ -131,19 +135,24 @@ public class ManagerController {
 	public OutputObject queryChannel(HttpServletRequest request){
 		OutputObject outputObj = new OutputObject();
 		Map<String, String> map = new HashMap<>();
-		String channelLevel = request.getParameter("channelLevel");
-		String channelName = request.getParameter("channelName");
-		String createMg = request.getParameter("createMg");
-		String channelQrcodeType = request.getParameter("channelQrcodeType");
-		if(StringUtil.isNotEmpty(createMg)){
-			map.put("createMg", "%" + createMg + "%");
+		try{
+			String channelLevel = request.getParameter("channelLevel");
+			String channelName = URLDecoder.decode(request.getParameter("channelName") == null ? "" : request.getParameter("channelName"), "UTF-8");
+			String createMg = URLDecoder.decode(request.getParameter("createMg") == null ? "" : request.getParameter("createMg"), "UTF-8");
+			String channelQrcodeType = request.getParameter("channelQrcodeType");
+			if(StringUtil.isNotEmpty(createMg)){
+				map.put("createMg", "%" + createMg + "%");
+			}
+			if(StringUtil.isNotEmpty(channelName)){
+				map.put("channelName", "%" + channelName + "%");
+			}
+			map.put("channelQrcodeType", channelQrcodeType);
+			map.put("channelLevel", channelLevel);
+			outputObj = channelService.queryChannelList(map);
+		}catch (Exception e){
+			outputObj.setReturnCode("9999");
+			outputObj.setReturnMessage("获取失败！");
 		}
-		if(StringUtil.isNotEmpty(channelName)){
-			map.put("channelName", "%" + channelName + "%");
-		}
-		map.put("channelQrcodeType", channelQrcodeType);
-		map.put("channelLevel", channelLevel);
-		outputObj = channelService.queryChannelList(map);
 		return outputObj;
 	}
 	
@@ -166,60 +175,67 @@ public class ManagerController {
 	@RequestMapping(value="/addChannel", method=RequestMethod.GET)
 	public OutputObject addChannel(HttpServletRequest request){
 		OutputObject outputObj = new OutputObject();
-		String channelParentCode = request.getParameter("channelParentCode");
-		String channelName = request.getParameter("channelName");
-		String channelLinkUrl = request.getParameter("channelLinkUrl");
-		String createMg = request.getParameter("mgName");
-		if(StringUtil.isEmpty(channelName)
-				|| StringUtil.isEmpty(createMg)){
-			outputObj.setReturnCode("9999");
-			outputObj.setReturnMessage("参数格式不正确！");
-			return outputObj;
-		}
-		Channel channel = new Channel();
-		String channelLevel;
-		if(StringUtil.isEmpty(channelParentCode)){
-			channelLevel="1";
-		}else{
-			channelLevel="2";
-		}
-		long cc = System.currentTimeMillis();
-		String channelCode = String.valueOf(cc).substring(3, 11);
-		//一级渠道，输入链接地址，生成二维码。二级渠道，只需要选择对应的一级渠道，自动生成链接地址和二维码
-		if(StringUtils.equals(channelLevel, "2")){
-			if(StringUtil.isEmpty(channelParentCode)){
+		try{
+			String channelParentCode = request.getParameter("channelParentCode");
+			String channelName = URLDecoder.decode(request.getParameter("channelName"), "UTF-8");
+			String channelLinkUrl = request.getParameter("channelLinkUrl");
+			String createMg = URLDecoder.decode(request.getParameter("mgName"), "UTF-8");
+			if(StringUtil.isEmpty(channelName)
+					|| StringUtil.isEmpty(createMg)){
 				outputObj.setReturnCode("9999");
-				outputObj.setReturnMessage("请选择一级渠道！");
+				outputObj.setReturnMessage("参数格式不正确！");
 				return outputObj;
 			}
-			//二级渠道统一跳转自己做的页面，h5页面地址拼上渠道编码生成新二维码
-			String u = request.getScheme() +"://" + request.getServerName() + ":" 
-						+ request.getServerPort();
-			channelLinkUrl = u+"/qrmg/person/resChannelCode?channelCode=" + channelCode;
-		}
-		if(StringUtil.isEmpty(channelLinkUrl)){
+			Channel channel = new Channel();
+			String channelLevel;
+			if(StringUtil.isEmpty(channelParentCode)){
+				channelLevel="1";
+			}else{
+				channelLevel="2";
+			}
+			long cc = System.currentTimeMillis();
+			String channelCode = String.valueOf(cc).substring(3, 11);
+			//一级渠道，输入链接地址，生成二维码。二级渠道，只需要选择对应的一级渠道，自动生成链接地址和二维码
+			if(StringUtils.equals(channelLevel, "2")){
+				if(StringUtil.isEmpty(channelParentCode)){
+					outputObj.setReturnCode("9999");
+					outputObj.setReturnMessage("请选择一级渠道！");
+					return outputObj;
+				}
+				//二级渠道统一跳转自己做的页面，h5页面地址拼上渠道编码生成新二维码
+				String u = request.getScheme() +"://" + request.getServerName() + ":" 
+							+ request.getServerPort();
+				channelLinkUrl = u+"/qrmg/person/resChannelCode?channelCode=" + channelCode;
+			}
+			if(StringUtil.isEmpty(channelLinkUrl)){
+				outputObj.setReturnCode("9999");
+				outputObj.setReturnMessage("请输入渠道链接地址！");
+				return outputObj;
+			}
+			//需要生成二维码
+			String filU = request.getSession().getServletContext().getRealPath("/QRCode");
+			String fileUrl = QRUtil.createQR(channelLinkUrl, channelCode, filU);
+			if(StringUtil.isEmpty(fileUrl)){
+				outputObj.setReturnCode("9999");
+				outputObj.setReturnMessage("二维码生成失败！");
+				return outputObj;
+			}
+			String qrurl = request.getScheme() +"://" + request.getServerName() + ":" 
+					+ request.getServerPort();
+			channel.setChannelQrcode(qrurl + "/qrmg/QRCode/" + channelCode + ".png");
+			channel.setCreateMg(createMg);
+			channel.setChannelCode(channelCode);
+			channel.setChannelLevel(channelLevel);
+			channel.setChannelParentCode(channelParentCode);
+			channel.setChannelName(channelName);
+			channel.setChannelLinkUrl(channelLinkUrl);
+			channelService.addChannel(channel);
+			outputObj.setReturnCode("0");
+			outputObj.setReturnMessage("添加成功！");
+		}catch (Exception e){
 			outputObj.setReturnCode("9999");
-			outputObj.setReturnMessage("请输入渠道链接地址！");
-			return outputObj;
+			outputObj.setReturnMessage("添加失败！");
 		}
-		//需要生成二维码
-		String filU = request.getSession().getServletContext().getRealPath("/QRCode");
-		String fileUrl = QRUtil.createQR(channelLinkUrl, channelCode, filU);
-		if(StringUtil.isEmpty(fileUrl)){
-			outputObj.setReturnCode("9999");
-			outputObj.setReturnMessage("二维码生成失败！");
-			return outputObj;
-		}
-		channel.setChannelQrcode(fileUrl);
-		channel.setCreateMg(createMg);
-		channel.setChannelCode(channelCode);
-		channel.setChannelLevel(channelLevel);
-		channel.setChannelParentCode(channelParentCode);
-		channel.setChannelName(channelName);
-		channel.setChannelLinkUrl(channelLinkUrl);
-		channelService.addChannel(channel);
-		outputObj.setReturnCode("0");
-		outputObj.setReturnMessage("添加成功！");
 		return outputObj;
 	}
 	
@@ -234,59 +250,64 @@ public class ManagerController {
 	@RequestMapping(value="/updateChannel", method=RequestMethod.GET)
 	public OutputObject updateChannel(HttpServletRequest request){
 		OutputObject outputObj = new OutputObject();
-		String id = request.getParameter("id");
-		String channelParentCode = request.getParameter("channelParentCode");
-		String channelName = request.getParameter("channelName");
-		String channelLinkUrl = request.getParameter("channelLinkUrl");
-		String channelCode = request.getParameter("channelCode");
-		String updateMg = request.getParameter("updateMg");
-		String channelQrcodeType = request.getParameter("channelQrcodeType");//二维码开启状态
-		String type=request.getParameter("type");//1-开启/关闭二维码 0-修改渠道信息
-		if(StringUtil.isEmpty(id) || StringUtil.isEmpty(updateMg)){
-			outputObj.setReturnCode("9999");
-			outputObj.setReturnMessage("参数格式不正确！");
-			return outputObj;
-		}
-		Channel channel = new Channel();
-		try {
-			channel.setId(Integer.parseInt(id));
-		} catch (NumberFormatException e) {
-			outputObj.setReturnCode("9999");
-			outputObj.setReturnMessage("没有获取到要修改的渠道！");
-			return outputObj;
-		}
-		if(StringUtils.equals(type, "0")){
-			channel.setChannelParentCode(channelParentCode);
-			if(StringUtil.isEmpty(channelParentCode)){
-				channel.setChannelLevel("1");
-				channel.setChannelParentCode("");
-			}else{
-				channel.setChannelLevel("2");
-				//二级渠道统一跳转自己做的页面，h5页面地址拼上渠道编码生成新二维码
-				String u = request.getScheme() +"://" + request.getServerName() + ":" 
-						+ request.getServerPort();
-				channelLinkUrl = u+"/qrmg/person/resChannelCode?channelCode=" + channelCode;
-			}
-			//重新生成二维码
-			String filU = request.getSession().getServletContext().getRealPath("/QRCode");
-			String fileUrl = QRUtil.createQR(channelLinkUrl, channelCode, filU);
-			if(StringUtil.isEmpty(fileUrl)){
+		try{
+			String id = request.getParameter("id");
+			String channelParentCode = request.getParameter("channelParentCode");
+			String channelName = URLDecoder.decode(request.getParameter("channelName") == null ? "" : request.getParameter("channelName"), "UTF-8");
+			String channelLinkUrl = request.getParameter("channelLinkUrl");
+			String channelCode = request.getParameter("channelCode");
+			String updateMg = URLDecoder.decode(request.getParameter("updateMg"), "UTF-8");
+			String channelQrcodeType = request.getParameter("channelQrcodeType");//二维码开启状态
+			String type=request.getParameter("type");//1-开启/关闭二维码 0-修改渠道信息
+			if(StringUtil.isEmpty(id) || StringUtil.isEmpty(updateMg)){
 				outputObj.setReturnCode("9999");
-				outputObj.setReturnMessage("二维码生成失败！");
+				outputObj.setReturnMessage("参数格式不正确！");
 				return outputObj;
 			}
-			channel.setChannelQrcode(fileUrl);
-			channel.setChannelName(channelName);
-			channel.setChannelLinkUrl(channelLinkUrl);
-			channel.setUpdateMg(updateMg);
-			channel.setChannelCode(channelCode);
-		}else{
-			channel.setChannelQrcodeType(channelQrcodeType);
-			channel.setUpdateMg(updateMg);
+			Channel channel = new Channel();
+			try {
+				channel.setId(Integer.parseInt(id));
+			} catch (NumberFormatException e) {
+				outputObj.setReturnCode("9999");
+				outputObj.setReturnMessage("没有获取到要修改的渠道！");
+				return outputObj;
+			}
+			if(StringUtils.equals(type, "0")){
+				channel.setChannelParentCode(channelParentCode);
+				if(StringUtil.isEmpty(channelParentCode)){
+					channel.setChannelLevel("1");
+					channel.setChannelParentCode("");
+				}else{
+					channel.setChannelLevel("2");
+					//二级渠道统一跳转自己做的页面，h5页面地址拼上渠道编码生成新二维码
+					String u = request.getScheme() +"://" + request.getServerName() + ":" 
+							+ request.getServerPort();
+					channelLinkUrl = u+"/qrmg/person/resChannelCode?channelCode=" + channelCode;
+				}
+				//重新生成二维码
+				String filU = request.getSession().getServletContext().getRealPath("/QRCode");
+				String fileUrl = QRUtil.createQR(channelLinkUrl, channelCode, filU);
+				if(StringUtil.isEmpty(fileUrl)){
+					outputObj.setReturnCode("9999");
+					outputObj.setReturnMessage("二维码生成失败！");
+					return outputObj;
+				}
+				channel.setChannelQrcode(fileUrl);
+				channel.setChannelName(channelName);
+				channel.setChannelLinkUrl(channelLinkUrl);
+				channel.setUpdateMg(updateMg);
+				channel.setChannelCode(channelCode);
+			}else{
+				channel.setChannelQrcodeType(channelQrcodeType);
+				channel.setUpdateMg(updateMg);
+			}
+			channelService.updateChannel(channel);
+			outputObj.setReturnCode("0");
+			outputObj.setReturnMessage("修改成功！");
+		}catch (Exception e){
+			outputObj.setReturnCode("9999");
+			outputObj.setReturnMessage("修改失败！");
 		}
-		channelService.updateChannel(channel);
-		outputObj.setReturnCode("0");
-		outputObj.setReturnMessage("修改成功！");
 		return outputObj;
 	}
 	
@@ -335,19 +356,24 @@ public class ManagerController {
 	public OutputObject queryChannel1(HttpServletRequest request){
 		OutputObject outputObj = new OutputObject();
 		Map<String, String> map = new HashMap<>();
-		String channelLevel = request.getParameter("channelLevel");
-		String channelName = request.getParameter("channelName");
-		String createMg = request.getParameter("createMg");
-		String channelQrcodeType = request.getParameter("channelQrcodeType");
-		if(StringUtil.isNotEmpty(createMg)){
-			map.put("createMg", "%" + createMg + "%");
+		try{
+			String channelLevel = request.getParameter("channelLevel");
+			String channelName = URLDecoder.decode(request.getParameter("channelName") == null ? "" : request.getParameter("channelName"), "UTF-8");
+			String createMg = URLDecoder.decode(request.getParameter("createMg") == null ? "" : request.getParameter("createMg"), "UTF-8");
+			String channelQrcodeType = request.getParameter("channelQrcodeType");
+			if(StringUtil.isNotEmpty(createMg)){
+				map.put("createMg", "%" + createMg + "%");
+			}
+			if(StringUtil.isNotEmpty(channelName)){
+				map.put("channelName", "%" + channelName + "%");
+			}
+			map.put("channelQrcodeType", channelQrcodeType);
+			map.put("channelLevel", channelLevel);
+			outputObj = channelService.queryChannel(map);
+		}catch (Exception e){
+			outputObj.setReturnCode("9999");
+			outputObj.setReturnMessage("获取失败！");
 		}
-		if(StringUtil.isNotEmpty(channelName)){
-			map.put("channelName", "%" + channelName + "%");
-		}
-		map.put("channelQrcodeType", channelQrcodeType);
-		map.put("channelLevel", channelLevel);
-		outputObj = channelService.queryChannel(map);
 		return outputObj;
 	}
 	
