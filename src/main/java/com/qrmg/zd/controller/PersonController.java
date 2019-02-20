@@ -59,7 +59,7 @@ public class PersonController {
 			if(StringUtils.equals(outputObj.getReturnCode(), "0")){
 				String u = request.getScheme() +"://" + request.getServerName() + ":" 
 						+ request.getServerPort();
-				response.sendRedirect(u+"/qrmg/module/h5Login/h5_login.html?ChannelCode="+channelCode + "&str="+System.currentTimeMillis());
+				response.sendRedirect(u+"/qrmg/module/h5Login/h5_login.html?ChannelCode="+channelCode);
 			}else{
 				response.sendError(404);
 			}
@@ -88,6 +88,11 @@ public class PersonController {
 		try{
 			String name = URLDecoder.decode(URLDecoder.decode(request.getParameter("userName"), "UTF-8"), "UTF-8");
 			String phone = request.getParameter("userPhone");
+			if(StringUtil.isEmpty(name) || StringUtil.isEmpty(phone)){
+				output.setReturnCode("9999");
+				output.setReturnMessage("手机号和姓名不可为空！");
+				return output;
+			}
 			Person person = new Person();
 			person.setUserName(name);
 			person.setUserPhone(phone);
