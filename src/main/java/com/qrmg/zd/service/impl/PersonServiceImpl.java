@@ -1,8 +1,16 @@
 package com.qrmg.zd.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -11,6 +19,7 @@ import com.ai.frame.bean.OutputObject;
 import com.qrmg.zd.dao.PersonDao;
 import com.qrmg.zd.model.Person;
 import com.qrmg.zd.service.PersonService;
+import com.qrmg.zd.util.StringUtil;
 
 /**
  * @Description: 用户管理
@@ -53,5 +62,67 @@ public class PersonServiceImpl implements PersonService {
 		outputObject.setReturnMessage("用户列表获取成功！");
 		return outputObject;
 	}
+	
+	/**
+	 * @Description: 导出用户登记列表
+	 * @author zz
+	 * @date 2019年2月20日 下午6:20:56
+	 * @return 
+	 * @param
+	 */
+	@Override
+    public void export(String[] titles, ServletOutputStream out, Map<String, String> map) {                
+        try{
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            HSSFSheet hssfSheet = workbook.createSheet("sheet1");
+            HSSFRow hssfRow = hssfSheet.createRow(0);
+            HSSFCellStyle hssfCellStyle = workbook.createCellStyle();
+            hssfCellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+            HSSFCell hssfCell = null;
+            for (int i = 0; i < titles.length; i++) {
+                hssfCell = hssfRow.createCell(i);
+                hssfCell.setCellValue(titles[i]);
+                hssfCell.setCellStyle(hssfCellStyle);
+            }
+            List<Person> list = personDao.queryPersonList(map);
+            if(list != null && !list.isEmpty()){
+                for (int i = 0; i < list.size(); i++) {
+                    hssfRow = hssfSheet.createRow(i+1);
+                    Person person = list.get(i);
+                    // 第六步，创建单元格，并设置值
+                    String username = "";
+                    if(StringUtil.isNotEmpty(person.getUserName())){
+                        username = person.getUserName();
+                    }
+                    hssfRow.createCell(0).setCellValue(username);
+                    String channelCode = "";
+                    if(StringUtil.isNotEmpty(person.getChannelCode())){
+                        channelCode = person.getChannelCode();
+                    }
+                    hssfRow.createCell(1).setCellValue(channelCode);
+                    String phone = "";
+                    if(StringUtil.isNotEmpty(person.getUserPhone())){
+                    	phone = person.getUserPhone();
+                    }
+                    hssfRow.createCell(2).setCellValue(phone);
+                    String date="";
+                    if(person.getCreateTime() != null){
+                    	date=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(person.getCreateTime());
+                    }
+                    hssfRow.createCell(3).setCellValue(date);
+                }
+            }
+            try {
+                workbook.write(out);
+                out.flush();
+                out.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }    
+    }
 
 }

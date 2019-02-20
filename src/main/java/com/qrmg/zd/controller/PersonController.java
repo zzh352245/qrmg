@@ -2,10 +2,13 @@ package com.qrmg.zd.controller;
 
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -155,5 +158,45 @@ public class PersonController {
 		}
 		return output;
 	}
+	
+	/**
+	 * @Description: 导出用户信息
+	 * @author zz
+	 * @date 2019年2月20日 下午6:51:02
+	 * @return 
+	 * @param
+	 */
+	@ResponseBody
+	@RequestMapping(value="/export", method=RequestMethod.GET)
+    public String export(HttpServletRequest request, HttpServletResponse response){    
+        response.setContentType("application/binary;charset=UTF-8");
+        try{
+        	String name = 
+					URLDecoder.decode(URLDecoder.decode(request.getParameter("userName") == null ? "" : request.getParameter("userName"), "UTF-8"), "UTF-8");
+			String channel = request.getParameter("channelCode");
+			String begindate = request.getParameter("begindate");
+			String enddate = request.getParameter("enddate");
+			Map<String, String> map = new HashMap<>();
+			map.put("channelCode", channel);
+			if(StringUtil.isNotEmpty(name)){
+				map.put("userName", "%" + name + "%");
+			}
+			if(StringUtil.isNotEmpty(begindate)){
+				map.put("begindate", begindate + " 00:00:00");
+			}
+			if(StringUtil.isNotEmpty(enddate)){
+				map.put("enddate", enddate + " 23:59:59");
+			}
+            ServletOutputStream out=response.getOutputStream();
+            String fileName=new String(("user"+ new SimpleDateFormat("yyyy-MM-dd").format(new Date())).getBytes(),"UTF-8");
+            response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xls");
+            String[] titles = { "用户姓名", "登记渠道", "用户手机号", "登记时间" }; 
+            personService.export(titles, out, map);
+            return "success";
+        } catch(Exception e){
+            e.printStackTrace();
+            return "导出信息失败";
+        }
+    }
 	
 }

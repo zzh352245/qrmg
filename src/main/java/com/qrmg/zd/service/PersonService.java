@@ -2,6 +2,8 @@ package com.qrmg.zd.service;
 
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
+
 import com.ai.frame.bean.OutputObject;
 import com.qrmg.zd.model.Person;
 
@@ -24,5 +26,14 @@ public interface PersonService {
 	 * @param
 	 */
 	OutputObject queryPerson(Map<String, String> map);
+	
+	/**
+	 * @Description: 导出用户登记列表
+	 * @author zz
+	 * @date 2019年2月20日 下午6:20:56
+	 * @return 
+	 * @param
+	 */
+	void export(String[] titles, ServletOutputStream out, Map<String, String> map);
 	
 }
