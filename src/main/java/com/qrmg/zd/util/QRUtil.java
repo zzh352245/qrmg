@@ -37,18 +37,20 @@ public class QRUtil {
 	 * @param
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static String createQR(String url, String channelCode, String fileUrl){
+	public static String createQR(String url, String channelCode){
         int width = 400;
         int height = 400;
         String format = "png";
-        String filePath = fileUrl + "/" + channelCode + ".png";
+//        String filePath = "/home/zdjf/tomcat/webapps/images/" + channelCode + ".png";
+        String filePath="F:/office/tomcat/apache-tomcat-8.5.15/webapps/images/" + channelCode + ".png";
         try {
 			Hashtable hints= new Hashtable();
 			hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
 			BitMatrix bitMatrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, width, height,hints);
 			File outputFile = new File(filePath);
 			MatrixToImageWriter.writeToFile(bitMatrix, format, outputFile);
-			return filePath;
+//			return "http://122.114.159.60:8080/images/" + channelCode + ".png";
+			return "http://localhost:28080/images/" + channelCode + ".png";
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

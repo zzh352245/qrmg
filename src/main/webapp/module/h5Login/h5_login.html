@@ -101,7 +101,7 @@
 			url: "/qrmg/person/addPerson",
 			dataType: "json",
 			data: {
-				userName: name,
+				userName: encodeURI(name),
 				userPhone: phone,
 				channelCode: UrlSplit1
 			},

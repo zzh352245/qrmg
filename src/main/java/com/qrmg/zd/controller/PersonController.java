@@ -59,7 +59,7 @@ public class PersonController {
 			if(StringUtils.equals(outputObj.getReturnCode(), "0")){
 				String u = request.getScheme() +"://" + request.getServerName() + ":" 
 						+ request.getServerPort();
-				response.sendRedirect(u+"/qrmg/module/h5Login/h5_login.html?ChannelCode="+channelCode);
+				response.sendRedirect(u+"/qrmg/module/h5Login/h5_login.html?ChannelCode="+channelCode + "&str="+System.currentTimeMillis());
 			}else{
 				response.sendError(404);
 			}
@@ -86,7 +86,7 @@ public class PersonController {
 			return output;
 		}
 		try{
-			String name = URLDecoder.decode(request.getParameter("userName"), "UTF-8");
+			String name = URLDecoder.decode(URLDecoder.decode(request.getParameter("userName"), "UTF-8"), "UTF-8");
 			String phone = request.getParameter("userPhone");
 			Person person = new Person();
 			person.setUserName(name);
@@ -127,7 +127,8 @@ public class PersonController {
 	public OutputObject queryPersonList(HttpServletRequest request){
 		OutputObject output = new OutputObject();
 		try{
-			String name = URLDecoder.decode(request.getParameter("userName") == null ? "" : request.getParameter("userName"), "UTF-8");
+			String name = 
+					URLDecoder.decode(URLDecoder.decode(request.getParameter("userName") == null ? "" : request.getParameter("userName"), "UTF-8"), "UTF-8");
 			String channel = request.getParameter("channelCode");
 			Map<String, String> map = new HashMap<>();
 			map.put("channelCode", channel);

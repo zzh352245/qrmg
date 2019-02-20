@@ -119,6 +119,8 @@
 					
 				}else if(reCode == '9999'){
 					layer.msg(json.returnMessage);
+					var img=$("#identifyingValue")[0];
+			        img.src="front/mana/loginCode?"+new Date().getTime();
 				}
 			},
 			error: function(json) {

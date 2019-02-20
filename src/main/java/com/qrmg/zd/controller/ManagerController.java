@@ -107,8 +107,8 @@ public class ManagerController {
 			outputObj.setReturnMessage("参数格式不正确！");
 			return outputObj;
 		}
-		String filU = request.getSession().getServletContext().getRealPath("/QRCode");
-		String fileUrl = QRUtil.createQR(url, channelCode, filU);
+//		String filU = request.getSession().getServletContext().getRealPath("/QRCode");
+		String fileUrl = QRUtil.createQR(url, channelCode);
 		if(StringUtil.isEmpty(fileUrl)){
 			outputObj.setReturnCode("9999");
 			outputObj.setReturnMessage("二维码生成失败！");
@@ -137,8 +137,10 @@ public class ManagerController {
 		Map<String, String> map = new HashMap<>();
 		try{
 			String channelLevel = request.getParameter("channelLevel");
-			String channelName = URLDecoder.decode(request.getParameter("channelName") == null ? "" : request.getParameter("channelName"), "UTF-8");
-			String createMg = URLDecoder.decode(request.getParameter("createMg") == null ? "" : request.getParameter("createMg"), "UTF-8");
+			String channelName = 
+					URLDecoder.decode(URLDecoder.decode(request.getParameter("channelName") == null ? "" : request.getParameter("channelName"), "UTF-8"), "UTF-8");
+			String createMg = 
+					URLDecoder.decode(URLDecoder.decode(request.getParameter("createMg") == null ? "" : request.getParameter("createMg"), "UTF-8"), "UTF-8");
 			String channelQrcodeType = request.getParameter("channelQrcodeType");
 			if(StringUtil.isNotEmpty(createMg)){
 				map.put("createMg", "%" + createMg + "%");
@@ -156,14 +158,6 @@ public class ManagerController {
 		return outputObj;
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="/ceshi", method=RequestMethod.GET)
-	public String ceshi(HttpServletRequest request){
-		String u = request.getScheme() +"://" + request.getServerName() + ":" 
-				+ request.getServerPort() ;
-		return u;
-	}
-	
 	/**
 	 * @Description: 添加渠道信息
 	 * @author zz
@@ -177,9 +171,11 @@ public class ManagerController {
 		OutputObject outputObj = new OutputObject();
 		try{
 			String channelParentCode = request.getParameter("channelParentCode");
-			String channelName = URLDecoder.decode(request.getParameter("channelName"), "UTF-8");
+			String channelName = 
+					URLDecoder.decode(URLDecoder.decode(request.getParameter("channelName"), "UTF-8"), "UTF-8");
 			String channelLinkUrl = request.getParameter("channelLinkUrl");
-			String createMg = URLDecoder.decode(request.getParameter("mgName"), "UTF-8");
+			String createMg = 
+					URLDecoder.decode(URLDecoder.decode(request.getParameter("mgName"), "UTF-8"), "UTF-8");
 			if(StringUtil.isEmpty(channelName)
 					|| StringUtil.isEmpty(createMg)){
 				outputObj.setReturnCode("9999");
@@ -213,16 +209,13 @@ public class ManagerController {
 				return outputObj;
 			}
 			//需要生成二维码
-			String filU = request.getSession().getServletContext().getRealPath("/QRCode");
-			String fileUrl = QRUtil.createQR(channelLinkUrl, channelCode, filU);
+			String fileUrl = QRUtil.createQR(channelLinkUrl, channelCode);
 			if(StringUtil.isEmpty(fileUrl)){
 				outputObj.setReturnCode("9999");
 				outputObj.setReturnMessage("二维码生成失败！");
 				return outputObj;
 			}
-			String qrurl = request.getScheme() +"://" + request.getServerName() + ":" 
-					+ request.getServerPort();
-			channel.setChannelQrcode(qrurl + "/qrmg/QRCode/" + channelCode + ".png");
+			channel.setChannelQrcode(fileUrl);
 			channel.setCreateMg(createMg);
 			channel.setChannelCode(channelCode);
 			channel.setChannelLevel(channelLevel);
@@ -253,10 +246,12 @@ public class ManagerController {
 		try{
 			String id = request.getParameter("id");
 			String channelParentCode = request.getParameter("channelParentCode");
-			String channelName = URLDecoder.decode(request.getParameter("channelName") == null ? "" : request.getParameter("channelName"), "UTF-8");
+			String channelName = 
+					URLDecoder.decode(URLDecoder.decode(request.getParameter("channelName") == null ? "" : request.getParameter("channelName"), "UTF-8"), "UTF-8");
 			String channelLinkUrl = request.getParameter("channelLinkUrl");
 			String channelCode = request.getParameter("channelCode");
-			String updateMg = URLDecoder.decode(request.getParameter("updateMg"), "UTF-8");
+			String updateMg = 
+					URLDecoder.decode(URLDecoder.decode(request.getParameter("updateMg"), "UTF-8"), "UTF-8");
 			String channelQrcodeType = request.getParameter("channelQrcodeType");//二维码开启状态
 			String type=request.getParameter("type");//1-开启/关闭二维码 0-修改渠道信息
 			if(StringUtil.isEmpty(id) || StringUtil.isEmpty(updateMg)){
@@ -285,8 +280,7 @@ public class ManagerController {
 					channelLinkUrl = u+"/qrmg/person/resChannelCode?channelCode=" + channelCode;
 				}
 				//重新生成二维码
-				String filU = request.getSession().getServletContext().getRealPath("/QRCode");
-				String fileUrl = QRUtil.createQR(channelLinkUrl, channelCode, filU);
+				String fileUrl = QRUtil.createQR(channelLinkUrl, channelCode);
 				if(StringUtil.isEmpty(fileUrl)){
 					outputObj.setReturnCode("9999");
 					outputObj.setReturnMessage("二维码生成失败！");
@@ -358,8 +352,10 @@ public class ManagerController {
 		Map<String, String> map = new HashMap<>();
 		try{
 			String channelLevel = request.getParameter("channelLevel");
-			String channelName = URLDecoder.decode(request.getParameter("channelName") == null ? "" : request.getParameter("channelName"), "UTF-8");
-			String createMg = URLDecoder.decode(request.getParameter("createMg") == null ? "" : request.getParameter("createMg"), "UTF-8");
+			String channelName = 
+					URLDecoder.decode(URLDecoder.decode(request.getParameter("channelName") == null ? "" : request.getParameter("channelName"), "UTF-8"), "UTF-8");
+			String createMg = 
+					URLDecoder.decode(URLDecoder.decode(request.getParameter("createMg") == null ? "" : request.getParameter("createMg"), "UTF-8"), "UTF-8");
 			String channelQrcodeType = request.getParameter("channelQrcodeType");
 			if(StringUtil.isNotEmpty(createMg)){
 				map.put("createMg", "%" + createMg + "%");

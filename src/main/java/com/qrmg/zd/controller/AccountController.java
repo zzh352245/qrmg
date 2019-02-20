@@ -87,12 +87,15 @@ public class AccountController {
 	public OutputObject addAccount(@RequestBody Map<String, Object> params, HttpServletRequest request){
 		OutputObject outputObj = new OutputObject();
 		try{
-			String mgName = URLDecoder.decode(params.get("name") == null ? "" : String.valueOf(params.get("name")), "UTF-8");
+			String mgName = 
+					URLDecoder.decode(URLDecoder.decode(params.get("name") == null ? "" : String.valueOf(params.get("name")), "UTF-8"), "UTF-8");
 			String mgAccount = params.get("userName") == null ? "" : String.valueOf(params.get("userName"));
 			String mgPassword = params.get("password") == null ? "" : String.valueOf(params.get("password"));
 			String mgPhone = params.get("phone") == null ? "" : String.valueOf(params.get("phone"));
-			String mgEmail = URLDecoder.decode(params.get("email") == null ? "" : String.valueOf(params.get("email")), "UTF-8");
-			String mgContact = URLDecoder.decode(params.get("contact") == null ? "" : String.valueOf(params.get("contact")), "UTF-8");
+			String mgEmail = 
+					URLDecoder.decode(URLDecoder.decode(params.get("email") == null ? "" : String.valueOf(params.get("email")), "UTF-8"), "UTF-8");
+			String mgContact = 
+					URLDecoder.decode(URLDecoder.decode(params.get("contact") == null ? "" : String.valueOf(params.get("contact")), "UTF-8"), "UTF-8");
 			String mgCode = params.get("level") == null ? "" : String.valueOf(params.get("level"));
 			if(StringUtil.isEmpty(mgName) || StringUtil.isEmpty(mgAccount) || StringUtil.isEmpty(mgPassword)
 					|| StringUtil.isEmpty(mgPhone) || StringUtil.isEmpty(mgCode)){
@@ -130,7 +133,8 @@ public class AccountController {
 		OutputObject outputObj = new OutputObject();
 		try {
 			String type = params.get("type") == null ? "" : String.valueOf(params.get("type"));
-			String username = URLDecoder.decode(params.get("userName") == null ? "" : String.valueOf(params.get("userName")), "UTF-8");
+			String username = 
+					URLDecoder.decode(URLDecoder.decode(params.get("userName") == null ? "" : String.valueOf(params.get("userName")), "UTF-8"), "UTF-8");
 			if(StringUtil.isEmpty(type) || StringUtil.isEmpty(username)){
 				outputObj.setReturnCode("9999");
 				outputObj.setReturnMessage("修改类型不可为空！");
@@ -158,11 +162,13 @@ public class AccountController {
 					outputObj.setReturnMessage("原密码错误！");
 				}
 			}else{
-				String name = URLDecoder.decode(params.get("name") == null ? "" : String.valueOf(params.get("name")), "UTF-8");
+				String name = 
+						URLDecoder.decode(URLDecoder.decode(params.get("name") == null ? "" : String.valueOf(params.get("name")), "UTF-8"), "UTF-8");
 				String phone = params.get("phone") == null ? "" : String.valueOf(params.get("phone"));
 				String code = params.get("code") == null ? "" : String.valueOf(params.get("code"));
 				String email = params.get("email") == null ? "" : String.valueOf(params.get("email"));
-				String contact = URLDecoder.decode(params.get("contact") == null ? "" : String.valueOf(params.get("contact")), "UTF-8");
+				String contact = 
+						URLDecoder.decode(URLDecoder.decode(params.get("contact") == null ? "" : String.valueOf(params.get("contact")), "UTF-8"), "UTF-8");
 				manager.setMgCode(code);
 				manager.setMgContact(contact);
 				manager.setMgEmail(email);
@@ -193,7 +199,7 @@ public class AccountController {
 		OutputObject outputObj = new OutputObject();
 		try {
 			String mgCode = request.getParameter("code");
-			String mgName = URLDecoder.decode(request.getParameter("name") == null ? "" : request.getParameter("name"), "UTF-8");
+			String mgName = URLDecoder.decode(URLDecoder.decode(request.getParameter("name") == null ? "" : request.getParameter("name"), "UTF-8"), "UTF-8");
 			Map<String, String> map = new HashMap<>();
 			map.put("mgCode", mgCode);
 			if(StringUtil.isNotEmpty(mgName)){
