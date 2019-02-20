@@ -135,10 +135,18 @@ public class PersonController {
 			String name = 
 					URLDecoder.decode(URLDecoder.decode(request.getParameter("userName") == null ? "" : request.getParameter("userName"), "UTF-8"), "UTF-8");
 			String channel = request.getParameter("channelCode");
+			String begindate = request.getParameter("begindate");
+			String enddate = request.getParameter("enddate");
 			Map<String, String> map = new HashMap<>();
 			map.put("channelCode", channel);
 			if(StringUtil.isNotEmpty(name)){
 				map.put("userName", "%" + name + "%");
+			}
+			if(StringUtil.isNotEmpty(begindate)){
+				map.put("begindate", begindate + " 00:00:00");
+			}
+			if(StringUtil.isNotEmpty(enddate)){
+				map.put("enddate", enddate + " 23:59:59");
 			}
 			output = personService.queryPerson(map);
 		}catch(Exception e){

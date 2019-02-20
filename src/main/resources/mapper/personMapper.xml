@@ -34,6 +34,12 @@
 			<if test="userName != null and userName != 'null' and userName != ''">
 				and user_name like #{userName}
 			</if>
+			<if test="begindate != null and begindate != 'null' and begindate != ''">
+				and create_time >= #{begindate}
+			</if>
+			<if test="enddate != null and enddate != 'null' and enddate != ''">
+				and create_time &lt;= #{enddate}
+			</if>
 		</where>
 	</sql>
 </mapper>

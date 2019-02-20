@@ -56,6 +56,8 @@ function getNoticeTableData() {
         dataType: "json",
         data:{
         	userName: encodeURI($("#userName").val()),
+        	begindate: $("#begindate").val(),
+        	enddate: $("#enddate").val(),
 			channelCode: $("#channelCode option:selected").val()
         },
         success: function (result) {
@@ -78,25 +80,6 @@ function addNotice() {
 function editNotice(id) {
     openlayer()
     currentID = id;
-}
-function delNotice(id) {
-    alert(id)
-    var NoticeId = id;
-    $.ajax({
-        url: '../WorkRecord/DeleteWork?workId=' + NoticeId,
-        type: 'GET',
-        dataType: 'json',
-        success: function (data) {
-            if (data.data) {
-                alert("删除成功！")
-                getNoticeTableData();
-            } else {
-                alert("删除失败")
-            }
-        },
-        error: function (err) {
-        }
-    });
 }
 function getCurrentID() {
     return currentID;
