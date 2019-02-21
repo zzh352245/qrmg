@@ -73,6 +73,33 @@ function getNoticeTableData() {
         }
     })
 }
+/*导出*/
+function checkOut(){
+	var checkOut = parent.layer.confirm('确定要导出吗?', {icon: 3, title:'提示'}, function(index){
+		  //do something
+		 $.ajax({
+		        type: "GET",
+		        url: "/qrmg/person/export?",
+		        dataType: "json",
+		        data:{
+		        	userName: encodeURI($("#userName").val()),
+		        	begindate: $("#begindate").val(),
+		        	enddate: $("#enddate").val(),
+					channelCode: $("#channelCode option:selected").val()
+		        },
+		        success: function (result) {
+		        	if (result.returnCode == 0) {
+					
+					} else {
+						
+					}
+		        }
+		    })
+		  parent.layer.close(checkOut);
+		});
+	  return false;     
+}
+
 function addNotice() {
     openlayer()
     currentID = "";

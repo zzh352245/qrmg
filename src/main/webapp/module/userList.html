@@ -7,9 +7,10 @@
 		<link rel="stylesheet" href="../css/base.css" />
 		<link rel="stylesheet" href="../css/info-mgt.css" />
 		<style>
-			.layui-layer-title{background:url(images/righttitlebig.png) repeat-x;font-weight:bold;color:#46647e; border:1px solid #c1d3de;height: 33px;line-height: 33px;}
+		.layui-layer-title{background:url(images/righttitlebig.png) repeat-x;font-weight:bold;color:#46647e; border:1px solid #c1d3de;height: 33px;line-height: 33px;}
         .tabe_bot label{width: 70px;text-align: right;font-size: 14px;font-weight: 900;color: #46647e}
         .l_left{float: left}
+        .tabe_bot input{padding: 0;}
         .tabe_bot input,.tabe_bot  select{width: 180px;height: 30px;border-radius: 6px;margin:0 20px 0 0;text-indent:1em;border: none;border: 1px #ccc solid}
         .tabe_btn{width: 60px;height: 30px;border: none;border-radius: 6px;color: #fff}
     </style>
@@ -37,6 +38,7 @@
 					</ul>
 				</div>
 				<button class="tabe_btn " onclick="getNoticeTableData()">查询</button>
+				<button class="tabe_btn " onclick="checkOut()">导出</button>
 				<div class="clear"></div>
 			</div>
 		</div>
