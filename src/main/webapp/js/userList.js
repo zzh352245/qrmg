@@ -75,6 +75,7 @@ function getNoticeTableData() {
 }
 /*导出*/
 function checkOut(){
+	getNoticeTableData();
 	var checkOut = parent.layer.confirm('确定要导出吗?', {icon: 3, title:'提示'}, function(index){
 		  //do something
 		 var str = "userName=" + encodeURI($("#userName").val()) + "&begindate=" + $("#begindate").val() + "&enddate=" + $("#enddate").val() + "&channelCode=" + $("#channelCode option:selected").val();
