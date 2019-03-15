@@ -107,15 +107,13 @@ public class ManagerController {
 			outputObj.setReturnMessage("参数格式不正确！");
 			return outputObj;
 		}
-//		String filU = request.getSession().getServletContext().getRealPath("/QRCode");
 		String fileUrl = QRUtil.createQR(url, channelCode);
 		if(StringUtil.isEmpty(fileUrl)){
 			outputObj.setReturnCode("9999");
 			outputObj.setReturnMessage("二维码生成失败！");
 			return outputObj;
 		}
-		String qrurl = request.getScheme() +"://" + request.getServerName() + ":" 
-				+ request.getServerPort();
+		String qrurl = request.getScheme() +"://" + request.getServerName();
 		
 		outputObj.getBean().put("QRUrl", qrurl + "/qrmg/QRCode/" + channelCode + ".png");
 		outputObj.setReturnCode("0");

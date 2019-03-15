@@ -48,7 +48,7 @@ public class QRUtil {
 			BitMatrix bitMatrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, width, height,hints);
 			File outputFile = new File(filePath);
 			MatrixToImageWriter.writeToFile(bitMatrix, format, outputFile);
-			return "http://122.114.159.60:8080/images/" + channelCode + ".png";
+			return "http://www.zdjf-hn.com/images/" + channelCode + ".png";
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
