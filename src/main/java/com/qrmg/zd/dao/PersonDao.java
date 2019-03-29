@@ -23,6 +23,15 @@ public interface PersonDao {
 	public void addPersonRegister(Person person);
 	
 	/**
+	 * @Description: 用户登记
+	 * @author zz
+	 * @date 2019年1月22日 下午2:46:01
+	 * @return 
+	 * @param
+	 */
+	public void updatePerson(Person person);
+	
+	/**
 	 * @Description: 查询登记用户列表
 	 * @author zz
 	 * @date 2019年1月24日 上午9:35:37

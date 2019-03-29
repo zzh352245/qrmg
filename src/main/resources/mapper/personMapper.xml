@@ -15,6 +15,11 @@
 		insert into qrmg_person
 		set user_name=#{userName},user_phone=#{userPhone},channel_code=#{channelCode}
 	</insert>
+	<update id="updatePerson" parameterType="com.qrmg.zd.model.Person">
+		update qrmg_person 
+		set create_time = NOW()
+		where id = #{id}
+	</update>
 	<select id="queryPersonList" parameterType="java.util.Map"
 		resultMap="personResultMap">
 		SELECT id,user_name,user_phone,(SELECT channel_name FROM qrmg_channel WHERE channel_level='2' AND channel_code=a.`channel_code`) channel_code,
@@ -39,6 +44,9 @@
 			</if>
 			<if test="enddate != null and enddate != 'null' and enddate != ''">
 				and create_time &lt;= #{enddate}
+			</if>
+			<if test="userPhone != null and userPhone != 'null' and userPhone != ''">
+				and user_phone = #{userPhone}
 			</if>
 		</where>
 	</sql>

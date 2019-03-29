@@ -1,6 +1,7 @@
 package com.qrmg.zd.service.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +36,18 @@ public class PersonServiceImpl implements PersonService {
 	
 	@Override
 	public void addPersonRegister(Person person) {
-		personDao.addPersonRegister(person);
+		//查询用户是否已经登记过，登记过则不在登记，只修改登记时间
+		Map<String, String> map = new HashMap<>();
+		map.put("userPhone", person.getUserPhone());
+		map.put("userName", person.getUserName());
+		map.put("channelCode", person.getChannelCode());
+		List<Person> list = personDao.queryPersonList(map);
+		if(CollectionUtils.isEmpty(list)){
+			personDao.addPersonRegister(person);
+		}else{
+			person.setId(list.get(0).getId());
+			personDao.updatePerson(person);
+		}
 	}
 
 	/**

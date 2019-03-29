@@ -197,8 +197,7 @@ public class ManagerController {
 					return outputObj;
 				}
 				//二级渠道统一跳转自己做的页面，h5页面地址拼上渠道编码生成新二维码
-				String u = request.getScheme() +"://" + request.getServerName() + ":" 
-							+ request.getServerPort();
+				String u = request.getScheme() +"://" + request.getServerName();
 				channelLinkUrl = u+"/qrmg/person/resChannelCode?channelCode=" + channelCode;
 			}
 			if(StringUtil.isEmpty(channelLinkUrl)){
@@ -273,8 +272,7 @@ public class ManagerController {
 				}else{
 					channel.setChannelLevel("2");
 					//二级渠道统一跳转自己做的页面，h5页面地址拼上渠道编码生成新二维码
-					String u = request.getScheme() +"://" + request.getServerName() + ":" 
-							+ request.getServerPort();
+					String u = request.getScheme() +"://" + request.getServerName();
 					channelLinkUrl = u+"/qrmg/person/resChannelCode?channelCode=" + channelCode;
 				}
 				//重新生成二维码
